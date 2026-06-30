@@ -1,0 +1,23 @@
+assessment:
+  max_reviews_per_item: 50
+  max_pages_per_item: 5
+  request_delay_seconds: 1.5
+  request_timeout_seconds: 20
+  repeat_runs: 2
+
+steam:
+  enabled: true
+  app_ids:
+    - "STEAM_APP_ID_1"
+    - "STEAM_APP_ID_2"
+    - "STEAM_APP_ID_3"
+  language: "english"
+  review_type: "all"
+  purchase_type: "all"
+  reviews_per_page: 20
+
+amazon:
+  enabled: true
+  review_urls:
+    - "AMAZON_REVIEW_URL_1"
+  saved_response_files: []

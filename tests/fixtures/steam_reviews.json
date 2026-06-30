@@ -1,0 +1,20 @@
+{
+  "success": 1,
+  "cursor": "AoIIPwYYanVtcA==",
+  "reviews": [
+    {
+      "recommendationid": "1001",
+      "language": "english",
+      "review": "A focused and useful review.",
+      "timestamp_created": 1700000000,
+      "voted_up": true,
+      "votes_up": 3,
+      "votes_funny": 1,
+      "author": {
+        "steamid": "76561198000000001",
+        "playtime_forever": 1200,
+        "playtime_at_review": 600
+      }
+    }
+  ]
+}

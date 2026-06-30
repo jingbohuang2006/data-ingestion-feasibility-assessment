@@ -1,0 +1,548 @@
+{
+  "execution_timestamp": "2026-06-30T14:28:07.348445+00:00",
+  "configuration_used": {
+    "assessment": {
+      "max_reviews_per_item": 50,
+      "max_pages_per_item": 5,
+      "request_delay_seconds": 1.5,
+      "request_timeout_seconds": 20.0,
+      "repeat_runs": 2
+    },
+    "steam": {
+      "enabled": true,
+      "app_ids": [
+        "730",
+        "413150",
+        "620"
+      ],
+      "language": "english",
+      "review_type": "all",
+      "purchase_type": "all",
+      "reviews_per_page": 20
+    },
+    "amazon": {
+      "enabled": true,
+      "review_urls_count": 1,
+      "saved_response_files": [
+        "data/raw/amazon/manual/amazon_response_1.txt",
+        "data/raw/amazon/manual/amazon_response_2.txt",
+        "data/raw/amazon/manual/amazon_response_3.txt"
+      ]
+    }
+  },
+  "tests_executed": [
+    "steam",
+    "amazon"
+  ],
+  "tests_skipped": {},
+  "network_availability": false,
+  "per_source_statistics": {
+    "steam": {
+      "source": "steam",
+      "executed": true,
+      "skipped_reason": null,
+      "mode": "live_existing_artifacts",
+      "live_request_executed": true,
+      "offline_saved_response_parsing_executed": false,
+      "saved_response_batch_count": 0,
+      "review_count": 150,
+      "request_count": 18,
+      "successful_request_count": 18,
+      "status_codes": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "request_details": [
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        },
+        {
+          "url": "https://store.steampowered.com/appreviews/...",
+          "status_code": 200,
+          "elapsed_seconds": null,
+          "success": true,
+          "content_type": "application/json; charset=utf-8",
+          "response_size": null,
+          "error": null,
+          "blocked": false
+        }
+      ],
+      "raw_reviews_returned": 360,
+      "unique_review_count": 150,
+      "duplicate_review_ids": [],
+      "overlap_across_repeat_runs": 150,
+      "repeat_run_overlap_rate": 1.0,
+      "available_metadata_fields": [
+        "author_id",
+        "collected_at",
+        "funny_votes",
+        "helpful_votes",
+        "item_id",
+        "language",
+        "playtime_at_review",
+        "playtime_forever",
+        "raw_cursor",
+        "raw_page_number",
+        "recommendation",
+        "review_date",
+        "review_id",
+        "review_text",
+        "source",
+        "source_url"
+      ],
+      "pagination_success": true,
+      "cursor_changed_correctly": true,
+      "pagination_batches": [
+        {
+          "app_id": "413150",
+          "run": 1,
+          "page": 1,
+          "request_cursor": "*",
+          "response_cursor": "AoJwyLq7hJ8Dceey6QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": null
+        },
+        {
+          "app_id": "413150",
+          "run": 1,
+          "page": 2,
+          "request_cursor": "AoJwyLq7hJ8Dceey6QY=",
+          "response_cursor": "AoJ49K3ug58DfKWp6QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": true
+        },
+        {
+          "app_id": "413150",
+          "run": 1,
+          "page": 3,
+          "request_cursor": "AoJ49K3ug58DfKWp6QY=",
+          "response_cursor": "AoJwxa/Cg58Dea2k6QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": true
+        },
+        {
+          "app_id": "413150",
+          "run": 2,
+          "page": 1,
+          "request_cursor": "*",
+          "response_cursor": "AoJwyLq7hJ8Dceey6QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": null
+        },
+        {
+          "app_id": "413150",
+          "run": 2,
+          "page": 2,
+          "request_cursor": "AoJwyLq7hJ8Dceey6QY=",
+          "response_cursor": "AoJ49K3ug58DfKWp6QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": true
+        },
+        {
+          "app_id": "413150",
+          "run": 2,
+          "page": 3,
+          "request_cursor": "AoJ49K3ug58DfKWp6QY=",
+          "response_cursor": "AoJwxa/Cg58Dea2k6QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": true
+        },
+        {
+          "app_id": "620",
+          "run": 1,
+          "page": 1,
+          "request_cursor": "*",
+          "response_cursor": "AoJ4qt7Yg58DevWm6QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": null
+        },
+        {
+          "app_id": "620",
+          "run": 1,
+          "page": 2,
+          "request_cursor": "AoJ4qt7Yg58DevWm6QY=",
+          "response_cursor": "AoJ4j8/jgp8Df8aY6QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": true
+        },
+        {
+          "app_id": "620",
+          "run": 1,
+          "page": 3,
+          "request_cursor": "AoJ4j8/jgp8Df8aY6QY=",
+          "response_cursor": "AoJww+mkgp8DdL2O6QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": true
+        },
+        {
+          "app_id": "620",
+          "run": 2,
+          "page": 1,
+          "request_cursor": "*",
+          "response_cursor": "AoJ4qt7Yg58DevWm6QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": null
+        },
+        {
+          "app_id": "620",
+          "run": 2,
+          "page": 2,
+          "request_cursor": "AoJ4qt7Yg58DevWm6QY=",
+          "response_cursor": "AoJ4j8/jgp8Df8aY6QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": true
+        },
+        {
+          "app_id": "620",
+          "run": 2,
+          "page": 3,
+          "request_cursor": "AoJ4j8/jgp8Df8aY6QY=",
+          "response_cursor": "AoJww+mkgp8DdL2O6QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": true
+        },
+        {
+          "app_id": "730",
+          "run": 1,
+          "page": 1,
+          "request_cursor": "*",
+          "response_cursor": "AoJwg7jthJ8Dd5y76QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": null
+        },
+        {
+          "app_id": "730",
+          "run": 1,
+          "page": 2,
+          "request_cursor": "AoJwg7jthJ8Dd5y76QY=",
+          "response_cursor": "AoJ408fmhJ8DdPu56QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": true
+        },
+        {
+          "app_id": "730",
+          "run": 1,
+          "page": 3,
+          "request_cursor": "AoJ408fmhJ8DdPu56QY=",
+          "response_cursor": "AoJ42r/ahJ8DdeK36QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": true
+        },
+        {
+          "app_id": "730",
+          "run": 2,
+          "page": 1,
+          "request_cursor": "*",
+          "response_cursor": "AoJwg7jthJ8Dd5y76QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": null
+        },
+        {
+          "app_id": "730",
+          "run": 2,
+          "page": 2,
+          "request_cursor": "AoJwg7jthJ8Dd5y76QY=",
+          "response_cursor": "AoJ408fmhJ8DdPu56QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": true
+        },
+        {
+          "app_id": "730",
+          "run": 2,
+          "page": 3,
+          "request_cursor": "AoJ408fmhJ8DdPu56QY=",
+          "response_cursor": "AoJ42r/ahJ8DdeK36QY=",
+          "raw_review_count": 20,
+          "distinct_review_count": 20,
+          "distinct_from_previous_page": true
+        }
+      ],
+      "blocked": false,
+      "blocking_status": null,
+      "captcha_status": null,
+      "parser_error_count": 0,
+      "warnings": [],
+      "errors": []
+    },
+    "amazon": {
+      "source": "amazon",
+      "executed": true,
+      "skipped_reason": null,
+      "mode": "offline_saved_files",
+      "live_request_executed": false,
+      "offline_saved_response_parsing_executed": true,
+      "saved_response_batch_count": 3,
+      "review_count": 30,
+      "request_count": 0,
+      "successful_request_count": 0,
+      "status_codes": [],
+      "request_details": [],
+      "raw_reviews_returned": 30,
+      "unique_review_count": 30,
+      "duplicate_review_ids": [],
+      "overlap_across_repeat_runs": null,
+      "repeat_run_overlap_rate": null,
+      "available_metadata_fields": [
+        "author_name",
+        "collected_at",
+        "helpful_votes",
+        "item_id",
+        "rating",
+        "review_date",
+        "review_id",
+        "review_text",
+        "review_title",
+        "source",
+        "source_url",
+        "verified_purchase"
+      ],
+      "pagination_success": true,
+      "cursor_changed_correctly": null,
+      "pagination_batches": [
+        {
+          "filename": "data/raw/amazon/manual/amazon_response_1.txt",
+          "batch_sequence": 1,
+          "review_count": 10,
+          "unique_review_count": 10,
+          "overlap_with_previous_batch": 0,
+          "distinct_from_previous_batch": null,
+          "detected_next_page_number": 3,
+          "next_page_token_detected": true
+        },
+        {
+          "filename": "data/raw/amazon/manual/amazon_response_2.txt",
+          "batch_sequence": 2,
+          "review_count": 10,
+          "unique_review_count": 10,
+          "overlap_with_previous_batch": 0,
+          "distinct_from_previous_batch": true,
+          "detected_next_page_number": 4,
+          "next_page_token_detected": true
+        },
+        {
+          "filename": "data/raw/amazon/manual/amazon_response_3.txt",
+          "batch_sequence": 3,
+          "review_count": 10,
+          "unique_review_count": 10,
+          "overlap_with_previous_batch": 0,
+          "distinct_from_previous_batch": true,
+          "detected_next_page_number": 5,
+          "next_page_token_detected": true
+        }
+      ],
+      "blocked": null,
+      "blocking_status": "not assessed",
+      "captcha_status": "not assessed",
+      "parser_error_count": 0,
+      "warnings": [],
+      "errors": []
+    }
+  },
+  "errors": {},
+  "warnings": {},
+  "limitations": [
+    "Small feasibility probe only; not a production ingestion pipeline.",
+    "Review caps prevent total platform volume measurement.",
+    "Amazon live behavior may vary by session, geography, and time."
+  ]
+}
