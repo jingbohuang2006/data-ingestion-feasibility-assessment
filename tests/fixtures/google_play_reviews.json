@@ -1,0 +1,13 @@
+[
+  {
+    "reviewId": "gp-1",
+    "userName": "Reviewer One",
+    "content": "Helpful app with lots of content.",
+    "score": 4,
+    "thumbsUpCount": 12,
+    "reviewCreatedVersion": "8.9.0",
+    "at": "2026-01-01T00:00:00",
+    "replyContent": "Thanks for the feedback.",
+    "repliedAt": "2026-01-02T00:00:00"
+  }
+]

@@ -36,10 +36,32 @@ class AmazonConfig:
 
 
 @dataclass(frozen=True)
+class GooglePlayConfig:
+    enabled: bool = True
+    app_name: str = "YouTube"
+    package_id: str = "com.google.android.youtube"
+    country: str = "us"
+    language: str = "en"
+    reviews_per_batch: int = 50
+
+
+@dataclass(frozen=True)
+class AppleAppStoreConfig:
+    enabled: bool = True
+    app_name: str = "YouTube"
+    app_id: str = "544007664"
+    country: str = "us"
+    language: str = "en"
+    reviews_per_page: int = 50
+
+
+@dataclass(frozen=True)
 class AppConfig:
     assessment: AssessmentConfig
     steam: SteamConfig
     amazon: AmazonConfig
+    google_play: GooglePlayConfig
+    apple_app_store: AppleAppStoreConfig
     path: Path
 
     def sanitized(self) -> dict[str, Any]:
@@ -59,6 +81,22 @@ class AppConfig:
                 "review_urls_count": len(self.amazon.review_urls),
                 "saved_response_files": list(self.amazon.saved_response_files),
             },
+            "google_play": {
+                "enabled": self.google_play.enabled,
+                "app_name": self.google_play.app_name,
+                "package_id": self.google_play.package_id,
+                "country": self.google_play.country,
+                "language": self.google_play.language,
+                "reviews_per_batch": self.google_play.reviews_per_batch,
+            },
+            "apple_app_store": {
+                "enabled": self.apple_app_store.enabled,
+                "app_name": self.apple_app_store.app_name,
+                "app_id": self.apple_app_store.app_id,
+                "country": self.apple_app_store.country,
+                "language": self.apple_app_store.language,
+                "reviews_per_page": self.apple_app_store.reviews_per_page,
+            },
         }
 
 
@@ -76,9 +114,11 @@ def load_config(path: str | Path) -> AppConfig:
     assessment_raw = raw.get("assessment", {}) or {}
     steam_raw = raw.get("steam", {}) or {}
     amazon_raw = raw.get("amazon", {}) or {}
+    google_play_raw = raw.get("google_play", {}) or {}
+    apple_raw = raw.get("apple_app_store", {}) or {}
 
     assessment = AssessmentConfig(
-        max_reviews_per_item=min(int(assessment_raw.get("max_reviews_per_item", 50)), 50),
+        max_reviews_per_item=min(int(assessment_raw.get("max_reviews_per_item", 100)), 100),
         max_pages_per_item=max(1, int(assessment_raw.get("max_pages_per_item", 5))),
         request_delay_seconds=max(1.0, float(assessment_raw.get("request_delay_seconds", 1.5))),
         request_timeout_seconds=float(assessment_raw.get("request_timeout_seconds", 20)),
@@ -99,4 +139,27 @@ def load_config(path: str | Path) -> AppConfig:
             str(value) for value in amazon_raw.get("saved_response_files", []) if str(value).strip()
         ),
     )
-    return AppConfig(assessment=assessment, steam=steam, amazon=amazon, path=config_path)
+    google_play = GooglePlayConfig(
+        enabled=bool(google_play_raw.get("enabled", True)),
+        app_name=str(google_play_raw.get("app_name", "YouTube")),
+        package_id=str(google_play_raw.get("package_id", "com.google.android.youtube")),
+        country=str(google_play_raw.get("country", "us")).lower(),
+        language=str(google_play_raw.get("language", "en")).lower(),
+        reviews_per_batch=min(max(1, int(google_play_raw.get("reviews_per_batch", 50))), 100),
+    )
+    apple_app_store = AppleAppStoreConfig(
+        enabled=bool(apple_raw.get("enabled", True)),
+        app_name=str(apple_raw.get("app_name", "YouTube")),
+        app_id=str(apple_raw.get("app_id", "544007664")),
+        country=str(apple_raw.get("country", "us")).lower(),
+        language=str(apple_raw.get("language", "en")).lower(),
+        reviews_per_page=min(max(1, int(apple_raw.get("reviews_per_page", 50))), 100),
+    )
+    return AppConfig(
+        assessment=assessment,
+        steam=steam,
+        amazon=amazon,
+        google_play=google_play,
+        apple_app_store=apple_app_store,
+        path=config_path,
+    )

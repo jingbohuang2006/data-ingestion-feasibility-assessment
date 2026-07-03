@@ -1,5 +1,5 @@
 assessment:
-  max_reviews_per_item: 50
+  max_reviews_per_item: 100
   max_pages_per_item: 5
   request_delay_seconds: 1.5
   request_timeout_seconds: 20
@@ -21,3 +21,19 @@ amazon:
   review_urls:
     - "AMAZON_REVIEW_URL_1"
   saved_response_files: []
+
+google_play:
+  enabled: true
+  app_name: "YouTube"
+  package_id: "com.google.android.youtube"
+  country: "us"
+  language: "en"
+  reviews_per_batch: 50
+
+apple_app_store:
+  enabled: true
+  app_name: "YouTube"
+  app_id: "544007664"
+  country: "us"
+  language: "en"
+  reviews_per_page: 50

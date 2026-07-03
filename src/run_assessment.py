@@ -10,12 +10,14 @@ from pathlib import Path
 import pandas as pd
 
 from .amazon_probe import run_amazon_probe
-from .comparison import build_comparison
+from .apple_app_store_probe import run_apple_app_store_probe
+from .comparison import build_app_store_comparison, build_comparison
 from .config import load_config
+from .google_play_probe import run_google_play_probe
 from .models import ProbeResult
 from .models import NORMALIZED_FIELDS
 from .quality_checks import calculate_quality_metrics
-from .report_generator import generate_reports
+from .report_generator import generate_app_store_reports, generate_reports
 from .steam_probe import run_steam_probe
 
 
@@ -23,7 +25,12 @@ def main() -> int:
     """Run probes and generate reports."""
     parser = argparse.ArgumentParser(description="Run review-source feasibility assessment.")
     parser.add_argument("--config", default="config.yaml", help="Path to YAML configuration.")
-    parser.add_argument("--source", choices=["all", "steam", "amazon"], default="all", help="Source to run.")
+    parser.add_argument(
+        "--source",
+        choices=["all", "steam", "amazon", "app_stores", "google_play", "apple_app_store"],
+        default="all",
+        help="Source to run.",
+    )
     parser.add_argument("--offline-only", action="store_true", help="Do not perform live HTTP requests.")
     parser.add_argument("--skip-live-amazon", action="store_true", help="Skip live Amazon GET tests.")
     parser.add_argument("--report-only", action="store_true", help="Generate reports from empty/skipped probe results.")
@@ -32,6 +39,9 @@ def main() -> int:
     root = Path.cwd()
     _setup_logging(root)
     config = load_config(args.config)
+
+    if args.source in {"app_stores", "google_play", "apple_app_store"}:
+        return _run_app_store_assessment(args, config, root)
 
     results: dict[str, ProbeResult] = {}
     if args.report_only:
@@ -63,6 +73,41 @@ def main() -> int:
     _ensure_processed_outputs(root, results)
     generate_reports(config, root, results, quality_list, comparison, network_available)
     logging.info("Assessment complete. Reports written to %s", root / "reports")
+    return 0
+
+
+def _run_app_store_assessment(args: argparse.Namespace, config, root: Path) -> int:
+    results: dict[str, ProbeResult] = {}
+    if args.report_only:
+        results["google_play"] = ProbeResult(source="google_play", executed=False, skipped_reason="Report-only mode.")
+        results["apple_app_store"] = ProbeResult(
+            source="apple_app_store", executed=False, skipped_reason="Report-only mode."
+        )
+    else:
+        if args.source in {"app_stores", "google_play"}:
+            results["google_play"] = run_google_play_probe(config, root)
+        else:
+            results["google_play"] = ProbeResult(source="google_play", executed=False, skipped_reason="Source not selected.")
+
+        if args.source in {"app_stores", "apple_app_store"}:
+            if args.offline_only:
+                results["apple_app_store"] = ProbeResult(
+                    source="apple_app_store", executed=False, skipped_reason="Offline-only mode."
+                )
+            else:
+                results["apple_app_store"] = run_apple_app_store_probe(config, root)
+        else:
+            results["apple_app_store"] = ProbeResult(
+                source="apple_app_store", executed=False, skipped_reason="Source not selected."
+            )
+
+    quality_list = [calculate_quality_metrics(result) for result in results.values()]
+    quality_by_source = {metrics["source"]: metrics for metrics in quality_list}
+    comparison = build_app_store_comparison(results, quality_by_source)
+    network_available = any(result.requests for result in results.values()) if not args.offline_only else False
+    _ensure_processed_outputs(root, results)
+    generate_app_store_reports(config, root, results, quality_list, comparison, network_available)
+    logging.info("App-store assessment complete. Reports written to %s", root / "reports")
     return 0
 
 

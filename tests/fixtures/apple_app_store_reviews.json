@@ -1,0 +1,19 @@
+{
+  "feed": {
+    "entry": [
+      {
+        "id": {"label": "324684580"}
+      },
+      {
+        "id": {"label": "111"},
+        "title": {"label": "Useful app"},
+        "content": {"label": "Works well for daily listening."},
+        "im:rating": {"label": "5"},
+        "updated": {"label": "2026-01-01T00:00:00-07:00"},
+        "author": {"name": {"label": "Reviewer One"}},
+        "im:voteSum": {"label": "3"},
+        "im:version": {"label": "9.0.0"}
+      }
+    ]
+  }
+}
