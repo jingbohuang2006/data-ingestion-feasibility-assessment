@@ -1,0 +1,541 @@
+app_name,item_id,country,language,field,missing_count,missing_rate
+Airbnb,401626263,us,en,source,0,0.0
+Airbnb,401626263,us,en,app_name,0,0.0
+Airbnb,401626263,us,en,item_id,0,0.0
+Airbnb,401626263,us,en,package_id,300,1.0
+Airbnb,401626263,us,en,item_name,300,1.0
+Airbnb,401626263,us,en,review_id,0,0.0
+Airbnb,401626263,us,en,review_title,0,0.0
+Airbnb,401626263,us,en,review_text,0,0.0
+Airbnb,401626263,us,en,rating,0,0.0
+Airbnb,401626263,us,en,recommendation,300,1.0
+Airbnb,401626263,us,en,review_date,0,0.0
+Airbnb,401626263,us,en,author_id,300,1.0
+Airbnb,401626263,us,en,author_name,0,0.0
+Airbnb,401626263,us,en,verified_purchase,300,1.0
+Airbnb,401626263,us,en,helpful_votes,0,0.0
+Airbnb,401626263,us,en,funny_votes,300,1.0
+Airbnb,401626263,us,en,playtime_forever,300,1.0
+Airbnb,401626263,us,en,playtime_at_review,300,1.0
+Airbnb,401626263,us,en,app_version,0,0.0
+Airbnb,401626263,us,en,language,0,0.0
+Airbnb,401626263,us,en,country,0,0.0
+Airbnb,401626263,us,en,developer_response,300,1.0
+Airbnb,401626263,us,en,developer_response_date,300,1.0
+Airbnb,401626263,us,en,source_url,0,0.0
+Airbnb,401626263,us,en,collected_at,0,0.0
+Airbnb,401626263,us,en,raw_page_number,0,0.0
+Airbnb,401626263,us,en,raw_cursor,300,1.0
+Amazon Shopping,297606951,us,en,source,0,0.0
+Amazon Shopping,297606951,us,en,app_name,0,0.0
+Amazon Shopping,297606951,us,en,item_id,0,0.0
+Amazon Shopping,297606951,us,en,package_id,150,1.0
+Amazon Shopping,297606951,us,en,item_name,150,1.0
+Amazon Shopping,297606951,us,en,review_id,0,0.0
+Amazon Shopping,297606951,us,en,review_title,0,0.0
+Amazon Shopping,297606951,us,en,review_text,0,0.0
+Amazon Shopping,297606951,us,en,rating,0,0.0
+Amazon Shopping,297606951,us,en,recommendation,150,1.0
+Amazon Shopping,297606951,us,en,review_date,0,0.0
+Amazon Shopping,297606951,us,en,author_id,150,1.0
+Amazon Shopping,297606951,us,en,author_name,0,0.0
+Amazon Shopping,297606951,us,en,verified_purchase,150,1.0
+Amazon Shopping,297606951,us,en,helpful_votes,0,0.0
+Amazon Shopping,297606951,us,en,funny_votes,150,1.0
+Amazon Shopping,297606951,us,en,playtime_forever,150,1.0
+Amazon Shopping,297606951,us,en,playtime_at_review,150,1.0
+Amazon Shopping,297606951,us,en,app_version,0,0.0
+Amazon Shopping,297606951,us,en,language,0,0.0
+Amazon Shopping,297606951,us,en,country,0,0.0
+Amazon Shopping,297606951,us,en,developer_response,150,1.0
+Amazon Shopping,297606951,us,en,developer_response_date,150,1.0
+Amazon Shopping,297606951,us,en,source_url,0,0.0
+Amazon Shopping,297606951,us,en,collected_at,0,0.0
+Amazon Shopping,297606951,us,en,raw_page_number,0,0.0
+Amazon Shopping,297606951,us,en,raw_cursor,150,1.0
+Canva,897446215,gb,en,source,0,0.0
+Canva,897446215,gb,en,app_name,0,0.0
+Canva,897446215,gb,en,item_id,0,0.0
+Canva,897446215,gb,en,package_id,50,1.0
+Canva,897446215,gb,en,item_name,50,1.0
+Canva,897446215,gb,en,review_id,0,0.0
+Canva,897446215,gb,en,review_title,0,0.0
+Canva,897446215,gb,en,review_text,0,0.0
+Canva,897446215,gb,en,rating,0,0.0
+Canva,897446215,gb,en,recommendation,50,1.0
+Canva,897446215,gb,en,review_date,0,0.0
+Canva,897446215,gb,en,author_id,50,1.0
+Canva,897446215,gb,en,author_name,0,0.0
+Canva,897446215,gb,en,verified_purchase,50,1.0
+Canva,897446215,gb,en,helpful_votes,0,0.0
+Canva,897446215,gb,en,funny_votes,50,1.0
+Canva,897446215,gb,en,playtime_forever,50,1.0
+Canva,897446215,gb,en,playtime_at_review,50,1.0
+Canva,897446215,gb,en,app_version,0,0.0
+Canva,897446215,gb,en,language,0,0.0
+Canva,897446215,gb,en,country,0,0.0
+Canva,897446215,gb,en,developer_response,50,1.0
+Canva,897446215,gb,en,developer_response_date,50,1.0
+Canva,897446215,gb,en,source_url,0,0.0
+Canva,897446215,gb,en,collected_at,0,0.0
+Canva,897446215,gb,en,raw_page_number,0,0.0
+Canva,897446215,gb,en,raw_cursor,50,1.0
+Discord,985746746,us,en,source,0,0.0
+Discord,985746746,us,en,app_name,0,0.0
+Discord,985746746,us,en,item_id,0,0.0
+Discord,985746746,us,en,package_id,50,1.0
+Discord,985746746,us,en,item_name,50,1.0
+Discord,985746746,us,en,review_id,0,0.0
+Discord,985746746,us,en,review_title,0,0.0
+Discord,985746746,us,en,review_text,0,0.0
+Discord,985746746,us,en,rating,0,0.0
+Discord,985746746,us,en,recommendation,50,1.0
+Discord,985746746,us,en,review_date,0,0.0
+Discord,985746746,us,en,author_id,50,1.0
+Discord,985746746,us,en,author_name,0,0.0
+Discord,985746746,us,en,verified_purchase,50,1.0
+Discord,985746746,us,en,helpful_votes,0,0.0
+Discord,985746746,us,en,funny_votes,50,1.0
+Discord,985746746,us,en,playtime_forever,50,1.0
+Discord,985746746,us,en,playtime_at_review,50,1.0
+Discord,985746746,us,en,app_version,0,0.0
+Discord,985746746,us,en,language,0,0.0
+Discord,985746746,us,en,country,0,0.0
+Discord,985746746,us,en,developer_response,50,1.0
+Discord,985746746,us,en,developer_response_date,50,1.0
+Discord,985746746,us,en,source_url,0,0.0
+Discord,985746746,us,en,collected_at,0,0.0
+Discord,985746746,us,en,raw_page_number,0,0.0
+Discord,985746746,us,en,raw_cursor,50,1.0
+Duolingo,570060128,us,en,source,0,0.0
+Duolingo,570060128,us,en,app_name,0,0.0
+Duolingo,570060128,us,en,item_id,0,0.0
+Duolingo,570060128,us,en,package_id,250,1.0
+Duolingo,570060128,us,en,item_name,250,1.0
+Duolingo,570060128,us,en,review_id,0,0.0
+Duolingo,570060128,us,en,review_title,0,0.0
+Duolingo,570060128,us,en,review_text,0,0.0
+Duolingo,570060128,us,en,rating,0,0.0
+Duolingo,570060128,us,en,recommendation,250,1.0
+Duolingo,570060128,us,en,review_date,0,0.0
+Duolingo,570060128,us,en,author_id,250,1.0
+Duolingo,570060128,us,en,author_name,0,0.0
+Duolingo,570060128,us,en,verified_purchase,250,1.0
+Duolingo,570060128,us,en,helpful_votes,0,0.0
+Duolingo,570060128,us,en,funny_votes,250,1.0
+Duolingo,570060128,us,en,playtime_forever,250,1.0
+Duolingo,570060128,us,en,playtime_at_review,250,1.0
+Duolingo,570060128,us,en,app_version,0,0.0
+Duolingo,570060128,us,en,language,0,0.0
+Duolingo,570060128,us,en,country,0,0.0
+Duolingo,570060128,us,en,developer_response,250,1.0
+Duolingo,570060128,us,en,developer_response_date,250,1.0
+Duolingo,570060128,us,en,source_url,0,0.0
+Duolingo,570060128,us,en,collected_at,0,0.0
+Duolingo,570060128,us,en,raw_page_number,0,0.0
+Duolingo,570060128,us,en,raw_cursor,250,1.0
+Gmail,422689480,us,en,source,0,0.0
+Gmail,422689480,us,en,app_name,0,0.0
+Gmail,422689480,us,en,item_id,0,0.0
+Gmail,422689480,us,en,package_id,500,1.0
+Gmail,422689480,us,en,item_name,500,1.0
+Gmail,422689480,us,en,review_id,0,0.0
+Gmail,422689480,us,en,review_title,0,0.0
+Gmail,422689480,us,en,review_text,0,0.0
+Gmail,422689480,us,en,rating,0,0.0
+Gmail,422689480,us,en,recommendation,500,1.0
+Gmail,422689480,us,en,review_date,0,0.0
+Gmail,422689480,us,en,author_id,500,1.0
+Gmail,422689480,us,en,author_name,0,0.0
+Gmail,422689480,us,en,verified_purchase,500,1.0
+Gmail,422689480,us,en,helpful_votes,0,0.0
+Gmail,422689480,us,en,funny_votes,500,1.0
+Gmail,422689480,us,en,playtime_forever,500,1.0
+Gmail,422689480,us,en,playtime_at_review,500,1.0
+Gmail,422689480,us,en,app_version,0,0.0
+Gmail,422689480,us,en,language,0,0.0
+Gmail,422689480,us,en,country,0,0.0
+Gmail,422689480,us,en,developer_response,500,1.0
+Gmail,422689480,us,en,developer_response_date,500,1.0
+Gmail,422689480,us,en,source_url,0,0.0
+Gmail,422689480,us,en,collected_at,0,0.0
+Gmail,422689480,us,en,raw_page_number,0,0.0
+Gmail,422689480,us,en,raw_cursor,500,1.0
+Google Maps,585027354,us,en,source,0,0.0
+Google Maps,585027354,us,en,app_name,0,0.0
+Google Maps,585027354,us,en,item_id,0,0.0
+Google Maps,585027354,us,en,package_id,150,1.0
+Google Maps,585027354,us,en,item_name,150,1.0
+Google Maps,585027354,us,en,review_id,0,0.0
+Google Maps,585027354,us,en,review_title,0,0.0
+Google Maps,585027354,us,en,review_text,0,0.0
+Google Maps,585027354,us,en,rating,0,0.0
+Google Maps,585027354,us,en,recommendation,150,1.0
+Google Maps,585027354,us,en,review_date,0,0.0
+Google Maps,585027354,us,en,author_id,150,1.0
+Google Maps,585027354,us,en,author_name,0,0.0
+Google Maps,585027354,us,en,verified_purchase,150,1.0
+Google Maps,585027354,us,en,helpful_votes,0,0.0
+Google Maps,585027354,us,en,funny_votes,150,1.0
+Google Maps,585027354,us,en,playtime_forever,150,1.0
+Google Maps,585027354,us,en,playtime_at_review,150,1.0
+Google Maps,585027354,us,en,app_version,0,0.0
+Google Maps,585027354,us,en,language,0,0.0
+Google Maps,585027354,us,en,country,0,0.0
+Google Maps,585027354,us,en,developer_response,150,1.0
+Google Maps,585027354,us,en,developer_response_date,150,1.0
+Google Maps,585027354,us,en,source_url,0,0.0
+Google Maps,585027354,us,en,collected_at,0,0.0
+Google Maps,585027354,us,en,raw_page_number,0,0.0
+Google Maps,585027354,us,en,raw_cursor,150,1.0
+Headspace,493145008,us,en,source,0,0.0
+Headspace,493145008,us,en,app_name,0,0.0
+Headspace,493145008,us,en,item_id,0,0.0
+Headspace,493145008,us,en,package_id,500,1.0
+Headspace,493145008,us,en,item_name,500,1.0
+Headspace,493145008,us,en,review_id,0,0.0
+Headspace,493145008,us,en,review_title,0,0.0
+Headspace,493145008,us,en,review_text,0,0.0
+Headspace,493145008,us,en,rating,0,0.0
+Headspace,493145008,us,en,recommendation,500,1.0
+Headspace,493145008,us,en,review_date,0,0.0
+Headspace,493145008,us,en,author_id,500,1.0
+Headspace,493145008,us,en,author_name,0,0.0
+Headspace,493145008,us,en,verified_purchase,500,1.0
+Headspace,493145008,us,en,helpful_votes,0,0.0
+Headspace,493145008,us,en,funny_votes,500,1.0
+Headspace,493145008,us,en,playtime_forever,500,1.0
+Headspace,493145008,us,en,playtime_at_review,500,1.0
+Headspace,493145008,us,en,app_version,0,0.0
+Headspace,493145008,us,en,language,0,0.0
+Headspace,493145008,us,en,country,0,0.0
+Headspace,493145008,us,en,developer_response,500,1.0
+Headspace,493145008,us,en,developer_response_date,500,1.0
+Headspace,493145008,us,en,source_url,0,0.0
+Headspace,493145008,us,en,collected_at,0,0.0
+Headspace,493145008,us,en,raw_page_number,0,0.0
+Headspace,493145008,us,en,raw_cursor,500,1.0
+Instagram,389801252,us,en,source,0,0.0
+Instagram,389801252,us,en,app_name,0,0.0
+Instagram,389801252,us,en,item_id,0,0.0
+Instagram,389801252,us,en,package_id,434,1.0
+Instagram,389801252,us,en,item_name,434,1.0
+Instagram,389801252,us,en,review_id,0,0.0
+Instagram,389801252,us,en,review_title,0,0.0
+Instagram,389801252,us,en,review_text,0,0.0
+Instagram,389801252,us,en,rating,0,0.0
+Instagram,389801252,us,en,recommendation,434,1.0
+Instagram,389801252,us,en,review_date,0,0.0
+Instagram,389801252,us,en,author_id,434,1.0
+Instagram,389801252,us,en,author_name,0,0.0
+Instagram,389801252,us,en,verified_purchase,434,1.0
+Instagram,389801252,us,en,helpful_votes,0,0.0
+Instagram,389801252,us,en,funny_votes,434,1.0
+Instagram,389801252,us,en,playtime_forever,434,1.0
+Instagram,389801252,us,en,playtime_at_review,434,1.0
+Instagram,389801252,us,en,app_version,0,0.0
+Instagram,389801252,us,en,language,0,0.0
+Instagram,389801252,us,en,country,0,0.0
+Instagram,389801252,us,en,developer_response,434,1.0
+Instagram,389801252,us,en,developer_response_date,434,1.0
+Instagram,389801252,us,en,source_url,0,0.0
+Instagram,389801252,us,en,collected_at,0,0.0
+Instagram,389801252,us,en,raw_page_number,0,0.0
+Instagram,389801252,us,en,raw_cursor,434,1.0
+LinkedIn,288429040,us,en,source,0,0.0
+LinkedIn,288429040,us,en,app_name,0,0.0
+LinkedIn,288429040,us,en,item_id,0,0.0
+LinkedIn,288429040,us,en,package_id,500,1.0
+LinkedIn,288429040,us,en,item_name,500,1.0
+LinkedIn,288429040,us,en,review_id,0,0.0
+LinkedIn,288429040,us,en,review_title,0,0.0
+LinkedIn,288429040,us,en,review_text,0,0.0
+LinkedIn,288429040,us,en,rating,0,0.0
+LinkedIn,288429040,us,en,recommendation,500,1.0
+LinkedIn,288429040,us,en,review_date,0,0.0
+LinkedIn,288429040,us,en,author_id,500,1.0
+LinkedIn,288429040,us,en,author_name,0,0.0
+LinkedIn,288429040,us,en,verified_purchase,500,1.0
+LinkedIn,288429040,us,en,helpful_votes,0,0.0
+LinkedIn,288429040,us,en,funny_votes,500,1.0
+LinkedIn,288429040,us,en,playtime_forever,500,1.0
+LinkedIn,288429040,us,en,playtime_at_review,500,1.0
+LinkedIn,288429040,us,en,app_version,0,0.0
+LinkedIn,288429040,us,en,language,0,0.0
+LinkedIn,288429040,us,en,country,0,0.0
+LinkedIn,288429040,us,en,developer_response,500,1.0
+LinkedIn,288429040,us,en,developer_response_date,500,1.0
+LinkedIn,288429040,us,en,source_url,0,0.0
+LinkedIn,288429040,us,en,collected_at,0,0.0
+LinkedIn,288429040,us,en,raw_page_number,0,0.0
+LinkedIn,288429040,us,en,raw_cursor,500,1.0
+Microsoft Teams,1113153706,us,en,source,0,0.0
+Microsoft Teams,1113153706,us,en,app_name,0,0.0
+Microsoft Teams,1113153706,us,en,item_id,0,0.0
+Microsoft Teams,1113153706,us,en,package_id,500,1.0
+Microsoft Teams,1113153706,us,en,item_name,500,1.0
+Microsoft Teams,1113153706,us,en,review_id,0,0.0
+Microsoft Teams,1113153706,us,en,review_title,0,0.0
+Microsoft Teams,1113153706,us,en,review_text,0,0.0
+Microsoft Teams,1113153706,us,en,rating,0,0.0
+Microsoft Teams,1113153706,us,en,recommendation,500,1.0
+Microsoft Teams,1113153706,us,en,review_date,0,0.0
+Microsoft Teams,1113153706,us,en,author_id,500,1.0
+Microsoft Teams,1113153706,us,en,author_name,0,0.0
+Microsoft Teams,1113153706,us,en,verified_purchase,500,1.0
+Microsoft Teams,1113153706,us,en,helpful_votes,0,0.0
+Microsoft Teams,1113153706,us,en,funny_votes,500,1.0
+Microsoft Teams,1113153706,us,en,playtime_forever,500,1.0
+Microsoft Teams,1113153706,us,en,playtime_at_review,500,1.0
+Microsoft Teams,1113153706,us,en,app_version,0,0.0
+Microsoft Teams,1113153706,us,en,language,0,0.0
+Microsoft Teams,1113153706,us,en,country,0,0.0
+Microsoft Teams,1113153706,us,en,developer_response,500,1.0
+Microsoft Teams,1113153706,us,en,developer_response_date,500,1.0
+Microsoft Teams,1113153706,us,en,source_url,0,0.0
+Microsoft Teams,1113153706,us,en,collected_at,0,0.0
+Microsoft Teams,1113153706,us,en,raw_page_number,0,0.0
+Microsoft Teams,1113153706,us,en,raw_cursor,500,1.0
+Netflix,363590051,us,en,source,0,0.0
+Netflix,363590051,us,en,app_name,0,0.0
+Netflix,363590051,us,en,item_id,0,0.0
+Netflix,363590051,us,en,package_id,400,1.0
+Netflix,363590051,us,en,item_name,400,1.0
+Netflix,363590051,us,en,review_id,0,0.0
+Netflix,363590051,us,en,review_title,0,0.0
+Netflix,363590051,us,en,review_text,0,0.0
+Netflix,363590051,us,en,rating,0,0.0
+Netflix,363590051,us,en,recommendation,400,1.0
+Netflix,363590051,us,en,review_date,0,0.0
+Netflix,363590051,us,en,author_id,400,1.0
+Netflix,363590051,us,en,author_name,0,0.0
+Netflix,363590051,us,en,verified_purchase,400,1.0
+Netflix,363590051,us,en,helpful_votes,0,0.0
+Netflix,363590051,us,en,funny_votes,400,1.0
+Netflix,363590051,us,en,playtime_forever,400,1.0
+Netflix,363590051,us,en,playtime_at_review,400,1.0
+Netflix,363590051,us,en,app_version,0,0.0
+Netflix,363590051,us,en,language,0,0.0
+Netflix,363590051,us,en,country,0,0.0
+Netflix,363590051,us,en,developer_response,400,1.0
+Netflix,363590051,us,en,developer_response_date,400,1.0
+Netflix,363590051,us,en,source_url,0,0.0
+Netflix,363590051,us,en,collected_at,0,0.0
+Netflix,363590051,us,en,raw_page_number,0,0.0
+Netflix,363590051,us,en,raw_cursor,400,1.0
+Pinterest,429047995,us,en,source,0,0.0
+Pinterest,429047995,us,en,app_name,0,0.0
+Pinterest,429047995,us,en,item_id,0,0.0
+Pinterest,429047995,us,en,package_id,500,1.0
+Pinterest,429047995,us,en,item_name,500,1.0
+Pinterest,429047995,us,en,review_id,0,0.0
+Pinterest,429047995,us,en,review_title,0,0.0
+Pinterest,429047995,us,en,review_text,0,0.0
+Pinterest,429047995,us,en,rating,0,0.0
+Pinterest,429047995,us,en,recommendation,500,1.0
+Pinterest,429047995,us,en,review_date,0,0.0
+Pinterest,429047995,us,en,author_id,500,1.0
+Pinterest,429047995,us,en,author_name,0,0.0
+Pinterest,429047995,us,en,verified_purchase,500,1.0
+Pinterest,429047995,us,en,helpful_votes,0,0.0
+Pinterest,429047995,us,en,funny_votes,500,1.0
+Pinterest,429047995,us,en,playtime_forever,500,1.0
+Pinterest,429047995,us,en,playtime_at_review,500,1.0
+Pinterest,429047995,us,en,app_version,0,0.0
+Pinterest,429047995,us,en,language,0,0.0
+Pinterest,429047995,us,en,country,0,0.0
+Pinterest,429047995,us,en,developer_response,500,1.0
+Pinterest,429047995,us,en,developer_response_date,500,1.0
+Pinterest,429047995,us,en,source_url,0,0.0
+Pinterest,429047995,us,en,collected_at,0,0.0
+Pinterest,429047995,us,en,raw_page_number,0,0.0
+Pinterest,429047995,us,en,raw_cursor,500,1.0
+Reddit,1064216828,us,en,source,0,0.0
+Reddit,1064216828,us,en,app_name,0,0.0
+Reddit,1064216828,us,en,item_id,0,0.0
+Reddit,1064216828,us,en,package_id,398,1.0
+Reddit,1064216828,us,en,item_name,398,1.0
+Reddit,1064216828,us,en,review_id,0,0.0
+Reddit,1064216828,us,en,review_title,0,0.0
+Reddit,1064216828,us,en,review_text,0,0.0
+Reddit,1064216828,us,en,rating,0,0.0
+Reddit,1064216828,us,en,recommendation,398,1.0
+Reddit,1064216828,us,en,review_date,0,0.0
+Reddit,1064216828,us,en,author_id,398,1.0
+Reddit,1064216828,us,en,author_name,0,0.0
+Reddit,1064216828,us,en,verified_purchase,398,1.0
+Reddit,1064216828,us,en,helpful_votes,0,0.0
+Reddit,1064216828,us,en,funny_votes,398,1.0
+Reddit,1064216828,us,en,playtime_forever,398,1.0
+Reddit,1064216828,us,en,playtime_at_review,398,1.0
+Reddit,1064216828,us,en,app_version,0,0.0
+Reddit,1064216828,us,en,language,0,0.0
+Reddit,1064216828,us,en,country,0,0.0
+Reddit,1064216828,us,en,developer_response,398,1.0
+Reddit,1064216828,us,en,developer_response_date,398,1.0
+Reddit,1064216828,us,en,source_url,0,0.0
+Reddit,1064216828,us,en,collected_at,0,0.0
+Reddit,1064216828,us,en,raw_page_number,0,0.0
+Reddit,1064216828,us,en,raw_cursor,398,1.0
+Spotify,324684580,us,en,source,0,0.0
+Spotify,324684580,us,en,app_name,0,0.0
+Spotify,324684580,us,en,item_id,0,0.0
+Spotify,324684580,us,en,package_id,400,1.0
+Spotify,324684580,us,en,item_name,400,1.0
+Spotify,324684580,us,en,review_id,0,0.0
+Spotify,324684580,us,en,review_title,0,0.0
+Spotify,324684580,us,en,review_text,0,0.0
+Spotify,324684580,us,en,rating,0,0.0
+Spotify,324684580,us,en,recommendation,400,1.0
+Spotify,324684580,us,en,review_date,0,0.0
+Spotify,324684580,us,en,author_id,400,1.0
+Spotify,324684580,us,en,author_name,0,0.0
+Spotify,324684580,us,en,verified_purchase,400,1.0
+Spotify,324684580,us,en,helpful_votes,0,0.0
+Spotify,324684580,us,en,funny_votes,400,1.0
+Spotify,324684580,us,en,playtime_forever,400,1.0
+Spotify,324684580,us,en,playtime_at_review,400,1.0
+Spotify,324684580,us,en,app_version,0,0.0
+Spotify,324684580,us,en,language,0,0.0
+Spotify,324684580,us,en,country,0,0.0
+Spotify,324684580,us,en,developer_response,400,1.0
+Spotify,324684580,us,en,developer_response_date,400,1.0
+Spotify,324684580,us,en,source_url,0,0.0
+Spotify,324684580,us,en,collected_at,0,0.0
+Spotify,324684580,us,en,raw_page_number,0,0.0
+Spotify,324684580,us,en,raw_cursor,400,1.0
+TikTok,835599320,us,en,source,0,0.0
+TikTok,835599320,us,en,app_name,0,0.0
+TikTok,835599320,us,en,item_id,0,0.0
+TikTok,835599320,us,en,package_id,464,1.0
+TikTok,835599320,us,en,item_name,464,1.0
+TikTok,835599320,us,en,review_id,0,0.0
+TikTok,835599320,us,en,review_title,0,0.0
+TikTok,835599320,us,en,review_text,0,0.0
+TikTok,835599320,us,en,rating,0,0.0
+TikTok,835599320,us,en,recommendation,464,1.0
+TikTok,835599320,us,en,review_date,0,0.0
+TikTok,835599320,us,en,author_id,464,1.0
+TikTok,835599320,us,en,author_name,0,0.0
+TikTok,835599320,us,en,verified_purchase,464,1.0
+TikTok,835599320,us,en,helpful_votes,0,0.0
+TikTok,835599320,us,en,funny_votes,464,1.0
+TikTok,835599320,us,en,playtime_forever,464,1.0
+TikTok,835599320,us,en,playtime_at_review,464,1.0
+TikTok,835599320,us,en,app_version,0,0.0
+TikTok,835599320,us,en,language,0,0.0
+TikTok,835599320,us,en,country,0,0.0
+TikTok,835599320,us,en,developer_response,464,1.0
+TikTok,835599320,us,en,developer_response_date,464,1.0
+TikTok,835599320,us,en,source_url,0,0.0
+TikTok,835599320,us,en,collected_at,0,0.0
+TikTok,835599320,us,en,raw_page_number,0,0.0
+TikTok,835599320,us,en,raw_cursor,464,1.0
+Uber,368677368,us,en,source,0,0.0
+Uber,368677368,us,en,app_name,0,0.0
+Uber,368677368,us,en,item_id,0,0.0
+Uber,368677368,us,en,package_id,50,1.0
+Uber,368677368,us,en,item_name,50,1.0
+Uber,368677368,us,en,review_id,0,0.0
+Uber,368677368,us,en,review_title,0,0.0
+Uber,368677368,us,en,review_text,0,0.0
+Uber,368677368,us,en,rating,0,0.0
+Uber,368677368,us,en,recommendation,50,1.0
+Uber,368677368,us,en,review_date,0,0.0
+Uber,368677368,us,en,author_id,50,1.0
+Uber,368677368,us,en,author_name,0,0.0
+Uber,368677368,us,en,verified_purchase,50,1.0
+Uber,368677368,us,en,helpful_votes,0,0.0
+Uber,368677368,us,en,funny_votes,50,1.0
+Uber,368677368,us,en,playtime_forever,50,1.0
+Uber,368677368,us,en,playtime_at_review,50,1.0
+Uber,368677368,us,en,app_version,0,0.0
+Uber,368677368,us,en,language,0,0.0
+Uber,368677368,us,en,country,0,0.0
+Uber,368677368,us,en,developer_response,50,1.0
+Uber,368677368,us,en,developer_response_date,50,1.0
+Uber,368677368,us,en,source_url,0,0.0
+Uber,368677368,us,en,collected_at,0,0.0
+Uber,368677368,us,en,raw_page_number,0,0.0
+Uber,368677368,us,en,raw_cursor,50,1.0
+WhatsApp,310633997,us,en,source,0,0.0
+WhatsApp,310633997,us,en,app_name,0,0.0
+WhatsApp,310633997,us,en,item_id,0,0.0
+WhatsApp,310633997,us,en,package_id,250,1.0
+WhatsApp,310633997,us,en,item_name,250,1.0
+WhatsApp,310633997,us,en,review_id,0,0.0
+WhatsApp,310633997,us,en,review_title,0,0.0
+WhatsApp,310633997,us,en,review_text,0,0.0
+WhatsApp,310633997,us,en,rating,0,0.0
+WhatsApp,310633997,us,en,recommendation,250,1.0
+WhatsApp,310633997,us,en,review_date,0,0.0
+WhatsApp,310633997,us,en,author_id,250,1.0
+WhatsApp,310633997,us,en,author_name,0,0.0
+WhatsApp,310633997,us,en,verified_purchase,250,1.0
+WhatsApp,310633997,us,en,helpful_votes,0,0.0
+WhatsApp,310633997,us,en,funny_votes,250,1.0
+WhatsApp,310633997,us,en,playtime_forever,250,1.0
+WhatsApp,310633997,us,en,playtime_at_review,250,1.0
+WhatsApp,310633997,us,en,app_version,0,0.0
+WhatsApp,310633997,us,en,language,0,0.0
+WhatsApp,310633997,us,en,country,0,0.0
+WhatsApp,310633997,us,en,developer_response,250,1.0
+WhatsApp,310633997,us,en,developer_response_date,250,1.0
+WhatsApp,310633997,us,en,source_url,0,0.0
+WhatsApp,310633997,us,en,collected_at,0,0.0
+WhatsApp,310633997,us,en,raw_page_number,0,0.0
+WhatsApp,310633997,us,en,raw_cursor,250,1.0
+YouTube,544007664,us,en,source,0,0.0
+YouTube,544007664,us,en,app_name,0,0.0
+YouTube,544007664,us,en,item_id,0,0.0
+YouTube,544007664,us,en,package_id,50,1.0
+YouTube,544007664,us,en,item_name,50,1.0
+YouTube,544007664,us,en,review_id,0,0.0
+YouTube,544007664,us,en,review_title,0,0.0
+YouTube,544007664,us,en,review_text,0,0.0
+YouTube,544007664,us,en,rating,0,0.0
+YouTube,544007664,us,en,recommendation,50,1.0
+YouTube,544007664,us,en,review_date,0,0.0
+YouTube,544007664,us,en,author_id,50,1.0
+YouTube,544007664,us,en,author_name,0,0.0
+YouTube,544007664,us,en,verified_purchase,50,1.0
+YouTube,544007664,us,en,helpful_votes,0,0.0
+YouTube,544007664,us,en,funny_votes,50,1.0
+YouTube,544007664,us,en,playtime_forever,50,1.0
+YouTube,544007664,us,en,playtime_at_review,50,1.0
+YouTube,544007664,us,en,app_version,0,0.0
+YouTube,544007664,us,en,language,0,0.0
+YouTube,544007664,us,en,country,0,0.0
+YouTube,544007664,us,en,developer_response,50,1.0
+YouTube,544007664,us,en,developer_response_date,50,1.0
+YouTube,544007664,us,en,source_url,0,0.0
+YouTube,544007664,us,en,collected_at,0,0.0
+YouTube,544007664,us,en,raw_page_number,0,0.0
+YouTube,544007664,us,en,raw_cursor,50,1.0
+Zoom,546505307,us,en,source,0,0.0
+Zoom,546505307,us,en,app_name,0,0.0
+Zoom,546505307,us,en,item_id,0,0.0
+Zoom,546505307,us,en,package_id,500,1.0
+Zoom,546505307,us,en,item_name,500,1.0
+Zoom,546505307,us,en,review_id,0,0.0
+Zoom,546505307,us,en,review_title,0,0.0
+Zoom,546505307,us,en,review_text,0,0.0
+Zoom,546505307,us,en,rating,0,0.0
+Zoom,546505307,us,en,recommendation,500,1.0
+Zoom,546505307,us,en,review_date,0,0.0
+Zoom,546505307,us,en,author_id,500,1.0
+Zoom,546505307,us,en,author_name,0,0.0
+Zoom,546505307,us,en,verified_purchase,500,1.0
+Zoom,546505307,us,en,helpful_votes,0,0.0
+Zoom,546505307,us,en,funny_votes,500,1.0
+Zoom,546505307,us,en,playtime_forever,500,1.0
+Zoom,546505307,us,en,playtime_at_review,500,1.0
+Zoom,546505307,us,en,app_version,0,0.0
+Zoom,546505307,us,en,language,0,0.0
+Zoom,546505307,us,en,country,0,0.0
+Zoom,546505307,us,en,developer_response,500,1.0
+Zoom,546505307,us,en,developer_response_date,500,1.0
+Zoom,546505307,us,en,source_url,0,0.0
+Zoom,546505307,us,en,collected_at,0,0.0
+Zoom,546505307,us,en,raw_page_number,0,0.0
+Zoom,546505307,us,en,raw_cursor,500,1.0

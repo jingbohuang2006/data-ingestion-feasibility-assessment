@@ -1,0 +1,4 @@
+app_name,item_id,country,language,review_count,unique_review_count,duplicate_count
+Duolingo,570060128,us,en,100,100,0
+Spotify,324684580,us,en,250,250,0
+YouTube,544007664,us,en,150,150,0

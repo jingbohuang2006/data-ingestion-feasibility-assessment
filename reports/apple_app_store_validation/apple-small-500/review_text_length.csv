@@ -1,0 +1,4 @@
+app_name,item_id,country,language,review_count,minimum_text_length,maximum_text_length,average_text_length,median_text_length,low_signal_review_count,empty_text_count,low_signal_rate
+Duolingo,570060128,us,en,100,1,690,181.35,109.5,5,0,0.05
+Spotify,324684580,us,en,250,1,685,108.564,61.0,36,0,0.144
+YouTube,544007664,us,en,150,3,1014,142.79333333333332,77.0,19,0,0.12666666666666668

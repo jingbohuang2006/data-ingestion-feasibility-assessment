@@ -10,6 +10,7 @@ from pathlib import Path
 import pandas as pd
 
 from .amazon_probe import run_amazon_probe
+from .apple_app_store_validation import run_apple_app_store_validation
 from .apple_app_store_probe import run_apple_app_store_probe
 from .comparison import build_app_store_comparison, build_comparison
 from .config import load_config
@@ -27,18 +28,27 @@ def main() -> int:
     parser.add_argument("--config", default="config.yaml", help="Path to YAML configuration.")
     parser.add_argument(
         "--source",
-        choices=["all", "steam", "amazon", "app_stores", "google_play", "apple_app_store"],
+        choices=["all", "steam", "amazon", "app_stores", "google_play", "apple_app_store", "apple_app_store_validation"],
         default="all",
         help="Source to run.",
     )
     parser.add_argument("--offline-only", action="store_true", help="Do not perform live HTTP requests.")
     parser.add_argument("--skip-live-amazon", action="store_true", help="Skip live Amazon GET tests.")
     parser.add_argument("--report-only", action="store_true", help="Generate reports from empty/skipped probe results.")
+    parser.add_argument("--validation-run-id", help="Optional output run ID for isolated Apple validation outputs.")
+    parser.add_argument(
+        "--validation-max-reviews",
+        type=int,
+        help="Optional temporary cap for Apple validation runs, useful for 500 or 1,000 row test runs.",
+    )
     args = parser.parse_args()
 
     root = Path.cwd()
     _setup_logging(root)
     config = load_config(args.config)
+
+    if args.source == "apple_app_store_validation":
+        return _run_apple_validation(args, config, root)
 
     if args.source in {"app_stores", "google_play", "apple_app_store"}:
         return _run_app_store_assessment(args, config, root)
@@ -108,6 +118,21 @@ def _run_app_store_assessment(args: argparse.Namespace, config, root: Path) -> i
     _ensure_processed_outputs(root, results)
     generate_app_store_reports(config, root, results, quality_list, comparison, network_available)
     logging.info("App-store assessment complete. Reports written to %s", root / "reports")
+    return 0
+
+
+def _run_apple_validation(args: argparse.Namespace, config, root: Path) -> int:
+    if args.offline_only:
+        logging.info("Apple validation skipped in offline-only mode.")
+        return 0
+    result = run_apple_app_store_validation(
+        config,
+        root,
+        run_id=args.validation_run_id,
+        max_reviews=args.validation_max_reviews,
+    )
+    logging.info("Apple validation complete. Processed output written to %s", result.processed_dir)
+    logging.info("Apple validation EDA written to %s", result.reports_dir)
     return 0
 
 

@@ -1,0 +1,58 @@
+{
+  "execution_timestamp": "2026-07-06T16:22:01.033131+00:00",
+  "phase": "Apple App Store larger-scale validation",
+  "run_id": "apple-small-500",
+  "target_review_count": 10000,
+  "reviews_collected": 500,
+  "targets": [
+    {
+      "app_name": "YouTube",
+      "app_id": "544007664",
+      "country": "us",
+      "language": "en",
+      "category": "video"
+    },
+    {
+      "app_name": "Spotify",
+      "app_id": "324684580",
+      "country": "us",
+      "language": "en",
+      "category": "music"
+    },
+    {
+      "app_name": "Duolingo",
+      "app_id": "570060128",
+      "country": "us",
+      "language": "en",
+      "category": "education"
+    },
+    {
+      "app_name": "Headspace",
+      "app_id": "493145008",
+      "country": "us",
+      "language": "en",
+      "category": "health"
+    },
+    {
+      "app_name": "Canva",
+      "app_id": "897446215",
+      "country": "gb",
+      "language": "en",
+      "category": "productivity"
+    }
+  ],
+  "request_count": 11,
+  "successful_request_count": 11,
+  "errors": [],
+  "parser_errors": [],
+  "warnings": [],
+  "processed_output_dir": "/Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/data/processed/apple_app_store_validation/apple-small-500",
+  "reports_output_dir": "/Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/reports/apple_app_store_validation/apple-small-500",
+  "raw_output_dir": "/Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/data/raw/apple_app_store_validation/apple-small-500",
+  "limitations": [
+    "Validation run only; this is not a production-ready ingestion pipeline.",
+    "Apple customer review RSS is publicly accessible but undocumented and not an official supported review API.",
+    "Review volume is capped by configuration and may be limited by app, storefront, endpoint behavior, or paging depth.",
+    "Language is configured by storefront request; independent language detection is not performed."
+  ]
+}

@@ -1,0 +1,98 @@
+app_name,item_id,country,language,rating,review_count
+Airbnb,401626263,us,en,1.0,265
+Airbnb,401626263,us,en,2.0,11
+Airbnb,401626263,us,en,3.0,13
+Airbnb,401626263,us,en,4.0,4
+Airbnb,401626263,us,en,5.0,7
+Amazon Shopping,297606951,us,en,1.0,91
+Amazon Shopping,297606951,us,en,2.0,15
+Amazon Shopping,297606951,us,en,3.0,10
+Amazon Shopping,297606951,us,en,4.0,8
+Amazon Shopping,297606951,us,en,5.0,26
+Canva,897446215,gb,en,1.0,2
+Canva,897446215,gb,en,3.0,1
+Canva,897446215,gb,en,4.0,4
+Canva,897446215,gb,en,5.0,43
+Discord,985746746,us,en,1.0,21
+Discord,985746746,us,en,2.0,2
+Discord,985746746,us,en,3.0,5
+Discord,985746746,us,en,4.0,4
+Discord,985746746,us,en,5.0,18
+Duolingo,570060128,us,en,1.0,35
+Duolingo,570060128,us,en,2.0,10
+Duolingo,570060128,us,en,3.0,19
+Duolingo,570060128,us,en,4.0,41
+Duolingo,570060128,us,en,5.0,145
+Gmail,422689480,us,en,1.0,263
+Gmail,422689480,us,en,2.0,57
+Gmail,422689480,us,en,3.0,44
+Gmail,422689480,us,en,4.0,33
+Gmail,422689480,us,en,5.0,103
+Google Maps,585027354,us,en,1.0,44
+Google Maps,585027354,us,en,2.0,19
+Google Maps,585027354,us,en,3.0,8
+Google Maps,585027354,us,en,4.0,8
+Google Maps,585027354,us,en,5.0,71
+Headspace,493145008,us,en,1.0,274
+Headspace,493145008,us,en,2.0,81
+Headspace,493145008,us,en,3.0,57
+Headspace,493145008,us,en,4.0,37
+Headspace,493145008,us,en,5.0,51
+Instagram,389801252,us,en,1.0,223
+Instagram,389801252,us,en,2.0,30
+Instagram,389801252,us,en,3.0,20
+Instagram,389801252,us,en,4.0,28
+Instagram,389801252,us,en,5.0,133
+LinkedIn,288429040,us,en,1.0,324
+LinkedIn,288429040,us,en,2.0,42
+LinkedIn,288429040,us,en,3.0,35
+LinkedIn,288429040,us,en,4.0,18
+LinkedIn,288429040,us,en,5.0,81
+Microsoft Teams,1113153706,us,en,1.0,301
+Microsoft Teams,1113153706,us,en,2.0,62
+Microsoft Teams,1113153706,us,en,3.0,47
+Microsoft Teams,1113153706,us,en,4.0,22
+Microsoft Teams,1113153706,us,en,5.0,68
+Netflix,363590051,us,en,1.0,81
+Netflix,363590051,us,en,2.0,24
+Netflix,363590051,us,en,3.0,41
+Netflix,363590051,us,en,4.0,46
+Netflix,363590051,us,en,5.0,208
+Pinterest,429047995,us,en,1.0,193
+Pinterest,429047995,us,en,2.0,66
+Pinterest,429047995,us,en,3.0,63
+Pinterest,429047995,us,en,4.0,50
+Pinterest,429047995,us,en,5.0,128
+Reddit,1064216828,us,en,1.0,275
+Reddit,1064216828,us,en,2.0,25
+Reddit,1064216828,us,en,3.0,12
+Reddit,1064216828,us,en,4.0,10
+Reddit,1064216828,us,en,5.0,76
+Spotify,324684580,us,en,1.0,54
+Spotify,324684580,us,en,2.0,21
+Spotify,324684580,us,en,3.0,34
+Spotify,324684580,us,en,4.0,42
+Spotify,324684580,us,en,5.0,249
+TikTok,835599320,us,en,1.0,202
+TikTok,835599320,us,en,2.0,58
+TikTok,835599320,us,en,3.0,42
+TikTok,835599320,us,en,4.0,45
+TikTok,835599320,us,en,5.0,117
+Uber,368677368,us,en,1.0,6
+Uber,368677368,us,en,3.0,2
+Uber,368677368,us,en,5.0,42
+WhatsApp,310633997,us,en,1.0,94
+WhatsApp,310633997,us,en,2.0,16
+WhatsApp,310633997,us,en,3.0,18
+WhatsApp,310633997,us,en,4.0,21
+WhatsApp,310633997,us,en,5.0,101
+YouTube,544007664,us,en,1.0,12
+YouTube,544007664,us,en,2.0,4
+YouTube,544007664,us,en,3.0,3
+YouTube,544007664,us,en,4.0,5
+YouTube,544007664,us,en,5.0,26
+Zoom,546505307,us,en,1.0,141
+Zoom,546505307,us,en,2.0,41
+Zoom,546505307,us,en,3.0,27
+Zoom,546505307,us,en,4.0,28
+Zoom,546505307,us,en,5.0,263

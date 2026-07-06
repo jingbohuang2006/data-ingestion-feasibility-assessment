@@ -203,6 +203,23 @@ python -m src.run_assessment --config config.yaml --source google_play
 python -m src.run_assessment --config config.yaml --source apple_app_store
 ```
 
+Run the separate larger Apple App Store validation path:
+
+```bash
+python -m src.run_assessment --config config.yaml --source apple_app_store_validation --validation-max-reviews 500 --validation-run-id apple-small-500
+```
+
+The validation path writes to isolated run folders and does not overwrite the Phase 2 app-store outputs. Use a small run first, such as 500 or 1,000 reviews, before attempting the configured larger target:
+
+```bash
+python -m src.run_assessment --config config.yaml --source apple_app_store_validation --validation-max-reviews 1000 --validation-run-id apple-small-1000
+python -m src.run_assessment --config config.yaml --source apple_app_store_validation --validation-run-id apple-target-10000
+```
+
+The configured default target is 10,000 Apple App Store reviews across multiple apps/storefronts where feasible. Actual volume may be lower because Apple RSS page depth, app review volume, storefront behavior, network conditions, and conservative caps can limit collection.
+
+If a validation run cannot reach the configured target, the generated summary, EDA Markdown, errors table, and pagination table record the actual collected count and observed reason, such as empty RSS pages, request failures, duplicate records, configured page-depth exhaustion, or target/storefront limits.
+
 ## Tests
 
 ```bash
@@ -238,6 +255,23 @@ Phase 2 app-store outputs:
 - `reports/app_store_metadata_field_matrix.csv`
 - `reports/app_store_source_comparison.csv`
 - `reports/app_store_feasibility_report.md`
+
+Larger Apple validation outputs are written under run-specific folders:
+
+- `data/processed/apple_app_store_validation/<run_id>/apple_app_store_validation_reviews.csv`
+- `data/processed/apple_app_store_validation/<run_id>/apple_app_store_validation_reviews.jsonl`
+- `reports/apple_app_store_validation/<run_id>/apple_app_store_validation_summary.json`
+- `reports/apple_app_store_validation/<run_id>/apple_app_store_validation_eda.md`
+- `reports/apple_app_store_validation/<run_id>/review_volume_by_app.csv`
+- `reports/apple_app_store_validation/<run_id>/rating_distribution.csv`
+- `reports/apple_app_store_validation/<run_id>/review_text_length.csv`
+- `reports/apple_app_store_validation/<run_id>/date_coverage.csv`
+- `reports/apple_app_store_validation/<run_id>/missing_fields.csv`
+- `reports/apple_app_store_validation/<run_id>/duplicate_records.csv`
+- `reports/apple_app_store_validation/<run_id>/language_region_issues.csv`
+- `reports/apple_app_store_validation/<run_id>/low_signal_reviews.csv`
+- `reports/apple_app_store_validation/<run_id>/pagination_depth_and_failures.csv`
+- `reports/apple_app_store_validation/<run_id>/errors.csv`
 
 Raw response files are intentionally not upload-ready because they may contain temporary browser/session artifacts.
 
@@ -284,6 +318,53 @@ Latest generated Phase 2 evidence in this repository shows:
 Apple App Store is the stronger primary app-store source under the current tested constraints because it produced the same 100-review normalized sample as Google Play while using a simpler publicly accessible RSS JSON feed rather than an unofficial third-party wrapper. It is not a risk-free production API. Google Play Store should be retained as a secondary source only after its unofficial access path is approved and monitored. Before production use, both sources need platform-policy review, longer repeatability testing across days, explicit rate limits, monitoring, failure detection, schema-change alerts, and stakeholder/legal approval.
 
 Steam is not recommended as the main Phase 2 source because of stakeholder concerns about commercial relevance and generalizability. Amazon remains on hold because this phase did not resolve repeatable programmatic access.
+
+## Larger Apple App Store Validation
+
+The larger Apple validation path is separate from the Phase 2 app-store assessment. It is intended to answer the next validation question: whether Apple App Store RSS review collection remains useful across multiple apps, categories, and storefronts at a larger sample size.
+
+Configure targets in `config.yaml`:
+
+```yaml
+apple_app_store:
+  validation_total_reviews: 10000
+  validation_reviews_per_target: 1000
+  validation_max_pages_per_target: 20
+  validation_low_signal_min_text_length: 15
+  validation_targets:
+    - app_name: "YouTube"
+      app_id: "544007664"
+      country: "us"
+      language: "en"
+      category: "video"
+    - app_name: "Spotify"
+      app_id: "324684580"
+      country: "us"
+      language: "en"
+      category: "music"
+```
+
+Start with a small validation run:
+
+```bash
+python -m src.run_assessment --config config.yaml --source apple_app_store_validation --validation-max-reviews 500 --validation-run-id apple-small-500
+```
+
+Then review the EDA files in `reports/apple_app_store_validation/apple-small-500/`. The EDA covers review volume by app, rating distribution, text length, timestamp/date coverage, missing fields, duplicate records, configured language/storefront notes, low-signal reviews, pagination depth, and failures/errors.
+
+If the validation run stops short of the configured target, review `apple_app_store_validation_eda.md`, `apple_app_store_validation_summary.json`, `errors.csv`, and `pagination_depth_and_failures.csv` for the actual count and observed reason.
+
+The preserved `apple-large-10000` validation run collected 6,396 normalized Apple App Store reviews across 20 configured app/storefront targets. It did not reach the 10,000-review target because the Apple RSS feed exposed limited page depth per app/storefront: several targets returned empty pages before page 10, and several high-volume targets returned unavailable-page responses around page 11. The run also skipped duplicate review IDs rather than inflating the final dataset.
+
+If the small run looks healthy, attempt a larger validation run:
+
+```bash
+python -m src.run_assessment --config config.yaml --source apple_app_store_validation --validation-run-id apple-target-10000
+```
+
+This remains validation work, not production readiness. The Apple RSS feed is publicly accessible but undocumented, is not an official supported Apple review API, and may change or stop behaving consistently. The validation runner does not include scheduling, storage backfills, monitoring, alerting, legal approval, policy review, or operational failure handling. It does not bypass authentication, CAPTCHA, rate limits, region restrictions, or access controls.
+
+Google Play remains in this repository as a secondary benchmark. The larger validation path does not expand Google Play equally because the current stakeholder direction is to evaluate Apple as the primary candidate while preserving Google Play as comparative evidence.
 
 ## Limitations
 

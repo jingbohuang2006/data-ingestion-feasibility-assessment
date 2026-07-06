@@ -1,0 +1,16 @@
+app_name,item_id,country,language,rating,review_count
+Duolingo,570060128,us,en,1.0,13
+Duolingo,570060128,us,en,2.0,4
+Duolingo,570060128,us,en,3.0,11
+Duolingo,570060128,us,en,4.0,18
+Duolingo,570060128,us,en,5.0,54
+Spotify,324684580,us,en,1.0,30
+Spotify,324684580,us,en,2.0,14
+Spotify,324684580,us,en,3.0,19
+Spotify,324684580,us,en,4.0,27
+Spotify,324684580,us,en,5.0,160
+YouTube,544007664,us,en,1.0,45
+YouTube,544007664,us,en,2.0,13
+YouTube,544007664,us,en,3.0,9
+YouTube,544007664,us,en,4.0,8
+YouTube,544007664,us,en,5.0,75

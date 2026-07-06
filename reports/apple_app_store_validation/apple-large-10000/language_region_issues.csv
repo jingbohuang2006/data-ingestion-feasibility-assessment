@@ -1,0 +1,21 @@
+app_name,item_id,country,language,review_count,language_detection_available,region_storefront,issue_note
+Airbnb,401626263,us,en,300,False,us,Language is request-configured; independent language detection is not performed.
+Amazon Shopping,297606951,us,en,150,False,us,Language is request-configured; independent language detection is not performed.
+Canva,897446215,gb,en,50,False,gb,Language is request-configured; independent language detection is not performed.
+Discord,985746746,us,en,50,False,us,Language is request-configured; independent language detection is not performed.
+Duolingo,570060128,us,en,250,False,us,Language is request-configured; independent language detection is not performed.
+Gmail,422689480,us,en,500,False,us,Language is request-configured; independent language detection is not performed.
+Google Maps,585027354,us,en,150,False,us,Language is request-configured; independent language detection is not performed.
+Headspace,493145008,us,en,500,False,us,Language is request-configured; independent language detection is not performed.
+Instagram,389801252,us,en,434,False,us,Language is request-configured; independent language detection is not performed.
+LinkedIn,288429040,us,en,500,False,us,Language is request-configured; independent language detection is not performed.
+Microsoft Teams,1113153706,us,en,500,False,us,Language is request-configured; independent language detection is not performed.
+Netflix,363590051,us,en,400,False,us,Language is request-configured; independent language detection is not performed.
+Pinterest,429047995,us,en,500,False,us,Language is request-configured; independent language detection is not performed.
+Reddit,1064216828,us,en,398,False,us,Language is request-configured; independent language detection is not performed.
+Spotify,324684580,us,en,400,False,us,Language is request-configured; independent language detection is not performed.
+TikTok,835599320,us,en,464,False,us,Language is request-configured; independent language detection is not performed.
+Uber,368677368,us,en,50,False,us,Language is request-configured; independent language detection is not performed.
+WhatsApp,310633997,us,en,250,False,us,Language is request-configured; independent language detection is not performed.
+YouTube,544007664,us,en,50,False,us,Language is request-configured; independent language detection is not performed.
+Zoom,546505307,us,en,500,False,us,Language is request-configured; independent language detection is not performed.

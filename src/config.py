@@ -46,6 +46,15 @@ class GooglePlayConfig:
 
 
 @dataclass(frozen=True)
+class AppleAppStoreTarget:
+    app_name: str
+    app_id: str
+    country: str = "us"
+    language: str = "en"
+    category: str | None = None
+
+
+@dataclass(frozen=True)
 class AppleAppStoreConfig:
     enabled: bool = True
     app_name: str = "YouTube"
@@ -53,6 +62,12 @@ class AppleAppStoreConfig:
     country: str = "us"
     language: str = "en"
     reviews_per_page: int = 50
+    validation_targets: tuple[AppleAppStoreTarget, ...] = ()
+    validation_reviews_per_target: int = 1000
+    validation_total_reviews: int = 10000
+    validation_max_pages_per_target: int = 20
+    validation_low_signal_min_text_length: int = 15
+    validation_output_dir: str = "apple_app_store_validation"
 
 
 @dataclass(frozen=True)
@@ -96,6 +111,21 @@ class AppConfig:
                 "country": self.apple_app_store.country,
                 "language": self.apple_app_store.language,
                 "reviews_per_page": self.apple_app_store.reviews_per_page,
+                "validation_targets": [
+                    {
+                        "app_name": target.app_name,
+                        "app_id": target.app_id,
+                        "country": target.country,
+                        "language": target.language,
+                        "category": target.category,
+                    }
+                    for target in self.apple_app_store.validation_targets
+                ],
+                "validation_reviews_per_target": self.apple_app_store.validation_reviews_per_target,
+                "validation_total_reviews": self.apple_app_store.validation_total_reviews,
+                "validation_max_pages_per_target": self.apple_app_store.validation_max_pages_per_target,
+                "validation_low_signal_min_text_length": self.apple_app_store.validation_low_signal_min_text_length,
+                "validation_output_dir": self.apple_app_store.validation_output_dir,
             },
         }
 
@@ -154,6 +184,14 @@ def load_config(path: str | Path) -> AppConfig:
         country=str(apple_raw.get("country", "us")).lower(),
         language=str(apple_raw.get("language", "en")).lower(),
         reviews_per_page=min(max(1, int(apple_raw.get("reviews_per_page", 50))), 100),
+        validation_targets=_load_apple_validation_targets(apple_raw),
+        validation_reviews_per_target=min(max(1, int(apple_raw.get("validation_reviews_per_target", 1000))), 10000),
+        validation_total_reviews=min(max(1, int(apple_raw.get("validation_total_reviews", 10000))), 50000),
+        validation_max_pages_per_target=min(max(1, int(apple_raw.get("validation_max_pages_per_target", 20))), 100),
+        validation_low_signal_min_text_length=max(
+            1, int(apple_raw.get("validation_low_signal_min_text_length", 15))
+        ),
+        validation_output_dir=str(apple_raw.get("validation_output_dir", "apple_app_store_validation")),
     )
     return AppConfig(
         assessment=assessment,
@@ -163,3 +201,41 @@ def load_config(path: str | Path) -> AppConfig:
         apple_app_store=apple_app_store,
         path=config_path,
     )
+
+
+def _load_apple_validation_targets(raw: dict[str, Any]) -> tuple[AppleAppStoreTarget, ...]:
+    """Load optional multi-app Apple validation targets."""
+    targets_raw = raw.get("validation_targets") or raw.get("apps") or []
+    if not targets_raw:
+        app_id = str(raw.get("app_id", "544007664"))
+        if app_id and not app_id.startswith("APPLE_APP_ID"):
+            return (
+                AppleAppStoreTarget(
+                    app_name=str(raw.get("app_name", "YouTube")),
+                    app_id=app_id,
+                    country=str(raw.get("country", "us")).lower(),
+                    language=str(raw.get("language", "en")).lower(),
+                    category=str(raw["category"]) if raw.get("category") else None,
+                ),
+            )
+        return ()
+    if not isinstance(targets_raw, list):
+        raise ValueError("apple_app_store.validation_targets must be a list.")
+
+    targets: list[AppleAppStoreTarget] = []
+    for index, item in enumerate(targets_raw, start=1):
+        if not isinstance(item, dict):
+            raise ValueError(f"apple_app_store.validation_targets[{index}] must be a mapping.")
+        app_id = str(item.get("app_id", "")).strip()
+        if not app_id or app_id.startswith("APPLE_APP_ID"):
+            continue
+        targets.append(
+            AppleAppStoreTarget(
+                app_name=str(item.get("app_name", app_id)),
+                app_id=app_id,
+                country=str(item.get("country", raw.get("country", "us"))).lower(),
+                language=str(item.get("language", raw.get("language", "en"))).lower(),
+                category=str(item["category"]) if item.get("category") else None,
+            )
+        )
+    return tuple(targets)
