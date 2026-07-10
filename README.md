@@ -366,6 +366,22 @@ This remains validation work, not production readiness. The Apple RSS feed is pu
 
 Google Play remains in this repository as a secondary benchmark. The larger validation path does not expand Google Play equally because the current stakeholder direction is to evaluate Apple as the primary candidate while preserving Google Play as comparative evidence.
 
+## Database Schema Design Stage
+
+The repository now includes database/schema design artifacts for the next stage of the project. This is a design deliverable only; the collection pipeline still writes the existing CSV, JSON, JSONL, raw payload, report, and EDA files, and it does not connect to or persist into a live database yet.
+
+The proposed target database is PostgreSQL, with SQLAlchemy and Alembic as the intended implementation path. The design preserves Apple App Store as the primary source and Google Play as a secondary benchmark. It records successful review data and unsuccessful collection evidence, including failed requests, empty pages, pagination limits, target shortfalls, missing/excluded records, quality flags, raw payload hashes, and raw-to-normalized traceability.
+
+Schema artifacts:
+
+- `docs/database_schema_design.md`
+- `docs/database_field_mapping.md`
+- `docs/database_example_queries.sql`
+- `db/schema.sql`
+- `alembic/versions/0001_initial_review_ingestion_schema.py`
+
+Historical validation outputs are designed to be backfillable later, but the preserved 6,396-review Apple validation run is not loaded into a database in this stage.
+
 ## Limitations
 
 - The assessment is intentionally small-scale.
