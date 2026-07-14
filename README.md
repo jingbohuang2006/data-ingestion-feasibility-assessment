@@ -368,7 +368,7 @@ Google Play remains in this repository as a secondary benchmark. The larger vali
 
 ## Database Schema Design Stage
 
-The repository now includes database/schema design artifacts for the next stage of the project. This is a design deliverable only; the collection pipeline still writes the existing CSV, JSON, JSONL, raw payload, report, and EDA files, and it does not connect to or persist into a live database yet.
+The repository includes database/schema artifacts and an explicitly invoked controlled backfill loader. The collection pipeline still writes the existing CSV, JSON, JSONL, raw payload, report, and EDA files and does not persist to PostgreSQL during live collection.
 
 The proposed target database is PostgreSQL, with SQLAlchemy and Alembic as the intended implementation path. The design preserves Apple App Store as the primary source and Google Play as a secondary benchmark. It records successful review data and unsuccessful collection evidence, including failed requests, empty pages, pagination limits, target shortfalls, missing/excluded records, quality flags, raw payload hashes, and raw-to-normalized traceability.
 
@@ -380,7 +380,37 @@ Schema artifacts:
 - `db/schema.sql`
 - `alembic/versions/0001_initial_review_ingestion_schema.py`
 
-Historical validation outputs are designed to be backfillable later, but the preserved 6,396-review Apple validation run is not loaded into a database in this stage.
+Historical validation outputs are not loaded automatically. The controlled loader below backfills them only when explicitly invoked with a database URL.
+
+### Database migration and controlled load
+
+Set a PostgreSQL connection URL using the standard environment variable:
+
+```bash
+export DATABASE_URL=postgresql://postgres@localhost:5432/review_ingestion
+alembic upgrade head
+alembic current
+alembic downgrade base
+alembic upgrade head
+```
+
+Run the normal and live-database tests with:
+
+```bash
+python -m pytest -q -m "not postgresql"
+TEST_DATABASE_URL="$DATABASE_URL" python -m pytest -q -m postgresql
+```
+
+The PostgreSQL tests are skipped when `TEST_DATABASE_URL` is absent. They run real upgrades, schema inspection, downgrade/re-upgrade, representative writes, constraint checks, and every example/reconciliation query when it is present.
+
+Load the preserved Apple validation evidence in controlled order:
+
+```bash
+python -m src.database_load apple-small-500 --report reports/database_load_test/apple-small-500.json
+python -m src.database_load apple-large-10000 --report reports/database_load_test/apple-large-10000.json
+```
+
+The loader is deterministic: raw files are ordered by capture timestamp, feed entries retain their original ordinal, identity is scoped by source/app/storefront/review ID, the first contextual appearance receives the normalized row, and later appearances remain as `duplicate_skipped` observations.
 
 ## Limitations
 

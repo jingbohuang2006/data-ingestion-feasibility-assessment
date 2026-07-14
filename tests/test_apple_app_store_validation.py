@@ -120,6 +120,21 @@ def test_validation_records_pagination_and_empty_page(monkeypatch, tmp_path: Pat
     assert "empty_page" in set(pagination["status"].dropna())
 
 
+def test_duplicate_report_uses_source_app_storefront_context() -> None:
+    frame = pd.DataFrame([
+        {"source": "apple_app_store", "item_id": "app-a", "country": "us", "language": "en", "review_id": "same"},
+        {"source": "apple_app_store", "item_id": "app-b", "country": "us", "language": "en", "review_id": "same"},
+        {"source": "apple_app_store", "item_id": "app-a", "country": "gb", "language": "en", "review_id": "same"},
+    ])
+    assert validation._duplicate_records(frame).empty
+
+    duplicated = pd.concat([frame, frame.iloc[[0]]], ignore_index=True)
+    result = validation._duplicate_records(duplicated)
+    assert len(result) == 1
+    assert result.iloc[0]["item_id"] == "app-a"
+    assert result.iloc[0]["country"] == "us"
+
+
 def test_validation_report_language_avoids_production_readiness_claim(monkeypatch, tmp_path: Path) -> None:
     _patch_fake_apple_session(monkeypatch, [_payload("r1")])
     config = _validation_config()

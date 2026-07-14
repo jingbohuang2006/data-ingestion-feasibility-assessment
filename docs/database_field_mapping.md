@@ -62,7 +62,7 @@ Phase 2 benchmark artifacts:
 
 | Existing normalized field | Proposed table.column |
 | --- | --- |
-| `source` | `normalized_reviews.source_code`; also joins `review_sources.source_code` |
+| `source` | joined through raw record → payload → request → target → source app → `review_sources.source_code` |
 | `app_name` | `apps.canonical_name` |
 | `item_id` | `source_apps.source_app_identifier` |
 | `package_id` | `source_apps.source_app_identifier` for Google Play only |
@@ -100,14 +100,14 @@ Backfill should create one `raw_review_records` row for each raw review entry wh
 
 | Existing fact | Proposed table.column |
 | --- | --- |
-| raw file path | `raw_payloads.storage_path` |
+| raw file path | `raw_payloads.storage_path`; identifies the specific request-owned payload occurrence |
 | raw JSON content | `raw_payloads.payload_json` |
 | SHA-256 hash of raw bytes or canonical JSON | `raw_payloads.payload_sha256` |
 | app ID in filename | `source_apps.source_app_identifier` |
 | page number in filename | `collection_requests.page_number` |
 | timestamp in filename | `raw_payloads.captured_at` when no better request timestamp exists |
 
-The filesystem path provides parity with current artifacts and allows exact raw-file inspection. `payload_json` supports direct database inspection. `payload_sha256` links the two and should be recomputed during backfill or validation to detect drift.
+The filesystem path provides parity with current artifacts and allows exact raw-file inspection. Identical hashes are allowed across requests. Original feed position populates `raw_review_records.record_ordinal`. Payload timestamp order plus ordinal defines deterministic first-seen order for repeated appearances.
 
 ## Pagination And Request Evidence Mapping
 

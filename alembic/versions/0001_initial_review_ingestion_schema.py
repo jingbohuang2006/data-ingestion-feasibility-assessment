@@ -1,6 +1,6 @@
 """Initial review ingestion evidence schema.
 
-Revision ID: 0001_initial_review_ingestion_schema
+Revision ID: 0001_initial
 Revises:
 Create Date: 2026-07-10
 
@@ -13,7 +13,7 @@ from __future__ import annotations
 from alembic import op
 
 
-revision = "0001_initial_review_ingestion_schema"
+revision = "0001_initial"
 down_revision = None
 branch_labels = None
 depends_on = None
