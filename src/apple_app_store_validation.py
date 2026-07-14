@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 from statistics import median
@@ -79,20 +78,20 @@ def run_apple_app_store_validation(
         delay_seconds=config.assessment.request_delay_seconds,
         user_agent=APPLE_USER_AGENT,
     )
-    seen_ids: set[str] = set()
-    duplicate_ids: set[str] = set()
+    seen_review_keys: set[tuple[str, str, str, str, str]] = set()
+    duplicate_keys: set[tuple[str, str, str, str, str]] = set()
 
     for target in targets:
         if len(result.reviews) >= target_total:
             break
         target_limit = min(apple.validation_reviews_per_target, target_total - len(result.reviews))
-        _collect_target(config, session, target, target_limit, result, seen_ids, duplicate_ids)
+        _collect_target(config, session, target, target_limit, result, seen_review_keys, duplicate_keys)
 
     result.pagination_batches.append(
         {
             "summary": "final_dataset",
-            "duplicate_review_id_count": len(duplicate_ids),
-            "duplicate_review_ids_sample": sorted(duplicate_ids)[:25],
+            "duplicate_review_id_count": len(duplicate_keys),
+            "duplicate_review_ids_sample": ["|".join(key) for key in sorted(duplicate_keys)[:25]],
         }
     )
     result.target_reached = len(result.reviews) >= target_total
@@ -192,8 +191,8 @@ def _collect_target(
     target: AppleAppStoreTarget,
     target_limit: int,
     result: AppleValidationResult,
-    seen_ids: set[str],
-    duplicate_ids: set[str],
+    seen_review_keys: set[tuple[str, str, str, str, str]],
+    duplicate_keys: set[tuple[str, str, str, str, str]],
 ) -> None:
     target_seen = 0
     previous_page_ids: set[str] = set()
@@ -239,11 +238,18 @@ def _collect_target(
         for review in parsed:
             if target_seen >= target_limit:
                 break
-            if review.review_id and review.review_id in seen_ids:
-                duplicate_ids.add(review.review_id)
+            review_key = (
+                review.source,
+                review.item_id or review.package_id or target.app_id,
+                review.country or target.country,
+                review.language or target.language,
+                review.review_id or "",
+            )
+            if review.review_id and review_key in seen_review_keys:
+                duplicate_keys.add(review_key)
                 continue
             if review.review_id:
-                seen_ids.add(review.review_id)
+                seen_review_keys.add(review_key)
             result.reviews.append(review)
             target_seen += 1
         previous_page_ids = page_ids
@@ -454,16 +460,9 @@ def _missing_fields(frame: pd.DataFrame, group_cols: list[str]) -> pd.DataFrame:
 
 
 def _duplicate_records(frame: pd.DataFrame) -> pd.DataFrame:
-    ids = [value for value in frame["review_id"].dropna().astype(str)]
-    counts = Counter(ids)
-    duplicate_ids = {review_id for review_id, count in counts.items() if count > 1}
-    if not duplicate_ids:
-        return pd.DataFrame(columns=["review_id", "duplicate_count"])
-    rows = []
-    for review_id in sorted(duplicate_ids):
-        apps = sorted(set(frame.loc[frame["review_id"] == review_id, "app_name"].dropna().astype(str)))
-        rows.append({"review_id": review_id, "duplicate_count": counts[review_id], "apps": ", ".join(apps)})
-    return pd.DataFrame(rows)
+    context = ["source", "item_id", "country", "language", "review_id"]
+    counts = frame.dropna(subset=["review_id"]).groupby(context, dropna=False).size().reset_index(name="duplicate_count")
+    return counts.loc[counts["duplicate_count"] > 1].reset_index(drop=True)
 
 
 def _language_region_issues(frame: pd.DataFrame, group_cols: list[str]) -> pd.DataFrame:

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This stage defines the proposed PostgreSQL schema for future review-ingestion persistence. It does not connect the existing collection pipeline to a live database. The current CSV, JSON, JSONL, raw payload, report, and EDA outputs remain the active workflow.
+This stage defines the PostgreSQL schema and an explicitly invoked controlled backfill path for preserved validation evidence. The live collectors still write CSV, JSON, JSONL, raw payload, report, and EDA artifacts; they do not write to PostgreSQL during collection.
 
 The schema is designed to preserve both successful review data and unsuccessful collection evidence. Apple App Store remains the primary source. Google Play remains a secondary benchmark, with the current limitation that the `google-play-scraper` wrapper does not expose complete HTTP-level request evidence.
 
@@ -38,19 +38,13 @@ erDiagram
     ingestion_runs ||--o{ run_targets : includes
     app_storefronts ||--o{ run_targets : targets
     run_targets ||--o{ collection_requests : attempts
-    review_sources ||--o{ collection_requests : requests
     collection_requests ||--o{ raw_payloads : captures
-    collection_requests ||--o{ raw_review_records : contains
     raw_payloads ||--o{ raw_review_records : provides
     raw_review_records ||--o| normalized_reviews : normalizes_to
-    ingestion_runs ||--o{ normalized_reviews : produces
-    app_storefronts ||--o{ normalized_reviews : contextualizes
-    review_sources ||--o{ review_identities : scopes
     app_storefronts ||--o{ review_identities : scopes
     review_identities ||--o{ review_observations : observed_as
     normalized_reviews ||--o{ review_observations : may_reference
-    ingestion_runs ||--o{ review_observations : observes
-    collection_requests ||--o{ review_observations : observes
+    raw_review_records ||--|| review_observations : receives_disposition
     normalized_reviews ||--o{ quality_flags : flags
     raw_review_records ||--o{ quality_flags : flags
     collection_requests ||--o{ quality_flags : flags
@@ -96,7 +90,6 @@ Source-specific app identifiers.
 | Column | Type | Constraints | Purpose |
 | --- | --- | --- | --- |
 | `source_app_id` | `uuid` | primary key | Internal source-app key. |
-| `source_id` | `uuid` | foreign key | References `review_sources`. |
 | `app_id` | `uuid` | foreign key | References `apps`. |
 | `source_app_identifier` | `text` | non-empty | Apple app ID or Google package ID. |
 | `source_url` | `text` | nullable | App details URL when known. |
@@ -218,7 +211,7 @@ Raw source payload captured for one request.
 | `payload_id` | `uuid` | primary key | Internal payload key. |
 | `request_id` | `uuid` | foreign key | References `collection_requests`. |
 | `storage_path` | `text` | nullable | Filesystem path for raw JSON payload. |
-| `payload_sha256` | `text` | unique 64-char hex | Hash of canonical raw payload bytes. |
+| `payload_sha256` | `text` | indexed 64-char hex | Hash of raw bytes; identical content may occur on multiple requests. |
 | `payload_json` | `jsonb` | nullable | Database JSONB snapshot. |
 | `captured_at` | `timestamptz` | not null | Capture timestamp. |
 | `created_at` | `timestamptz` | not null | Creation timestamp. |
@@ -232,8 +225,7 @@ Individual raw entries extracted from a payload.
 | Column | Type | Constraints | Purpose |
 | --- | --- | --- | --- |
 | `raw_record_id` | `uuid` | primary key | Internal raw-record key. |
-| `request_id` | `uuid` | foreign key | References `collection_requests`. |
-| `payload_id` | `uuid` | foreign key nullable | References `raw_payloads`. |
+| `payload_id` | `uuid` | foreign key, not null | References the specific request-owned `raw_payloads` occurrence. |
 | `source_review_id` | `text` | nullable | Raw source review ID if present. |
 | `record_ordinal` | `integer` | non-negative | Position in payload. |
 | `raw_record_json` | `jsonb` | not null | Raw entry JSON. |
@@ -242,7 +234,7 @@ Individual raw entries extracted from a payload.
 | `parse_error` | `text` | nullable | Parse error detail. |
 | `created_at` | `timestamptz` | not null | Creation timestamp. |
 
-Unique constraint: `(request_id, record_ordinal)`.
+Unique constraint: `(payload_id, record_ordinal)`.
 
 ### `normalized_reviews`
 
@@ -252,9 +244,6 @@ Source-neutral normalized review row derived from exactly one raw record.
 | --- | --- | --- | --- |
 | `normalized_review_id` | `uuid` | primary key | Internal normalized review key. |
 | `raw_record_id` | `uuid` | unique foreign key | References `raw_review_records`. |
-| `run_id` | `uuid` | foreign key | References `ingestion_runs`. |
-| `app_storefront_id` | `uuid` | foreign key | References `app_storefronts`. |
-| `source_code` | `text` | not null | Source code copied for convenience. |
 | `source_review_id` | `text` | nullable | Normalized review ID. |
 | `review_title` | `text` | nullable | Apple title when available. |
 | `review_text` | `text` | nullable | Review text. |
@@ -274,25 +263,24 @@ Source-neutral normalized review row derived from exactly one raw record.
 | `normalized_hash` | `text` | 64-char hex | Hash of canonical normalized row. |
 | `created_at` | `timestamptz` | not null | Creation timestamp. |
 
-Indexes: `(app_storefront_id, review_date)`, `(source_code, source_review_id)`, `run_id`, `normalized_hash`.
+Indexes: `review_date`, `source_review_id`, and `normalized_hash`. Run, source, app, and storefront are derived through the raw lineage rather than copied here.
 
 ### `review_identities`
 
 Conservative duplicate identity.
 
-The identity is `(source_id, app_storefront_id, source_review_id)`. This deliberately includes source app/storefront context and does not assume a review ID is globally unique across all apps or storefronts.
+The identity is `(app_storefront_id, source_review_id)`. The app/storefront already determines its source through `source_apps`, avoiding a redundant source field while retaining source/app/storefront context.
 
 | Column | Type | Constraints | Purpose |
 | --- | --- | --- | --- |
 | `review_identity_id` | `uuid` | primary key | Internal identity key. |
-| `source_id` | `uuid` | foreign key | Source scope. |
 | `app_storefront_id` | `uuid` | foreign key | App/storefront scope. |
 | `source_review_id` | `text` | non-empty | Source review ID. |
 | `first_seen_at` | `timestamptz` | not null | First observation time. |
 | `latest_seen_at` | `timestamptz` | not null | Latest observation time. |
 | `created_at` | `timestamptz` | not null | Creation timestamp. |
 
-Unique constraint: `(source_id, app_storefront_id, source_review_id)`.
+Unique constraint: `(app_storefront_id, source_review_id)`.
 
 ### `review_observations`
 
@@ -301,15 +289,14 @@ Every time an identity appears in a run/request.
 | Column | Type | Constraints | Purpose |
 | --- | --- | --- | --- |
 | `observation_id` | `uuid` | primary key | Internal observation key. |
-| `review_identity_id` | `uuid` | foreign key | References `review_identities`. |
+| `review_identity_id` | `uuid` | nullable foreign key | References identity when a usable source review ID exists. |
+| `raw_record_id` | `uuid` | unique foreign key | Exact raw occurrence receiving this disposition. |
 | `normalized_review_id` | `uuid` | nullable foreign key | References normalized row if retained. |
-| `run_id` | `uuid` | foreign key | References `ingestion_runs`. |
-| `request_id` | `uuid` | foreign key | References `collection_requests`. |
-| `observation_status` | `text` | enum-like check | `new`, `repeat_seen`, `duplicate_skipped`, `excluded`, or `parse_error`. |
+| `observation_status` | `text` | enum-like check | `new`, `repeat_seen`, `duplicate_skipped`, `excluded`, `parse_error`, or `non_review_entry`. |
 | `observed_at` | `timestamptz` | not null | Observation timestamp. |
 | `created_at` | `timestamptz` | not null | Creation timestamp. |
 
-This supports duplicate and rerun analysis while preserving evidence for skipped repeated IDs.
+This supports duplicate and rerun analysis while preserving skipped repeats and records without usable IDs. A trigger verifies that identity context and normalized lineage match the raw record.
 
 ### `quality_flags`
 
@@ -326,7 +313,7 @@ Review-, raw-record-, or request-level quality annotations.
 | `flag_value` | `jsonb` | not null | Structured details. |
 | `created_at` | `timestamptz` | not null | Creation timestamp. |
 
-At least one subject foreign key is required.
+Exactly one subject foreign key is required.
 
 ### `missing_or_excluded_records`
 
@@ -357,15 +344,15 @@ ingestion_runs
   -> normalized_reviews
 ```
 
-`collection_requests` records every page/batch attempt, including failures and empty pages. `raw_payloads` stores both `payload_json` and `storage_path` where available. `payload_sha256` verifies that the database snapshot and filesystem artifact refer to the same captured payload. `raw_review_records.raw_record_sha256` verifies each raw entry. `normalized_reviews.normalized_hash` verifies the normalized row snapshot.
+`collection_requests` records every page/batch attempt, including failures and empty pages. Each `raw_payloads` row belongs to one request; hashes are indexed but not globally unique because identical content can be observed repeatedly. `(payload_id, record_ordinal)` identifies an exact raw entry. `normalized_reviews.raw_record_id` selects the retained first-seen occurrence.
 
 ## Duplicate And Rerun Handling
 
-Duplicate identity is conservative: `(source_id, app_storefront_id, source_review_id)`.
+Duplicate identity is conservative: `(app_storefront_id, source_review_id)`, with source implied by the app/storefront.
 
 This means the same numeric or string review ID in two different apps, sources, countries, or languages is not automatically treated as the same review. Every appearance is stored in `review_observations`. If a repeated review ID is skipped from the final normalized dataset, the skipped observation is still retained with `observation_status = 'duplicate_skipped'`.
 
-Cross-run overlap is measured by grouping `review_observations` by `review_identity_id` across different `run_id` values. Same-run repeated pages are visible through repeated observations for the same identity and run.
+The Apple backfill orders payloads by capture timestamp and entries by original feed ordinal. The first appearance within `(source, app, country, language, source_review_id)` receives the normalized row; later appearances receive `duplicate_skipped`. Run and request are derived through each observation's raw-record lineage.
 
 ## Failed Requests, Empty Pages, And Pagination Limits
 
@@ -384,7 +371,7 @@ Run-level and target-level `stop_reason` fields preserve why collection stopped 
 
 ## Historical Backfill
 
-The schema can accept historical validation outputs later. Backfill should create an `ingestion_runs` row for each existing validation run folder, one `run_targets` row per app/storefront, one `collection_requests` row per pagination CSV entry, one `raw_payloads` row per raw JSON file where available, and normalized/raw review rows from the existing validation CSV/JSONL. This stage intentionally does not load the current 6,396-review validation run into a database.
+The controlled loader creates an `ingestion_runs` row for each explicitly selected validation run folder, one `run_targets` row per app/storefront, one `collection_requests` row per pagination CSV entry, one `raw_payloads` row per raw JSON file where available, and normalized/raw review rows from the existing validation CSV/JSONL. It can load the current 6,396-review validation run after the small validation run succeeds; no database load occurs implicitly.
 
 ## Source Limitation Notes
 

@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_SQL = ROOT / "db" / "schema.sql"
 MIGRATION = ROOT / "alembic" / "versions" / "0001_initial_review_ingestion_schema.py"
+READINESS_MIGRATION = ROOT / "alembic" / "versions" / "0002_integration_readiness.py"
 DESIGN_DOC = ROOT / "docs" / "database_schema_design.md"
 FIELD_MAPPING_DOC = ROOT / "docs" / "database_field_mapping.md"
 QUERY_DOC = ROOT / "docs" / "database_example_queries.sql"
@@ -58,10 +59,9 @@ def test_review_identity_is_scoped_by_source_app_storefront_and_review_id() -> N
     ddl = _read(SCHEMA_SQL)
     identities = _table_block(ddl, "review_identities")
 
-    assert "source_id uuid NOT NULL REFERENCES review_sources" in identities
     assert "app_storefront_id uuid NOT NULL REFERENCES app_storefronts" in identities
     assert "source_review_id text NOT NULL" in identities
-    assert "UNIQUE (source_id, app_storefront_id, source_review_id)" in identities
+    assert "UNIQUE (app_storefront_id, source_review_id)" in identities
 
 
 def test_request_evidence_statuses_cover_failures_empty_pages_and_wrapper_limits() -> None:
@@ -90,9 +90,9 @@ def test_traceability_foreign_key_path_is_present() -> None:
     assert "run_id uuid NOT NULL REFERENCES ingestion_runs" in _table_block(ddl, "run_targets")
     assert "run_target_id uuid NOT NULL REFERENCES run_targets" in _table_block(ddl, "collection_requests")
     assert "request_id uuid NOT NULL REFERENCES collection_requests" in _table_block(ddl, "raw_payloads")
-    assert "request_id uuid NOT NULL REFERENCES collection_requests" in _table_block(ddl, "raw_review_records")
+    assert "payload_id uuid NOT NULL REFERENCES raw_payloads" in _table_block(ddl, "raw_review_records")
     assert "raw_record_id uuid NOT NULL REFERENCES raw_review_records" in _table_block(ddl, "normalized_reviews")
-    assert "run_id uuid NOT NULL REFERENCES ingestion_runs" in _table_block(ddl, "normalized_reviews")
+    assert "raw_record_id uuid NOT NULL UNIQUE REFERENCES raw_review_records" in _table_block(ddl, "review_observations")
 
 
 def test_quality_and_missing_tables_require_actionable_context() -> None:
@@ -100,7 +100,8 @@ def test_quality_and_missing_tables_require_actionable_context() -> None:
     quality = _table_block(ddl, "quality_flags")
     missing = _table_block(ddl, "missing_or_excluded_records")
 
-    assert "quality_flags_has_subject" in quality
+    assert "quality_flags_one_subject" in quality
+    assert "num_nonnulls(normalized_review_id, raw_record_id, request_id) = 1" in quality
     assert "severity IN ('info', 'warning', 'error')" in quality
     assert "run_target_id uuid NOT NULL REFERENCES run_targets" in missing
     assert "reason_code text NOT NULL" in missing
@@ -113,7 +114,7 @@ def test_indexes_cover_expected_analysis_paths() -> None:
     expected_indexes = {
         "ix_collection_requests_target_page",
         "ix_collection_requests_status_category",
-        "ix_normalized_reviews_app_date",
+        "ix_normalized_reviews_review_date",
         "ix_normalized_reviews_source_review_id",
         "ix_review_observations_status",
         "ix_quality_flags_type_severity",
@@ -127,23 +128,32 @@ def test_indexes_cover_expected_analysis_paths() -> None:
 def test_alembic_migration_represents_initial_schema() -> None:
     migration = _read(MIGRATION)
 
-    assert 'revision = "0001_initial_review_ingestion_schema"' in migration
+    assert 'revision = "0001_initial"' in migration
     assert "down_revision = None" in migration
     for table in REQUIRED_TABLES:
         assert f"CREATE TABLE {table}" in migration
     assert "DROP TABLE IF EXISTS review_sources" in migration
+    readiness = _read(READINESS_MIGRATION)
+    assert 'revision = "0002_integration_readiness"' in readiness
+    assert 'down_revision = "0001_initial"' in readiness
+
+
+def test_alembic_environment_is_complete() -> None:
+    assert (ROOT / "alembic" / "env.py").is_file()
+    assert (ROOT / "alembic" / "script.py.mako").is_file()
+    assert (ROOT / "pytest.ini").is_file()
 
 
 def test_documentation_covers_stage_boundaries_and_google_play_limitation() -> None:
     readme = _read(README)
     design_doc = _read(DESIGN_DOC)
 
-    assert "does not connect to or persist into a live database yet" in readme
-    assert "This stage defines the proposed PostgreSQL schema" in design_doc
-    assert "does not connect the existing collection pipeline to a live database" in design_doc
+    assert "controlled loader" in readme
+    assert "This stage defines the PostgreSQL schema" in design_doc
+    assert "controlled backfill path" in design_doc
     assert "Google Play remains a secondary benchmark" in design_doc
     assert "does not expose complete HTTP-level request evidence" in design_doc
-    assert "This stage intentionally does not load the current 6,396-review validation run" in design_doc
+    assert "no database load occurs implicitly" in design_doc
 
 
 def test_field_mapping_links_current_outputs_to_database_tables() -> None:
