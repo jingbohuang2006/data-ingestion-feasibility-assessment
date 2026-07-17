@@ -17,14 +17,11 @@ import pandas as pd
 import psycopg
 from psycopg.types.json import Jsonb
 
+from .database_ingestion import IngestionStore, canonical_hash, raw_apple_entries, reconcile_run
+
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW_NAME = re.compile(r"apple_app_store_(?P<app_id>\d+)_page(?P<page>\d+)_(?P<stamp>.+)\.json$")
-
-
-def canonical_hash(value: Any) -> str:
-    encoded = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str).encode()
-    return hashlib.sha256(encoded).hexdigest()
 
 
 def _value(value: Any) -> Any:
@@ -44,13 +41,7 @@ def _timestamp_from_name(path: Path) -> datetime:
 
 
 def _raw_entries(payload: dict[str, Any]) -> list[tuple[int, dict[str, Any], str | None, str]]:
-    entries = payload.get("feed", {}).get("entry", [])
-    result = []
-    for ordinal, entry in enumerate(entries):
-        review_id = entry.get("id", {}).get("label") if isinstance(entry, dict) else None
-        is_review = bool(review_id and str(review_id).isdigit() and "im:rating" in entry)
-        result.append((ordinal, entry, str(review_id) if is_review else None, "parsed" if is_review else "non_review_entry"))
-    return result
+    return [(ordinal, entry, review_id, status) for ordinal, entry, review_id, status, _ in raw_apple_entries(payload)]
 
 
 def load_apple_validation_run(database_url: str, run_name: str, root: Path = ROOT) -> dict[str, Any]:
@@ -77,17 +68,10 @@ def load_apple_validation_run(database_url: str, run_name: str, root: Path = ROO
         normalized_lookup[key] = {k: _value(v) for k, v in row.items()}
 
     with psycopg.connect(database_url) as conn:
+        store = IngestionStore(conn)
         with conn.cursor() as cur:
             cur.execute("DELETE FROM ingestion_runs WHERE external_run_name = %s", (run_name,))
-            cur.execute("""
-                INSERT INTO review_sources(source_code, display_name, priority, access_method, access_method_type,
-                                           is_primary, limitations)
-                VALUES ('apple_app_store', 'Apple App Store', 1, 'Customer Reviews RSS JSON',
-                        'publicly accessible undocumented feed', true, %s)
-                ON CONFLICT (source_code) DO UPDATE SET display_name = EXCLUDED.display_name
-                RETURNING source_id
-            """, (["RSS page-depth is limited", "Endpoint is undocumented"],))
-            source_id = cur.fetchone()[0]
+            source_id = store.ensure_apple_source()
             cur.execute("""
                 INSERT INTO ingestion_runs(external_run_name, phase, started_at, completed_at, status,
                     target_review_count, reviews_collected, target_reached, stop_reason, config,
@@ -103,32 +87,10 @@ def load_apple_validation_run(database_url: str, run_name: str, root: Path = ROO
             contexts: dict[tuple[str, str, str], dict[str, Any]] = {}
             for target in summary["targets"]:
                 app_id, country, language = str(target["app_id"]), target["country"], target["language"]
-                cur.execute("SELECT source_app_id, app_id FROM source_apps WHERE source_id=%s AND source_app_identifier=%s",
-                            (source_id, app_id))
-                existing_source_app = cur.fetchone()
-                if existing_source_app:
-                    source_app_id, canonical_app_id = existing_source_app
-                    cur.execute("UPDATE apps SET canonical_name=%s, category=%s WHERE app_id=%s",
-                                (target["app_name"], target.get("category"), canonical_app_id))
-                else:
-                    cur.execute("INSERT INTO apps(canonical_name, category) VALUES (%s,%s) RETURNING app_id",
-                                (target["app_name"], target.get("category")))
-                    canonical_app_id = cur.fetchone()[0]
-                    cur.execute("""INSERT INTO source_apps(source_id, app_id, source_app_identifier)
-                        VALUES (%s,%s,%s) RETURNING source_app_id""", (source_id, canonical_app_id, app_id))
-                    source_app_id = cur.fetchone()[0]
-                cur.execute("""
-                    INSERT INTO storefronts(country_code, language_code) VALUES (%s,%s)
-                    ON CONFLICT(country_code, language_code) DO UPDATE SET country_code=EXCLUDED.country_code
-                    RETURNING storefront_id
-                """, (country, language))
-                storefront_id = cur.fetchone()[0]
-                cur.execute("""
-                    INSERT INTO app_storefronts(source_app_id, storefront_id, configured_category) VALUES (%s,%s,%s)
-                    ON CONFLICT(source_app_id, storefront_id) DO UPDATE SET configured_category=EXCLUDED.configured_category
-                    RETURNING app_storefront_id
-                """, (source_app_id, storefront_id, target.get("category")))
-                app_storefront_id = cur.fetchone()[0]
+                app_storefront_id = store.resolve_app_storefront(
+                    source_id, app_id=app_id, app_name=target["app_name"], country=country,
+                    language=language, category=target.get("category"),
+                )
                 target_rows = reviews[(reviews.item_id.astype(str) == app_id) & (reviews.country == country) & (reviews.language == language)]
                 collected = len(target_rows)
                 target_evidence = pagination[
@@ -276,55 +238,6 @@ def load_apple_validation_run(database_url: str, run_name: str, root: Path = ROO
                                 (context["run_target_id"], context["target_limit"], context["collected"]))
         conn.commit()
     return reconcile_run(database_url, run_name) | {"repeated_observations": repeated_count, "non_review_entries": non_review_count}
-
-
-def reconcile_run(database_url: str, run_name: str) -> dict[str, Any]:
-    with psycopg.connect(database_url) as conn, conn.cursor() as cur:
-        cur.execute("""
-            SELECT count(DISTINCT rt.run_target_id), count(DISTINCT cr.request_id), count(DISTINCT rp.payload_id),
-                   count(DISTINCT rrr.raw_record_id), count(DISTINCT nr.normalized_review_id),
-                   count(DISTINCT ro.observation_id), count(DISTINCT qf.quality_flag_id),
-                   count(DISTINCT mer.missing_record_id)
-            FROM ingestion_runs r LEFT JOIN run_targets rt ON rt.run_id=r.run_id
-            LEFT JOIN collection_requests cr ON cr.run_target_id=rt.run_target_id
-            LEFT JOIN raw_payloads rp ON rp.request_id=cr.request_id
-            LEFT JOIN raw_review_records rrr ON rrr.payload_id=rp.payload_id
-            LEFT JOIN normalized_reviews nr ON nr.raw_record_id=rrr.raw_record_id
-            LEFT JOIN review_observations ro ON ro.raw_record_id=rrr.raw_record_id
-            LEFT JOIN quality_flags qf ON qf.normalized_review_id=nr.normalized_review_id
-            LEFT JOIN missing_or_excluded_records mer ON mer.run_target_id=rt.run_target_id
-            WHERE r.external_run_name=%s
-        """, (run_name,))
-        values = cur.fetchone()
-        names = ["targets", "requests", "payloads", "raw_records", "normalized_reviews", "observations", "quality_flags", "missing_evidence"]
-        result = dict(zip(names, values))
-        checks = {
-            "raw_without_observation": """SELECT count(*) FROM raw_review_records rrr JOIN raw_payloads rp USING(payload_id)
-                JOIN collection_requests cr USING(request_id) JOIN run_targets rt USING(run_target_id)
-                JOIN ingestion_runs r USING(run_id) LEFT JOIN review_observations ro USING(raw_record_id)
-                WHERE r.external_run_name=%s AND ro.observation_id IS NULL""",
-            "normalized_without_observation": """SELECT count(*) FROM normalized_reviews nr JOIN raw_review_records rrr USING(raw_record_id)
-                JOIN raw_payloads rp USING(payload_id) JOIN collection_requests cr USING(request_id)
-                JOIN run_targets rt USING(run_target_id) JOIN ingestion_runs r USING(run_id)
-                LEFT JOIN review_observations ro USING(normalized_review_id)
-                WHERE r.external_run_name=%s AND ro.observation_id IS NULL""",
-            "lineage_conflicts": """SELECT count(*) FROM review_observations ro JOIN raw_review_records rrr USING(raw_record_id)
-                JOIN raw_payloads rp USING(payload_id) JOIN collection_requests cr USING(request_id)
-                JOIN run_targets rt USING(run_target_id) LEFT JOIN review_identities ri USING(review_identity_id)
-                JOIN ingestion_runs r USING(run_id) WHERE r.external_run_name=%s
-                AND ri.review_identity_id IS NOT NULL AND ri.app_storefront_id<>rt.app_storefront_id""",
-        }
-        for name, sql in checks.items():
-            cur.execute(sql, (run_name,)); result[name] = cur.fetchone()[0]
-        cur.execute("""SELECT observation_status,count(*) FROM review_observations ro
-            JOIN raw_review_records rrr USING(raw_record_id) JOIN raw_payloads rp USING(payload_id)
-            JOIN collection_requests cr USING(request_id) JOIN run_targets rt USING(run_target_id)
-            JOIN ingestion_runs r USING(run_id) WHERE r.external_run_name=%s GROUP BY observation_status""", (run_name,))
-        result["observation_statuses"] = dict(cur.fetchall())
-        cur.execute("""SELECT status_category,count(*) FROM collection_requests cr JOIN run_targets rt USING(run_target_id)
-            JOIN ingestion_runs r USING(run_id) WHERE r.external_run_name=%s GROUP BY status_category""", (run_name,))
-        result["request_statuses"] = dict(cur.fetchall())
-        return result
 
 
 def main() -> None:

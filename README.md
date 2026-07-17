@@ -366,9 +366,12 @@ This remains validation work, not production readiness. The Apple RSS feed is pu
 
 Google Play remains in this repository as a secondary benchmark. The larger validation path does not expand Google Play equally because the current stakeholder direction is to evaluate Apple as the primary candidate while preserving Google Play as comparative evidence.
 
-## Database Schema Design Stage
+## PostgreSQL Ingestion Workflows
 
-The repository includes database/schema artifacts and an explicitly invoked controlled backfill loader. The collection pipeline still writes the existing CSV, JSON, JSONL, raw payload, report, and EDA files and does not persist to PostgreSQL during live collection.
+The repository includes database/schema artifacts and two explicitly invoked PostgreSQL workflows. Neither runs as part of the general assessment command:
+
+1. **Controlled historical backfill** loads preserved validation datasets and their existing raw/report artifacts.
+2. **Live collector persistence** collects a newly observed, tightly bounded Apple sample directly into PostgreSQL while also preserving unique run-specific raw files and a reconciliation report.
 
 The proposed target database is PostgreSQL, with SQLAlchemy and Alembic as the intended implementation path. The design preserves Apple App Store as the primary source and Google Play as a secondary benchmark. It records successful review data and unsuccessful collection evidence, including failed requests, empty pages, pagination limits, target shortfalls, missing/excluded records, quality flags, raw payload hashes, and raw-to-normalized traceability.
 
@@ -380,14 +383,14 @@ Schema artifacts:
 - `db/schema.sql`
 - `alembic/versions/0001_initial_review_ingestion_schema.py`
 
-Historical validation outputs are not loaded automatically. The controlled loader below backfills them only when explicitly invoked with a database URL.
+Historical validation outputs are not loaded automatically. Live collection is also never started by migrations, tests, or the historical loader. Both workflows require an explicit command and database URL.
 
-### Database migration and controlled load
+### Database migration and tests
 
 Set a PostgreSQL connection URL using the standard environment variable:
 
 ```bash
-export DATABASE_URL=postgresql://postgres@localhost:5432/review_ingestion
+export DATABASE_URL='<postgresql-connection-url>'
 alembic upgrade head
 alembic current
 alembic downgrade base
@@ -401,7 +404,9 @@ python -m pytest -q -m "not postgresql"
 TEST_DATABASE_URL="$DATABASE_URL" python -m pytest -q -m postgresql
 ```
 
-The PostgreSQL tests are skipped when `TEST_DATABASE_URL` is absent. They run real upgrades, schema inspection, downgrade/re-upgrade, representative writes, constraint checks, and every example/reconciliation query when it is present.
+The PostgreSQL tests are skipped when `TEST_DATABASE_URL` is absent. They run real upgrades, schema inspection, downgrade/re-upgrade, representative writes, a mocked-network live persistence path, constraint checks, and every example/reconciliation query when it is present. They must point only to a disposable database.
+
+### Controlled historical backfill
 
 Load the preserved Apple validation evidence in controlled order:
 
@@ -411,6 +416,58 @@ python -m src.database_load apple-large-10000 --report reports/database_load_tes
 ```
 
 The loader is deterministic: raw files are ordered by capture timestamp, feed entries retain their original ordinal, identity is scoped by source/app/storefront/review ID, the first contextual appearance receives the normalized row, and later appearances remain as `duplicate_skipped` observations.
+
+This controlled loader is only for the preserved `apple-small-500` and `apple-large-10000` validation datasets. It intentionally retains their established replacement semantics for an identically named historical run. Do not use it for newly collected data.
+
+### Controlled live Apple persistence
+
+The live workflow is append-only and uses a unique `apple-live-<timestamp>-<suffix>` run name unless `APPLE_LIVE_RUN_NAME` is explicitly provided. An existing run or output directory is never deleted or replaced. Its conservative default scope is one app/storefront, two passes, one page per pass, two total HTTP requests, and at most 25 newly normalized reviews:
+
+```bash
+export DATABASE_URL='<postgresql-connection-url>'
+export APPLE_LIVE_APP_ID=544007664
+export APPLE_LIVE_APP_NAME=YouTube
+export APPLE_LIVE_COUNTRY=us
+export APPLE_LIVE_LANGUAGE=en
+export APPLE_LIVE_PASSES=2
+export APPLE_LIVE_MAX_PAGES_PER_PASS=1
+export APPLE_LIVE_MAX_REQUESTS=2
+export APPLE_LIVE_MAX_NORMALIZED_REVIEWS=25
+python -m src.apple_live_persistence
+```
+
+The implementation enforces hard safety ceilings of 2 passes, 2 pages per pass, 4 requests, and 100 normalized reviews. A delay of at least one second is required. All returned feed entries are stored as raw appearances before normalization decisions, including repeated reviews, app metadata, malformed entries, and entries beyond the normalization cap. Repeats and excluded appearances remain explicit observations rather than being silently dropped.
+
+Each run writes raw responses to `data/raw/apple_live/<run_name>/` and its JSON report to `reports/apple_live/<run_name>/live_persistence_report.json`. The report includes app/storefront/target/request counts, raw appearances, normalized reviews, repeat observations, request and incomplete-page categories, quality flags, reconciliation issues, and final run status.
+
+Request/page evidence distinguishes:
+
+- `ok` and `empty_page` successful responses;
+- `request_failed` transport or HTTP failures;
+- `json_parse_error` malformed response bodies;
+- `pagination_limit_or_unavailable_page` later-page 400/404 limits;
+- `normalization_cap_exceeded` and `configured_scope_exhausted` incomplete-load evidence.
+
+Do not commit real database URLs, credentials, or locally generated live raw payloads without review. The live command above should only be run after migrations and mocked/PostgreSQL tests pass and after explicit approval for the network collection.
+
+### Controlled Live Persistence Test
+
+The approved controlled test ran Apple ID `544007664` (YouTube) against one `us/en` storefront. It used two collection passes with one page per pass, producing two successful HTTP requests. Both raw payloads remain local and ignored; the safe reconciliation report is preserved at `reports/apple_live/apple-live-20260717T120724Z-3e66c24f/live_persistence_report.json`.
+
+Results:
+
+- 1 app, 1 storefront, and 1 run target;
+- 2 successful HTTP requests;
+- 100 raw review appearances;
+- 25 normalized reviews;
+- 50 repeated observations;
+- 25 excluded observations caused by the approved normalization cap;
+- 0 failed, empty, malformed, or limited pages;
+- 0 reconciliation issues and 0 integrity issues;
+- final run status: `completed`;
+- validation suite: 63 passed, 0 failed, 0 skipped.
+
+The report's `incomplete_pages = 1` is deliberate cap evidence, not a collection failure. The first successful page returned 50 review appearances: 25 were normalized and the remaining 25 were preserved as explicit `excluded` observations after the approved 25-review normalization cap was reached. It does not indicate an HTTP failure, empty response, malformed response, pagination limit, or interrupted collection.
 
 ## Limitations
 

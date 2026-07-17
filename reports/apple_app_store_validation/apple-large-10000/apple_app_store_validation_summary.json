@@ -155,9 +155,9 @@
   "warnings": [
     "Target not reached: collected 6396 of 10000 reviews because Apple RSS page depth was limited by app/storefront. Several targets returned empty pages before page 10, several high-volume targets returned unavailable-page responses around page 11, and duplicate review IDs were skipped rather than counted in the final dataset."
   ],
-  "processed_output_dir": "/Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/data/processed/apple_app_store_validation/apple-large-10000",
-  "reports_output_dir": "/Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/reports/apple_app_store_validation/apple-large-10000",
-  "raw_output_dir": "/Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/data/raw/apple_app_store_validation/apple-large-10000",
+  "processed_output_dir": "data/processed/apple_app_store_validation/apple-large-10000",
+  "reports_output_dir": "reports/apple_app_store_validation/apple-large-10000",
+  "raw_output_dir": "data/raw/apple_app_store_validation/apple-large-10000",
   "limitations": [
     "Validation run only; this is not a production-ready ingestion pipeline.",
     "Apple customer review RSS is publicly accessible but undocumented and not an official supported review API.",

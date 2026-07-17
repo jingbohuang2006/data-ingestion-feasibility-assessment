@@ -1,0 +1,38 @@
+{
+  "run_name": "apple-live-20260717T120724Z-3e66c24f",
+  "final_run_status": "completed",
+  "apps": 1,
+  "storefronts": 1,
+  "targets": 1,
+  "requests": 2,
+  "payloads": 2,
+  "raw_review_appearances": 100,
+  "normalized_reviews": 25,
+  "observations": 100,
+  "quality_flags": 4,
+  "missing_evidence": 25,
+  "raw_without_observation": 0,
+  "normalized_without_observation": 0,
+  "lineage_conflicts": 0,
+  "observation_statuses": {
+    "excluded": 25,
+    "new": 25,
+    "repeat_seen": 50
+  },
+  "request_statuses": {
+    "ok": 2
+  },
+  "incomplete_categories": {
+    "normalization_cap_exceeded": 25
+  },
+  "duplicate_or_repeated_observations": 50,
+  "failed_pages": 0,
+  "empty_pages": 0,
+  "malformed_pages": 0,
+  "limited_pages": 0,
+  "incomplete_pages": 1,
+  "limited_or_incomplete_pages": 1,
+  "reconciliation_issues": {},
+  "integrity_issue_count": 0,
+  "raw_records": 100
+}
