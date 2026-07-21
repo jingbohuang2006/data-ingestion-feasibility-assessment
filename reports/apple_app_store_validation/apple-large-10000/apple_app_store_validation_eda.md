@@ -4,9 +4,9 @@
 This is a larger validation path for Apple App Store review collection and EDA. It is not production-ready.
 
 ## Output Isolation
-- Processed output directory: /Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/data/processed/apple_app_store_validation/apple-large-10000
-- Report output directory: /Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/reports/apple_app_store_validation/apple-large-10000
-- Raw output directory: /Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/data/raw/apple_app_store_validation/apple-large-10000
+- Processed output directory: data/processed/apple_app_store_validation/apple-large-10000
+- Report output directory: reports/apple_app_store_validation/apple-large-10000
+- Raw output directory: data/raw/apple_app_store_validation/apple-large-10000
 
 ## Target Status
 - Target review count: 10000

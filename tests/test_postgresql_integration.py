@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import os
 import subprocess
 from pathlib import Path
@@ -7,7 +8,10 @@ from pathlib import Path
 import psycopg
 import pytest
 
+from src.apple_live_persistence import LiveAppleSettings, run_live_apple_persistence
 from src.database_load import load_apple_validation_run
+from src.http_utils import HttpResult
+from src.models import RequestRecord
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -119,3 +123,77 @@ def test_all_example_and_reconciliation_queries_execute(database_url: str) -> No
             cur.execute(statement.replace(":source_review_id", "'not-present'"))
             if cur.description:
                 cur.fetchall()
+
+
+def test_mocked_live_persistence_preserves_all_appearances_and_repeats(database_url: str, tmp_path: Path) -> None:
+    payload = {"feed": {"entry": [
+        {"id": {"label": "app-metadata"}},
+        {
+            "id": {"label": "live-review-1"}, "title": {"label": "Good"},
+            "content": {"label": "A useful review body."}, "im:rating": {"label": "5"},
+            "updated": {"label": "2026-07-17T00:00:00Z"}, "author": {"name": {"label": "One"}},
+        },
+        {
+            "id": {"label": "live-review-2"}, "title": {"label": "Fine"},
+            "content": {"label": "Another useful review."}, "im:rating": {"label": "4"},
+            "updated": {"label": "2026-07-17T00:00:00Z"}, "author": {"name": {"label": "Two"}},
+        },
+        "malformed-entry",
+    ]}}
+    session = _FakeAppleSession(payload, repeats=2)
+    settings = LiveAppleSettings(
+        database_url=database_url, output_root=tmp_path, run_name="apple-live-postgresql-test",
+        passes=2, max_pages_per_pass=1, max_requests=2, max_normalized_reviews=1,
+    )
+
+    report = run_live_apple_persistence(settings, session=session)
+
+    assert report["apps"] == 1
+    assert report["storefronts"] == 1
+    assert report["targets"] == 1
+    assert report["requests"] == 2
+    assert report["payloads"] == 2
+    assert report["raw_review_appearances"] == 8
+    assert report["normalized_reviews"] == 1
+    assert report["observation_statuses"] == {
+        "excluded": 1, "new": 1, "non_review_entry": 2, "parse_error": 2, "repeat_seen": 2,
+    }
+    assert report["duplicate_or_repeated_observations"] == 2
+    assert report["request_statuses"] == {"ok": 2}
+    assert report["scope_or_exclusion_categories"] == {"normalization_cap_exceeded": 1}
+    assert report["failed_pages"] == 0
+    assert report["empty_pages"] == 0
+    assert report["malformed_pages"] == 0
+    assert report["limited_pages"] == 0
+    assert report["collection_issue_pages"] == 0
+    assert report["scope_limited_pages"] == 1
+    assert report["reconciliation_issues"] == {}
+    assert report["integrity_issue_count"] == 0
+    assert report["final_run_status"] == "completed"
+    assert (tmp_path / "reports" / "apple_live" / settings.run_name / "live_persistence_report.json").exists()
+    assert len(list((tmp_path / "data" / "raw" / "apple_live" / settings.run_name).glob("*.json"))) == 2
+
+    with pytest.raises(FileExistsError):
+        run_live_apple_persistence(settings, session=_FakeAppleSession(payload, repeats=2))
+
+
+class _FakeAppleSession:
+    def __init__(self, payload: dict, repeats: int) -> None:
+        self.content = json.dumps(payload).encode()
+        self.remaining = repeats
+
+    def get(self, url: str) -> HttpResult:
+        assert self.remaining > 0
+        self.remaining -= 1
+
+        class Response:
+            status_code = 200
+            headers = {"content-type": "application/json"}
+
+            def __init__(self, content: bytes) -> None:
+                self.content = content
+
+        return HttpResult(Response(self.content), RequestRecord(
+            url=url, status_code=200, elapsed_seconds=0.01, success=True,
+            content_type="application/json", response_size=len(self.content),
+        ))

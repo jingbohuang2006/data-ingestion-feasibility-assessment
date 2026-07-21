@@ -46,9 +46,9 @@
   "errors": [],
   "parser_errors": [],
   "warnings": [],
-  "processed_output_dir": "/Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/data/processed/apple_app_store_validation/apple-small-500",
-  "reports_output_dir": "/Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/reports/apple_app_store_validation/apple-small-500",
-  "raw_output_dir": "/Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/data/raw/apple_app_store_validation/apple-small-500",
+  "processed_output_dir": "data/processed/apple_app_store_validation/apple-small-500",
+  "reports_output_dir": "reports/apple_app_store_validation/apple-small-500",
+  "raw_output_dir": "data/raw/apple_app_store_validation/apple-small-500",
   "limitations": [
     "Validation run only; this is not a production-ready ingestion pipeline.",
     "Apple customer review RSS is publicly accessible but undocumented and not an official supported review API.",
