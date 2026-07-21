@@ -438,7 +438,7 @@ python -m src.apple_live_persistence
 
 The implementation enforces hard safety ceilings of 2 passes, 2 pages per pass, 4 requests, and 100 normalized reviews. A delay of at least one second is required. All returned feed entries are stored as raw appearances before normalization decisions, including repeated reviews, app metadata, malformed entries, and entries beyond the normalization cap. Repeats and excluded appearances remain explicit observations rather than being silently dropped.
 
-Each run writes raw responses to `data/raw/apple_live/<run_name>/` and its JSON report to `reports/apple_live/<run_name>/live_persistence_report.json`. The report includes app/storefront/target/request counts, raw appearances, normalized reviews, repeat observations, request and incomplete-page categories, quality flags, reconciliation issues, and final run status.
+Each run writes raw responses to `data/raw/apple_live/<run_name>/` and its JSON report to `reports/apple_live/<run_name>/live_persistence_report.json`. The report includes app/storefront/target/request counts, raw appearances, normalized reviews, repeat observations, request outcomes, scope/exclusion categories, quality flags, reconciliation issues, and final run status.
 
 Request/page evidence distinguishes:
 
@@ -446,7 +446,9 @@ Request/page evidence distinguishes:
 - `request_failed` transport or HTTP failures;
 - `json_parse_error` malformed response bodies;
 - `pagination_limit_or_unavailable_page` later-page 400/404 limits;
-- `normalization_cap_exceeded` and `configured_scope_exhausted` incomplete-load evidence.
+- `normalization_cap_exceeded` and `configured_scope_exhausted` intentional scope/exclusion evidence, not request or page failures.
+
+The reconciliation output keeps those groups separate. `collection_issue_pages` aggregates failed, empty, malformed, and pagination-limited pages. `scope_limited_pages` counts successful pages associated with an intentional cap or configured scope limit; it is not included in `collection_issue_pages`.
 
 Do not commit real database URLs, credentials, or locally generated live raw payloads without review. The live command above should only be run after migrations and mocked/PostgreSQL tests pass and after explicit approval for the network collection.
 
@@ -467,7 +469,7 @@ Results:
 - final run status: `completed`;
 - validation suite: 63 passed, 0 failed, 0 skipped.
 
-The report's `incomplete_pages = 1` is deliberate cap evidence, not a collection failure. The first successful page returned 50 review appearances: 25 were normalized and the remaining 25 were preserved as explicit `excluded` observations after the approved 25-review normalization cap was reached. It does not indicate an HTTP failure, empty response, malformed response, pagination limit, or interrupted collection.
+The report's `scope_limited_pages = 1` is deliberate cap evidence, while `collection_issue_pages = 0`. The first successful page returned 50 review appearances: 25 were normalized and the remaining 25 were preserved as explicit `excluded` observations after the approved 25-review normalization cap was reached. It does not indicate an HTTP failure, empty response, malformed response, pagination limit, or interrupted collection.
 
 ## Limitations
 

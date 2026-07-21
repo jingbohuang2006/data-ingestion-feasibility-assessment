@@ -22,7 +22,7 @@
   "request_statuses": {
     "ok": 2
   },
-  "incomplete_categories": {
+  "scope_or_exclusion_categories": {
     "normalization_cap_exceeded": 25
   },
   "duplicate_or_repeated_observations": 50,
@@ -30,8 +30,8 @@
   "empty_pages": 0,
   "malformed_pages": 0,
   "limited_pages": 0,
-  "incomplete_pages": 1,
-  "limited_or_incomplete_pages": 1,
+  "collection_issue_pages": 0,
+  "scope_limited_pages": 1,
   "reconciliation_issues": {},
   "integrity_issue_count": 0,
   "raw_records": 100

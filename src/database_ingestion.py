@@ -249,7 +249,7 @@ def reconcile_run(database_url: str, run_name: str) -> dict[str, Any]:
             cur.execute(sql, (run_name,)); result[name] = cur.fetchone()[0]
         for key, table, column in (("observation_statuses", "review_observations", "observation_status"),
                                    ("request_statuses", "collection_requests", "status_category"),
-                                   ("incomplete_categories", "missing_or_excluded_records", "reason_code")):
+                                   ("scope_or_exclusion_categories", "missing_or_excluded_records", "reason_code")):
             join = "JOIN raw_review_records rrr USING(raw_record_id) JOIN raw_payloads rp USING(payload_id) JOIN collection_requests cr USING(request_id) JOIN run_targets rt USING(run_target_id)" if table == "review_observations" else "JOIN run_targets rt USING(run_target_id)"
             cur.execute(f"""SELECT {column},count(*) FROM {table} {join} JOIN ingestion_runs r USING(run_id)
                 WHERE r.external_run_name=%s GROUP BY {column}""", (run_name,))
@@ -259,13 +259,15 @@ def reconcile_run(database_url: str, run_name: str) -> dict[str, Any]:
         result["empty_pages"] = result["request_statuses"].get("empty_page", 0)
         result["malformed_pages"] = result["request_statuses"].get("json_parse_error", 0)
         result["limited_pages"] = result["request_statuses"].get("pagination_limit_or_unavailable_page", 0)
+        result["collection_issue_pages"] = sum(
+            result[name] for name in ("failed_pages", "empty_pages", "malformed_pages", "limited_pages")
+        )
         cur.execute("""SELECT count(DISTINCT mer.request_id) FROM missing_or_excluded_records mer
             JOIN run_targets rt USING(run_target_id) JOIN ingestion_runs r USING(run_id)
             WHERE r.external_run_name=%s AND mer.request_id IS NOT NULL
             AND mer.reason_code IN ('normalization_cap_exceeded','request_limit_reached','configured_scope_exhausted')""",
             (run_name,))
-        result["incomplete_pages"] = cur.fetchone()[0]
-        result["limited_or_incomplete_pages"] = result["limited_pages"] + result["incomplete_pages"]
+        result["scope_limited_pages"] = cur.fetchone()[0]
         result["reconciliation_issues"] = {name: result[name] for name in checks if result[name]}
         result["integrity_issue_count"] = sum(result[k] for k in checks)
         result["raw_records"] = result["raw_review_appearances"]

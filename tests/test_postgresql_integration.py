@@ -160,11 +160,13 @@ def test_mocked_live_persistence_preserves_all_appearances_and_repeats(database_
     }
     assert report["duplicate_or_repeated_observations"] == 2
     assert report["request_statuses"] == {"ok": 2}
-    assert report["incomplete_categories"] == {"normalization_cap_exceeded": 1}
+    assert report["scope_or_exclusion_categories"] == {"normalization_cap_exceeded": 1}
     assert report["failed_pages"] == 0
     assert report["empty_pages"] == 0
     assert report["malformed_pages"] == 0
-    assert report["limited_or_incomplete_pages"] == 1
+    assert report["limited_pages"] == 0
+    assert report["collection_issue_pages"] == 0
+    assert report["scope_limited_pages"] == 1
     assert report["reconciliation_issues"] == {}
     assert report["integrity_issue_count"] == 0
     assert report["final_run_status"] == "completed"
