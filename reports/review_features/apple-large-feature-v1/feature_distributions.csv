@@ -1,0 +1,498 @@
+app_name,country,language,row_count,metric,value,count,rate,minimum,median,mean,maximum
+Airbnb,us,en,300,review_text_character_count,,300,,5.0,268.0,386.86,3255.0
+Airbnb,us,en,300,review_text_word_count,,300,,1.0,48.0,69.31,628.0
+Airbnb,us,en,300,title_character_count,,300,,1.0,20.0,22.99,94.0
+Airbnb,us,en,300,title_word_count,,300,,0.0,3.0,3.8,17.0
+Airbnb,us,en,300,missing_title,True,0,0.0,,,,
+Airbnb,us,en,300,missing_review_text,True,0,0.0,,,,
+Airbnb,us,en,300,missing_rating,True,0,0.0,,,,
+Airbnb,us,en,300,missing_publication_timestamp,True,0,0.0,,,,
+Airbnb,us,en,300,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Airbnb,us,en,300,has_developer_reply,True,0,0.0,,,,
+Airbnb,us,en,300,has_app_version,True,300,1.0,,,,
+Airbnb,us,en,300,low_signal_text,True,8,0.02666666666666667,,,,
+Airbnb,us,en,300,repeated_text,True,0,0.0,,,,
+Airbnb,us,en,300,issue_login,True,2,0.006666666666666667,,,,
+Airbnb,us,en,300,issue_payment,True,59,0.19666666666666666,,,,
+Airbnb,us,en,300,issue_performance,True,3,0.01,,,,
+Airbnb,us,en,300,issue_subscription,True,0,0.0,,,,
+Airbnb,us,en,300,issue_delivery,True,0,0.0,,,,
+Airbnb,us,en,300,issue_customer_service,True,56,0.18666666666666668,,,,
+Airbnb,us,en,300,rating_distribution,1.0,265,0.8833333333333333,,,,
+Airbnb,us,en,300,rating_distribution,2.0,11,0.03666666666666667,,,,
+Airbnb,us,en,300,rating_distribution,3.0,13,0.043333333333333335,,,,
+Airbnb,us,en,300,rating_distribution,4.0,4,0.013333333333333334,,,,
+Airbnb,us,en,300,rating_distribution,5.0,7,0.023333333333333334,,,,
+Airbnb,us,en,300,publication_time_coverage,valid,300,1.0,2026.0,2026.0,2026.0,2026.0
+Amazon Shopping,us,en,150,review_text_character_count,,150,,8.0,175.5,253.50666666666666,1797.0
+Amazon Shopping,us,en,150,review_text_word_count,,150,,1.0,31.5,46.82,327.0
+Amazon Shopping,us,en,150,title_character_count,,150,,1.0,16.0,18.866666666666667,60.0
+Amazon Shopping,us,en,150,title_word_count,,150,,0.0,3.0,3.2533333333333334,12.0
+Amazon Shopping,us,en,150,missing_title,True,0,0.0,,,,
+Amazon Shopping,us,en,150,missing_review_text,True,0,0.0,,,,
+Amazon Shopping,us,en,150,missing_rating,True,0,0.0,,,,
+Amazon Shopping,us,en,150,missing_publication_timestamp,True,0,0.0,,,,
+Amazon Shopping,us,en,150,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Amazon Shopping,us,en,150,has_developer_reply,True,0,0.0,,,,
+Amazon Shopping,us,en,150,has_app_version,True,150,1.0,,,,
+Amazon Shopping,us,en,150,low_signal_text,True,5,0.03333333333333333,,,,
+Amazon Shopping,us,en,150,repeated_text,True,0,0.0,,,,
+Amazon Shopping,us,en,150,issue_login,True,2,0.013333333333333334,,,,
+Amazon Shopping,us,en,150,issue_payment,True,17,0.11333333333333333,,,,
+Amazon Shopping,us,en,150,issue_performance,True,11,0.07333333333333333,,,,
+Amazon Shopping,us,en,150,issue_subscription,True,1,0.006666666666666667,,,,
+Amazon Shopping,us,en,150,issue_delivery,True,30,0.2,,,,
+Amazon Shopping,us,en,150,issue_customer_service,True,24,0.16,,,,
+Amazon Shopping,us,en,150,rating_distribution,1.0,91,0.6066666666666667,,,,
+Amazon Shopping,us,en,150,rating_distribution,2.0,15,0.1,,,,
+Amazon Shopping,us,en,150,rating_distribution,3.0,10,0.06666666666666667,,,,
+Amazon Shopping,us,en,150,rating_distribution,4.0,8,0.05333333333333334,,,,
+Amazon Shopping,us,en,150,rating_distribution,5.0,26,0.17333333333333334,,,,
+Amazon Shopping,us,en,150,publication_time_coverage,valid,150,1.0,2026.0,2026.0,2026.0,2026.0
+Canva,gb,en,50,review_text_character_count,,50,,8.0,61.5,87.24,365.0
+Canva,gb,en,50,review_text_word_count,,50,,1.0,12.5,16.4,63.0
+Canva,gb,en,50,title_character_count,,50,,2.0,11.5,14.74,71.0
+Canva,gb,en,50,title_word_count,,50,,1.0,2.0,2.56,12.0
+Canva,gb,en,50,missing_title,True,0,0.0,,,,
+Canva,gb,en,50,missing_review_text,True,0,0.0,,,,
+Canva,gb,en,50,missing_rating,True,0,0.0,,,,
+Canva,gb,en,50,missing_publication_timestamp,True,0,0.0,,,,
+Canva,gb,en,50,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Canva,gb,en,50,has_developer_reply,True,0,0.0,,,,
+Canva,gb,en,50,has_app_version,True,50,1.0,,,,
+Canva,gb,en,50,low_signal_text,True,4,0.08,,,,
+Canva,gb,en,50,repeated_text,True,0,0.0,,,,
+Canva,gb,en,50,issue_login,True,0,0.0,,,,
+Canva,gb,en,50,issue_payment,True,0,0.0,,,,
+Canva,gb,en,50,issue_performance,True,0,0.0,,,,
+Canva,gb,en,50,issue_subscription,True,0,0.0,,,,
+Canva,gb,en,50,issue_delivery,True,0,0.0,,,,
+Canva,gb,en,50,issue_customer_service,True,2,0.04,,,,
+Canva,gb,en,50,rating_distribution,1.0,2,0.04,,,,
+Canva,gb,en,50,rating_distribution,3.0,1,0.02,,,,
+Canva,gb,en,50,rating_distribution,4.0,4,0.08,,,,
+Canva,gb,en,50,rating_distribution,5.0,43,0.86,,,,
+Canva,gb,en,50,publication_time_coverage,valid,50,1.0,2026.0,2026.0,2026.0,2026.0
+Discord,us,en,50,review_text_character_count,,50,,5.0,80.5,135.94,1191.0
+Discord,us,en,50,review_text_word_count,,50,,1.0,15.5,26.12,197.0
+Discord,us,en,50,title_character_count,,50,,2.0,13.0,17.66,94.0
+Discord,us,en,50,title_word_count,,50,,0.0,2.0,3.42,18.0
+Discord,us,en,50,missing_title,True,0,0.0,,,,
+Discord,us,en,50,missing_review_text,True,0,0.0,,,,
+Discord,us,en,50,missing_rating,True,0,0.0,,,,
+Discord,us,en,50,missing_publication_timestamp,True,0,0.0,,,,
+Discord,us,en,50,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Discord,us,en,50,has_developer_reply,True,0,0.0,,,,
+Discord,us,en,50,has_app_version,True,50,1.0,,,,
+Discord,us,en,50,low_signal_text,True,7,0.14,,,,
+Discord,us,en,50,repeated_text,True,0,0.0,,,,
+Discord,us,en,50,issue_login,True,5,0.1,,,,
+Discord,us,en,50,issue_payment,True,0,0.0,,,,
+Discord,us,en,50,issue_performance,True,0,0.0,,,,
+Discord,us,en,50,issue_subscription,True,0,0.0,,,,
+Discord,us,en,50,issue_delivery,True,0,0.0,,,,
+Discord,us,en,50,issue_customer_service,True,0,0.0,,,,
+Discord,us,en,50,rating_distribution,1.0,21,0.42,,,,
+Discord,us,en,50,rating_distribution,2.0,2,0.04,,,,
+Discord,us,en,50,rating_distribution,3.0,5,0.1,,,,
+Discord,us,en,50,rating_distribution,4.0,4,0.08,,,,
+Discord,us,en,50,rating_distribution,5.0,18,0.36,,,,
+Discord,us,en,50,publication_time_coverage,valid,50,1.0,2026.0,2026.0,2026.0,2026.0
+Duolingo,us,en,250,review_text_character_count,,250,,1.0,108.0,184.14,1906.0
+Duolingo,us,en,250,review_text_word_count,,250,,0.0,21.0,35.248,355.0
+Duolingo,us,en,250,title_character_count,,250,,1.0,12.0,16.824,100.0
+Duolingo,us,en,250,title_word_count,,250,,0.0,2.0,3.124,18.0
+Duolingo,us,en,250,missing_title,True,0,0.0,,,,
+Duolingo,us,en,250,missing_review_text,True,0,0.0,,,,
+Duolingo,us,en,250,missing_rating,True,0,0.0,,,,
+Duolingo,us,en,250,missing_publication_timestamp,True,0,0.0,,,,
+Duolingo,us,en,250,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Duolingo,us,en,250,has_developer_reply,True,0,0.0,,,,
+Duolingo,us,en,250,has_app_version,True,250,1.0,,,,
+Duolingo,us,en,250,low_signal_text,True,20,0.08,,,,
+Duolingo,us,en,250,repeated_text,True,0,0.0,,,,
+Duolingo,us,en,250,issue_login,True,1,0.004,,,,
+Duolingo,us,en,250,issue_payment,True,13,0.052,,,,
+Duolingo,us,en,250,issue_performance,True,5,0.02,,,,
+Duolingo,us,en,250,issue_subscription,True,6,0.024,,,,
+Duolingo,us,en,250,issue_delivery,True,0,0.0,,,,
+Duolingo,us,en,250,issue_customer_service,True,2,0.008,,,,
+Duolingo,us,en,250,rating_distribution,1.0,35,0.14,,,,
+Duolingo,us,en,250,rating_distribution,2.0,10,0.04,,,,
+Duolingo,us,en,250,rating_distribution,3.0,19,0.076,,,,
+Duolingo,us,en,250,rating_distribution,4.0,41,0.164,,,,
+Duolingo,us,en,250,rating_distribution,5.0,145,0.58,,,,
+Duolingo,us,en,250,publication_time_coverage,valid,250,1.0,2026.0,2026.0,2026.0,2026.0
+Gmail,us,en,500,review_text_character_count,,500,,2.0,117.5,173.918,3515.0
+Gmail,us,en,500,review_text_word_count,,500,,0.0,22.0,32.096,553.0
+Gmail,us,en,500,title_character_count,,500,,1.0,15.0,19.148,85.0
+Gmail,us,en,500,title_word_count,,500,,0.0,3.0,3.422,18.0
+Gmail,us,en,500,missing_title,True,0,0.0,,,,
+Gmail,us,en,500,missing_review_text,True,0,0.0,,,,
+Gmail,us,en,500,missing_rating,True,0,0.0,,,,
+Gmail,us,en,500,missing_publication_timestamp,True,0,0.0,,,,
+Gmail,us,en,500,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Gmail,us,en,500,has_developer_reply,True,0,0.0,,,,
+Gmail,us,en,500,has_app_version,True,500,1.0,,,,
+Gmail,us,en,500,low_signal_text,True,48,0.096,,,,
+Gmail,us,en,500,repeated_text,True,0,0.0,,,,
+Gmail,us,en,500,issue_login,True,28,0.056,,,,
+Gmail,us,en,500,issue_payment,True,10,0.02,,,,
+Gmail,us,en,500,issue_performance,True,21,0.042,,,,
+Gmail,us,en,500,issue_subscription,True,1,0.002,,,,
+Gmail,us,en,500,issue_delivery,True,0,0.0,,,,
+Gmail,us,en,500,issue_customer_service,True,2,0.004,,,,
+Gmail,us,en,500,rating_distribution,1.0,263,0.526,,,,
+Gmail,us,en,500,rating_distribution,2.0,57,0.114,,,,
+Gmail,us,en,500,rating_distribution,3.0,44,0.088,,,,
+Gmail,us,en,500,rating_distribution,4.0,33,0.066,,,,
+Gmail,us,en,500,rating_distribution,5.0,103,0.206,,,,
+Gmail,us,en,500,publication_time_coverage,valid,500,1.0,2026.0,2026.0,2026.0,2026.0
+Google Maps,us,en,150,review_text_character_count,,150,,1.0,135.5,210.77333333333334,2870.0
+Google Maps,us,en,150,review_text_word_count,,150,,0.0,24.0,38.07333333333333,473.0
+Google Maps,us,en,150,title_character_count,,150,,2.0,19.0,21.273333333333333,94.0
+Google Maps,us,en,150,title_word_count,,150,,0.0,3.0,3.76,22.0
+Google Maps,us,en,150,missing_title,True,0,0.0,,,,
+Google Maps,us,en,150,missing_review_text,True,0,0.0,,,,
+Google Maps,us,en,150,missing_rating,True,0,0.0,,,,
+Google Maps,us,en,150,missing_publication_timestamp,True,0,0.0,,,,
+Google Maps,us,en,150,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Google Maps,us,en,150,has_developer_reply,True,0,0.0,,,,
+Google Maps,us,en,150,has_app_version,True,150,1.0,,,,
+Google Maps,us,en,150,low_signal_text,True,17,0.11333333333333333,,,,
+Google Maps,us,en,150,repeated_text,True,2,0.013333333333333334,,,,
+Google Maps,us,en,150,issue_login,True,0,0.0,,,,
+Google Maps,us,en,150,issue_payment,True,1,0.006666666666666667,,,,
+Google Maps,us,en,150,issue_performance,True,3,0.02,,,,
+Google Maps,us,en,150,issue_subscription,True,0,0.0,,,,
+Google Maps,us,en,150,issue_delivery,True,0,0.0,,,,
+Google Maps,us,en,150,issue_customer_service,True,3,0.02,,,,
+Google Maps,us,en,150,rating_distribution,1.0,44,0.29333333333333333,,,,
+Google Maps,us,en,150,rating_distribution,2.0,19,0.12666666666666668,,,,
+Google Maps,us,en,150,rating_distribution,3.0,8,0.05333333333333334,,,,
+Google Maps,us,en,150,rating_distribution,4.0,8,0.05333333333333334,,,,
+Google Maps,us,en,150,rating_distribution,5.0,71,0.47333333333333333,,,,
+Google Maps,us,en,150,publication_time_coverage,valid,150,1.0,2026.0,2026.0,2026.0,2026.0
+Headspace,us,en,500,review_text_character_count,,500,,2.0,279.0,341.382,2381.0
+Headspace,us,en,500,review_text_word_count,,500,,0.0,53.0,62.936,413.0
+Headspace,us,en,500,title_character_count,,500,,1.0,20.0,23.35,100.0
+Headspace,us,en,500,title_word_count,,500,,0.0,3.0,4.086,20.0
+Headspace,us,en,500,missing_title,True,0,0.0,,,,
+Headspace,us,en,500,missing_review_text,True,0,0.0,,,,
+Headspace,us,en,500,missing_rating,True,0,0.0,,,,
+Headspace,us,en,500,missing_publication_timestamp,True,0,0.0,,,,
+Headspace,us,en,500,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Headspace,us,en,500,has_developer_reply,True,0,0.0,,,,
+Headspace,us,en,500,has_app_version,True,500,1.0,,,,
+Headspace,us,en,500,low_signal_text,True,4,0.008,,,,
+Headspace,us,en,500,repeated_text,True,0,0.0,,,,
+Headspace,us,en,500,issue_login,True,11,0.022,,,,
+Headspace,us,en,500,issue_payment,True,92,0.184,,,,
+Headspace,us,en,500,issue_performance,True,16,0.032,,,,
+Headspace,us,en,500,issue_subscription,True,69,0.138,,,,
+Headspace,us,en,500,issue_delivery,True,0,0.0,,,,
+Headspace,us,en,500,issue_customer_service,True,27,0.054,,,,
+Headspace,us,en,500,rating_distribution,1.0,274,0.548,,,,
+Headspace,us,en,500,rating_distribution,2.0,81,0.162,,,,
+Headspace,us,en,500,rating_distribution,3.0,57,0.114,,,,
+Headspace,us,en,500,rating_distribution,4.0,37,0.074,,,,
+Headspace,us,en,500,rating_distribution,5.0,51,0.102,,,,
+Headspace,us,en,500,publication_time_coverage,valid,500,1.0,2025.0,2026.0,2025.6,2026.0
+Instagram,us,en,434,review_text_character_count,,434,,2.0,121.5,186.27649769585253,2134.0
+Instagram,us,en,434,review_text_word_count,,434,,0.0,23.0,34.07834101382488,357.0
+Instagram,us,en,434,title_character_count,,434,,1.0,16.0,19.35483870967742,99.0
+Instagram,us,en,434,title_word_count,,434,,0.0,3.0,3.4400921658986174,21.0
+Instagram,us,en,434,missing_title,True,0,0.0,,,,
+Instagram,us,en,434,missing_review_text,True,0,0.0,,,,
+Instagram,us,en,434,missing_rating,True,0,0.0,,,,
+Instagram,us,en,434,missing_publication_timestamp,True,0,0.0,,,,
+Instagram,us,en,434,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Instagram,us,en,434,has_developer_reply,True,0,0.0,,,,
+Instagram,us,en,434,has_app_version,True,434,1.0,,,,
+Instagram,us,en,434,low_signal_text,True,35,0.08064516129032258,,,,
+Instagram,us,en,434,repeated_text,True,0,0.0,,,,
+Instagram,us,en,434,issue_login,True,5,0.01152073732718894,,,,
+Instagram,us,en,434,issue_payment,True,2,0.004608294930875576,,,,
+Instagram,us,en,434,issue_performance,True,12,0.027649769585253458,,,,
+Instagram,us,en,434,issue_subscription,True,1,0.002304147465437788,,,,
+Instagram,us,en,434,issue_delivery,True,0,0.0,,,,
+Instagram,us,en,434,issue_customer_service,True,9,0.020737327188940093,,,,
+Instagram,us,en,434,rating_distribution,1.0,223,0.5138248847926268,,,,
+Instagram,us,en,434,rating_distribution,2.0,30,0.06912442396313365,,,,
+Instagram,us,en,434,rating_distribution,3.0,20,0.04608294930875576,,,,
+Instagram,us,en,434,rating_distribution,4.0,28,0.06451612903225806,,,,
+Instagram,us,en,434,rating_distribution,5.0,133,0.3064516129032258,,,,
+Instagram,us,en,434,publication_time_coverage,valid,434,1.0,2026.0,2026.0,2026.0,2026.0
+LinkedIn,us,en,500,review_text_character_count,,500,,3.0,181.5,244.82,2271.0
+LinkedIn,us,en,500,review_text_word_count,,500,,1.0,32.5,44.258,352.0
+LinkedIn,us,en,500,title_character_count,,500,,1.0,19.0,23.718,99.0
+LinkedIn,us,en,500,title_word_count,,500,,0.0,3.0,3.968,18.0
+LinkedIn,us,en,500,missing_title,True,0,0.0,,,,
+LinkedIn,us,en,500,missing_review_text,True,0,0.0,,,,
+LinkedIn,us,en,500,missing_rating,True,0,0.0,,,,
+LinkedIn,us,en,500,missing_publication_timestamp,True,0,0.0,,,,
+LinkedIn,us,en,500,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+LinkedIn,us,en,500,has_developer_reply,True,0,0.0,,,,
+LinkedIn,us,en,500,has_app_version,True,500,1.0,,,,
+LinkedIn,us,en,500,low_signal_text,True,19,0.038,,,,
+LinkedIn,us,en,500,repeated_text,True,0,0.0,,,,
+LinkedIn,us,en,500,issue_login,True,57,0.114,,,,
+LinkedIn,us,en,500,issue_payment,True,23,0.046,,,,
+LinkedIn,us,en,500,issue_performance,True,13,0.026,,,,
+LinkedIn,us,en,500,issue_subscription,True,19,0.038,,,,
+LinkedIn,us,en,500,issue_delivery,True,1,0.002,,,,
+LinkedIn,us,en,500,issue_customer_service,True,29,0.058,,,,
+LinkedIn,us,en,500,rating_distribution,1.0,324,0.648,,,,
+LinkedIn,us,en,500,rating_distribution,2.0,42,0.084,,,,
+LinkedIn,us,en,500,rating_distribution,3.0,35,0.07,,,,
+LinkedIn,us,en,500,rating_distribution,4.0,18,0.036,,,,
+LinkedIn,us,en,500,rating_distribution,5.0,81,0.162,,,,
+LinkedIn,us,en,500,publication_time_coverage,valid,500,1.0,2026.0,2026.0,2026.0,2026.0
+Microsoft Teams,us,en,500,review_text_character_count,,500,,1.0,138.0,179.166,1063.0
+Microsoft Teams,us,en,500,review_text_word_count,,500,,0.0,26.0,32.746,198.0
+Microsoft Teams,us,en,500,title_character_count,,500,,1.0,18.0,21.198,95.0
+Microsoft Teams,us,en,500,title_word_count,,500,,0.0,3.0,3.63,19.0
+Microsoft Teams,us,en,500,missing_title,True,0,0.0,,,,
+Microsoft Teams,us,en,500,missing_review_text,True,0,0.0,,,,
+Microsoft Teams,us,en,500,missing_rating,True,0,0.0,,,,
+Microsoft Teams,us,en,500,missing_publication_timestamp,True,0,0.0,,,,
+Microsoft Teams,us,en,500,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Microsoft Teams,us,en,500,has_developer_reply,True,0,0.0,,,,
+Microsoft Teams,us,en,500,has_app_version,True,500,1.0,,,,
+Microsoft Teams,us,en,500,low_signal_text,True,34,0.068,,,,
+Microsoft Teams,us,en,500,repeated_text,True,0,0.0,,,,
+Microsoft Teams,us,en,500,issue_login,True,31,0.062,,,,
+Microsoft Teams,us,en,500,issue_payment,True,1,0.002,,,,
+Microsoft Teams,us,en,500,issue_performance,True,27,0.054,,,,
+Microsoft Teams,us,en,500,issue_subscription,True,1,0.002,,,,
+Microsoft Teams,us,en,500,issue_delivery,True,1,0.002,,,,
+Microsoft Teams,us,en,500,issue_customer_service,True,0,0.0,,,,
+Microsoft Teams,us,en,500,rating_distribution,1.0,301,0.602,,,,
+Microsoft Teams,us,en,500,rating_distribution,2.0,62,0.124,,,,
+Microsoft Teams,us,en,500,rating_distribution,3.0,47,0.094,,,,
+Microsoft Teams,us,en,500,rating_distribution,4.0,22,0.044,,,,
+Microsoft Teams,us,en,500,rating_distribution,5.0,68,0.136,,,,
+Microsoft Teams,us,en,500,publication_time_coverage,valid,500,1.0,2025.0,2026.0,2025.804,2026.0
+Netflix,us,en,400,review_text_character_count,,400,,1.0,79.5,142.01,1597.0
+Netflix,us,en,400,review_text_word_count,,400,,0.0,16.0,26.685,268.0
+Netflix,us,en,400,title_character_count,,400,,1.0,13.0,16.3725,100.0
+Netflix,us,en,400,title_word_count,,400,,0.0,2.0,2.93,24.0
+Netflix,us,en,400,missing_title,True,0,0.0,,,,
+Netflix,us,en,400,missing_review_text,True,0,0.0,,,,
+Netflix,us,en,400,missing_rating,True,0,0.0,,,,
+Netflix,us,en,400,missing_publication_timestamp,True,0,0.0,,,,
+Netflix,us,en,400,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Netflix,us,en,400,has_developer_reply,True,0,0.0,,,,
+Netflix,us,en,400,has_app_version,True,400,1.0,,,,
+Netflix,us,en,400,low_signal_text,True,43,0.1075,,,,
+Netflix,us,en,400,repeated_text,True,2,0.005,,,,
+Netflix,us,en,400,issue_login,True,6,0.015,,,,
+Netflix,us,en,400,issue_payment,True,16,0.04,,,,
+Netflix,us,en,400,issue_performance,True,1,0.0025,,,,
+Netflix,us,en,400,issue_subscription,True,10,0.025,,,,
+Netflix,us,en,400,issue_delivery,True,0,0.0,,,,
+Netflix,us,en,400,issue_customer_service,True,3,0.0075,,,,
+Netflix,us,en,400,rating_distribution,1.0,81,0.2025,,,,
+Netflix,us,en,400,rating_distribution,2.0,24,0.06,,,,
+Netflix,us,en,400,rating_distribution,3.0,41,0.1025,,,,
+Netflix,us,en,400,rating_distribution,4.0,46,0.115,,,,
+Netflix,us,en,400,rating_distribution,5.0,208,0.52,,,,
+Netflix,us,en,400,publication_time_coverage,valid,400,1.0,2026.0,2026.0,2026.0,2026.0
+Pinterest,us,en,500,review_text_character_count,,500,,3.0,167.0,231.666,1945.0
+Pinterest,us,en,500,review_text_word_count,,500,,1.0,32.0,43.856,373.0
+Pinterest,us,en,500,title_character_count,,500,,1.0,14.0,16.67,99.0
+Pinterest,us,en,500,title_word_count,,500,,0.0,3.0,3.198,18.0
+Pinterest,us,en,500,missing_title,True,0,0.0,,,,
+Pinterest,us,en,500,missing_review_text,True,0,0.0,,,,
+Pinterest,us,en,500,missing_rating,True,0,0.0,,,,
+Pinterest,us,en,500,missing_publication_timestamp,True,0,0.0,,,,
+Pinterest,us,en,500,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Pinterest,us,en,500,has_developer_reply,True,0,0.0,,,,
+Pinterest,us,en,500,has_app_version,True,500,1.0,,,,
+Pinterest,us,en,500,low_signal_text,True,16,0.032,,,,
+Pinterest,us,en,500,repeated_text,True,0,0.0,,,,
+Pinterest,us,en,500,issue_login,True,10,0.02,,,,
+Pinterest,us,en,500,issue_payment,True,8,0.016,,,,
+Pinterest,us,en,500,issue_performance,True,5,0.01,,,,
+Pinterest,us,en,500,issue_subscription,True,1,0.002,,,,
+Pinterest,us,en,500,issue_delivery,True,0,0.0,,,,
+Pinterest,us,en,500,issue_customer_service,True,2,0.004,,,,
+Pinterest,us,en,500,rating_distribution,1.0,193,0.386,,,,
+Pinterest,us,en,500,rating_distribution,2.0,66,0.132,,,,
+Pinterest,us,en,500,rating_distribution,3.0,63,0.126,,,,
+Pinterest,us,en,500,rating_distribution,4.0,50,0.1,,,,
+Pinterest,us,en,500,rating_distribution,5.0,128,0.256,,,,
+Pinterest,us,en,500,publication_time_coverage,valid,500,1.0,2026.0,2026.0,2026.0,2026.0
+Reddit,us,en,398,review_text_character_count,,398,,1.0,130.0,192.83165829145727,2957.0
+Reddit,us,en,398,review_text_word_count,,398,,0.0,24.0,35.92211055276382,547.0
+Reddit,us,en,398,title_character_count,,398,,1.0,20.5,22.891959798994975,101.0
+Reddit,us,en,398,title_word_count,,398,,0.0,4.0,4.28140703517588,21.0
+Reddit,us,en,398,missing_title,True,0,0.0,,,,
+Reddit,us,en,398,missing_review_text,True,0,0.0,,,,
+Reddit,us,en,398,missing_rating,True,0,0.0,,,,
+Reddit,us,en,398,missing_publication_timestamp,True,0,0.0,,,,
+Reddit,us,en,398,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Reddit,us,en,398,has_developer_reply,True,0,0.0,,,,
+Reddit,us,en,398,has_app_version,True,398,1.0,,,,
+Reddit,us,en,398,low_signal_text,True,28,0.07035175879396985,,,,
+Reddit,us,en,398,repeated_text,True,0,0.0,,,,
+Reddit,us,en,398,issue_login,True,4,0.010050251256281407,,,,
+Reddit,us,en,398,issue_payment,True,1,0.002512562814070352,,,,
+Reddit,us,en,398,issue_performance,True,9,0.022613065326633167,,,,
+Reddit,us,en,398,issue_subscription,True,3,0.007537688442211055,,,,
+Reddit,us,en,398,issue_delivery,True,0,0.0,,,,
+Reddit,us,en,398,issue_customer_service,True,1,0.002512562814070352,,,,
+Reddit,us,en,398,rating_distribution,1.0,275,0.6909547738693468,,,,
+Reddit,us,en,398,rating_distribution,2.0,25,0.06281407035175879,,,,
+Reddit,us,en,398,rating_distribution,3.0,12,0.03015075376884422,,,,
+Reddit,us,en,398,rating_distribution,4.0,10,0.02512562814070352,,,,
+Reddit,us,en,398,rating_distribution,5.0,76,0.19095477386934673,,,,
+Reddit,us,en,398,publication_time_coverage,valid,398,1.0,2026.0,2026.0,2026.0,2026.0
+Spotify,us,en,400,review_text_character_count,,400,,1.0,61.5,111.9725,1287.0
+Spotify,us,en,400,review_text_word_count,,400,,0.0,12.0,21.8925,239.0
+Spotify,us,en,400,title_character_count,,400,,1.0,11.0,14.55,100.0
+Spotify,us,en,400,title_word_count,,400,,0.0,2.0,2.74,20.0
+Spotify,us,en,400,missing_title,True,0,0.0,,,,
+Spotify,us,en,400,missing_review_text,True,0,0.0,,,,
+Spotify,us,en,400,missing_rating,True,0,0.0,,,,
+Spotify,us,en,400,missing_publication_timestamp,True,0,0.0,,,,
+Spotify,us,en,400,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Spotify,us,en,400,has_developer_reply,True,0,0.0,,,,
+Spotify,us,en,400,has_app_version,True,400,1.0,,,,
+Spotify,us,en,400,low_signal_text,True,67,0.1675,,,,
+Spotify,us,en,400,repeated_text,True,0,0.0,,,,
+Spotify,us,en,400,issue_login,True,2,0.005,,,,
+Spotify,us,en,400,issue_payment,True,18,0.045,,,,
+Spotify,us,en,400,issue_performance,True,7,0.0175,,,,
+Spotify,us,en,400,issue_subscription,True,4,0.01,,,,
+Spotify,us,en,400,issue_delivery,True,0,0.0,,,,
+Spotify,us,en,400,issue_customer_service,True,0,0.0,,,,
+Spotify,us,en,400,rating_distribution,1.0,54,0.135,,,,
+Spotify,us,en,400,rating_distribution,2.0,21,0.0525,,,,
+Spotify,us,en,400,rating_distribution,3.0,34,0.085,,,,
+Spotify,us,en,400,rating_distribution,4.0,42,0.105,,,,
+Spotify,us,en,400,rating_distribution,5.0,249,0.6225,,,,
+Spotify,us,en,400,publication_time_coverage,valid,400,1.0,2026.0,2026.0,2026.0,2026.0
+TikTok,us,en,464,review_text_character_count,,464,,1.0,120.0,168.04525862068965,1631.0
+TikTok,us,en,464,review_text_word_count,,464,,1.0,24.5,33.03879310344828,282.0
+TikTok,us,en,464,title_character_count,,464,,1.0,13.0,17.213362068965516,94.0
+TikTok,us,en,464,title_word_count,,464,,0.0,2.0,3.3599137931034484,19.0
+TikTok,us,en,464,missing_title,True,0,0.0,,,,
+TikTok,us,en,464,missing_review_text,True,0,0.0,,,,
+TikTok,us,en,464,missing_rating,True,0,0.0,,,,
+TikTok,us,en,464,missing_publication_timestamp,True,0,0.0,,,,
+TikTok,us,en,464,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+TikTok,us,en,464,has_developer_reply,True,0,0.0,,,,
+TikTok,us,en,464,has_app_version,True,464,1.0,,,,
+TikTok,us,en,464,low_signal_text,True,35,0.07543103448275862,,,,
+TikTok,us,en,464,repeated_text,True,0,0.0,,,,
+TikTok,us,en,464,issue_login,True,11,0.023706896551724137,,,,
+TikTok,us,en,464,issue_payment,True,3,0.00646551724137931,,,,
+TikTok,us,en,464,issue_performance,True,14,0.03017241379310345,,,,
+TikTok,us,en,464,issue_subscription,True,0,0.0,,,,
+TikTok,us,en,464,issue_delivery,True,2,0.004310344827586207,,,,
+TikTok,us,en,464,issue_customer_service,True,1,0.0021551724137931034,,,,
+TikTok,us,en,464,rating_distribution,1.0,202,0.4353448275862069,,,,
+TikTok,us,en,464,rating_distribution,2.0,58,0.125,,,,
+TikTok,us,en,464,rating_distribution,3.0,42,0.09051724137931035,,,,
+TikTok,us,en,464,rating_distribution,4.0,45,0.09698275862068965,,,,
+TikTok,us,en,464,rating_distribution,5.0,117,0.2521551724137931,,,,
+TikTok,us,en,464,publication_time_coverage,valid,464,1.0,2026.0,2026.0,2026.0,2026.0
+Uber,us,en,50,review_text_character_count,,50,,6.0,58.5,104.94,535.0
+Uber,us,en,50,review_text_word_count,,50,,1.0,10.0,19.6,105.0
+Uber,us,en,50,title_character_count,,50,,3.0,13.0,15.98,57.0
+Uber,us,en,50,title_word_count,,50,,1.0,2.0,2.76,9.0
+Uber,us,en,50,missing_title,True,0,0.0,,,,
+Uber,us,en,50,missing_review_text,True,0,0.0,,,,
+Uber,us,en,50,missing_rating,True,0,0.0,,,,
+Uber,us,en,50,missing_publication_timestamp,True,0,0.0,,,,
+Uber,us,en,50,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Uber,us,en,50,has_developer_reply,True,0,0.0,,,,
+Uber,us,en,50,has_app_version,True,50,1.0,,,,
+Uber,us,en,50,low_signal_text,True,8,0.16,,,,
+Uber,us,en,50,repeated_text,True,0,0.0,,,,
+Uber,us,en,50,issue_login,True,0,0.0,,,,
+Uber,us,en,50,issue_payment,True,3,0.06,,,,
+Uber,us,en,50,issue_performance,True,1,0.02,,,,
+Uber,us,en,50,issue_subscription,True,0,0.0,,,,
+Uber,us,en,50,issue_delivery,True,2,0.04,,,,
+Uber,us,en,50,issue_customer_service,True,1,0.02,,,,
+Uber,us,en,50,rating_distribution,1.0,6,0.12,,,,
+Uber,us,en,50,rating_distribution,3.0,2,0.04,,,,
+Uber,us,en,50,rating_distribution,5.0,42,0.84,,,,
+Uber,us,en,50,publication_time_coverage,valid,50,1.0,2026.0,2026.0,2026.0,2026.0
+WhatsApp,us,en,250,review_text_character_count,,250,,1.0,62.5,112.276,1052.0
+WhatsApp,us,en,250,review_text_word_count,,250,,0.0,11.5,20.772,185.0
+WhatsApp,us,en,250,title_character_count,,250,,1.0,11.0,16.024,100.0
+WhatsApp,us,en,250,title_word_count,,250,,0.0,2.0,2.856,21.0
+WhatsApp,us,en,250,missing_title,True,0,0.0,,,,
+WhatsApp,us,en,250,missing_review_text,True,0,0.0,,,,
+WhatsApp,us,en,250,missing_rating,True,0,0.0,,,,
+WhatsApp,us,en,250,missing_publication_timestamp,True,0,0.0,,,,
+WhatsApp,us,en,250,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+WhatsApp,us,en,250,has_developer_reply,True,0,0.0,,,,
+WhatsApp,us,en,250,has_app_version,True,250,1.0,,,,
+WhatsApp,us,en,250,low_signal_text,True,50,0.2,,,,
+WhatsApp,us,en,250,repeated_text,True,0,0.0,,,,
+WhatsApp,us,en,250,issue_login,True,5,0.02,,,,
+WhatsApp,us,en,250,issue_payment,True,2,0.008,,,,
+WhatsApp,us,en,250,issue_performance,True,5,0.02,,,,
+WhatsApp,us,en,250,issue_subscription,True,1,0.004,,,,
+WhatsApp,us,en,250,issue_delivery,True,0,0.0,,,,
+WhatsApp,us,en,250,issue_customer_service,True,1,0.004,,,,
+WhatsApp,us,en,250,rating_distribution,1.0,94,0.376,,,,
+WhatsApp,us,en,250,rating_distribution,2.0,16,0.064,,,,
+WhatsApp,us,en,250,rating_distribution,3.0,18,0.072,,,,
+WhatsApp,us,en,250,rating_distribution,4.0,21,0.084,,,,
+WhatsApp,us,en,250,rating_distribution,5.0,101,0.404,,,,
+WhatsApp,us,en,250,publication_time_coverage,valid,250,1.0,2026.0,2026.0,2026.0,2026.0
+YouTube,us,en,50,review_text_character_count,,50,,3.0,56.5,120.4,708.0
+YouTube,us,en,50,review_text_word_count,,50,,1.0,12.5,22.94,123.0
+YouTube,us,en,50,title_character_count,,50,,2.0,11.5,15.38,53.0
+YouTube,us,en,50,title_word_count,,50,,1.0,2.0,3.16,9.0
+YouTube,us,en,50,missing_title,True,0,0.0,,,,
+YouTube,us,en,50,missing_review_text,True,0,0.0,,,,
+YouTube,us,en,50,missing_rating,True,0,0.0,,,,
+YouTube,us,en,50,missing_publication_timestamp,True,0,0.0,,,,
+YouTube,us,en,50,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+YouTube,us,en,50,has_developer_reply,True,0,0.0,,,,
+YouTube,us,en,50,has_app_version,True,50,1.0,,,,
+YouTube,us,en,50,low_signal_text,True,10,0.2,,,,
+YouTube,us,en,50,repeated_text,True,0,0.0,,,,
+YouTube,us,en,50,issue_login,True,0,0.0,,,,
+YouTube,us,en,50,issue_payment,True,1,0.02,,,,
+YouTube,us,en,50,issue_performance,True,0,0.0,,,,
+YouTube,us,en,50,issue_subscription,True,0,0.0,,,,
+YouTube,us,en,50,issue_delivery,True,0,0.0,,,,
+YouTube,us,en,50,issue_customer_service,True,0,0.0,,,,
+YouTube,us,en,50,rating_distribution,1.0,12,0.24,,,,
+YouTube,us,en,50,rating_distribution,2.0,4,0.08,,,,
+YouTube,us,en,50,rating_distribution,3.0,3,0.06,,,,
+YouTube,us,en,50,rating_distribution,4.0,5,0.1,,,,
+YouTube,us,en,50,rating_distribution,5.0,26,0.52,,,,
+YouTube,us,en,50,publication_time_coverage,valid,50,1.0,2026.0,2026.0,2026.0,2026.0
+Zoom,us,en,500,review_text_character_count,,500,,1.0,61.5,117.888,1161.0
+Zoom,us,en,500,review_text_word_count,,500,,0.0,12.0,21.97,222.0
+Zoom,us,en,500,title_character_count,,500,,1.0,13.0,17.36,100.0
+Zoom,us,en,500,title_word_count,,500,,0.0,2.0,3.112,22.0
+Zoom,us,en,500,missing_title,True,0,0.0,,,,
+Zoom,us,en,500,missing_review_text,True,0,0.0,,,,
+Zoom,us,en,500,missing_rating,True,0,0.0,,,,
+Zoom,us,en,500,missing_publication_timestamp,True,0,0.0,,,,
+Zoom,us,en,500,publication_timestamp_missing_or_invalid,True,0,0.0,,,,
+Zoom,us,en,500,has_developer_reply,True,0,0.0,,,,
+Zoom,us,en,500,has_app_version,True,500,1.0,,,,
+Zoom,us,en,500,low_signal_text,True,93,0.186,,,,
+Zoom,us,en,500,repeated_text,True,5,0.01,,,,
+Zoom,us,en,500,issue_login,True,13,0.026,,,,
+Zoom,us,en,500,issue_payment,True,10,0.02,,,,
+Zoom,us,en,500,issue_performance,True,6,0.012,,,,
+Zoom,us,en,500,issue_subscription,True,3,0.006,,,,
+Zoom,us,en,500,issue_delivery,True,0,0.0,,,,
+Zoom,us,en,500,issue_customer_service,True,9,0.018,,,,
+Zoom,us,en,500,rating_distribution,1.0,141,0.282,,,,
+Zoom,us,en,500,rating_distribution,2.0,41,0.082,,,,
+Zoom,us,en,500,rating_distribution,3.0,27,0.054,,,,
+Zoom,us,en,500,rating_distribution,4.0,28,0.056,,,,
+Zoom,us,en,500,rating_distribution,5.0,263,0.526,,,,
+Zoom,us,en,500,publication_time_coverage,valid,500,1.0,2026.0,2026.0,2026.0,2026.0

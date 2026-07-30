@@ -218,6 +218,32 @@ python -m src.run_assessment --config config.yaml --source apple_app_store_valid
 
 The configured default target is 10,000 Apple App Store reviews across multiple apps/storefronts where feasible. Actual volume may be lower because Apple RSS page depth, app review volume, storefront behavior, network conditions, and conservative caps can limit collection.
 
+## Deterministic Review Features
+
+Generate a separate, run-specific feature dataset from an explicit normalized-review CSV:
+
+```bash
+python -m src.review_features \
+  --input data/processed/apple_app_store_validation/apple-large-10000/apple_app_store_validation_reviews.csv \
+  --config config/review_feature_rules_v1.yaml \
+  --output-root data/processed/review_features \
+  --run-id apple-large-feature-v1
+```
+
+Then generate the deterministic validation report using the observed input count:
+
+```bash
+python -m src.review_feature_report \
+  --features data/processed/review_features/apple-large-feature-v1/review_features.csv \
+  --input-row-count 6396 \
+  --output-root reports/review_features \
+  --run-id apple-large-feature-v1
+```
+
+The generator preserves one row per normalized review, retains identifiers and lineage, and never overwrites
+raw or normalized datasets. Rules are versioned in `config/review_feature_rules_v1.yaml`. See
+`docs/review_feature_methodology.md` and `docs/review_feature_data_dictionary.md`.
+
 If a validation run cannot reach the configured target, the generated summary, EDA Markdown, errors table, and pagination table record the actual collected count and observed reason, such as empty RSS pages, request failures, duplicate records, configured page-depth exhaustion, or target/storefront limits.
 
 ## Tests
