@@ -40,7 +40,7 @@ def test_text_unicode_whitespace_null_and_low_signal_rules() -> None:
 
     assert features.loc["r1", "review_text_character_count"] == len("i cannot log in!")
     assert features.loc["r1", "review_text_word_count"] == 4
-    assert features.loc["r2", "title_character_count"] == len("login issue")
+    assert features.loc["r2", "title_character_count"] == len("password trouble")
     assert features.loc["r5", "review_text_character_count"] == 0
     assert features.loc["r5", "review_text_word_count"] == 0
     assert not bool(features.loc["r5", "has_review_text"])
@@ -58,6 +58,8 @@ def test_fixed_time_features_and_invalid_timestamp_handling() -> None:
     assert features.loc["r1", "publication_month"] == 7
     assert features.loc["r1", "publication_day_of_week"] == "Sunday"
     assert features.loc["r1", "review_age_days"] == 2.0
+    assert features.loc["r1", "review_age_at_collection_days"] == 1.0
+    assert features.loc["r2", "review_age_at_collection_days"] == pytest.approx(1 / 24)
     assert not bool(features.loc["r1", "publication_timestamp_missing_or_invalid"])
     assert pd.isna(features.loc["r3", "publication_year"])
     assert pd.isna(features.loc["r3", "review_age_days"])
@@ -65,28 +67,43 @@ def test_fixed_time_features_and_invalid_timestamp_handling() -> None:
     assert not bool(features.loc["r3", "missing_publication_timestamp"])
     assert bool(features.loc["r5", "missing_publication_timestamp"])
     assert features.loc["r4", "review_age_days"] == pytest.approx(1 / 3)
+    assert features.loc["r6", "review_age_days"] == -1.0
+    assert features.loc["r6", "review_age_at_collection_days"] == pytest.approx(1 / 48)
 
 
-def test_repeated_text_flags_every_member_without_removal() -> None:
+def test_repeated_body_ignores_title_and_full_content_requires_both() -> None:
     features = _features().set_index("review_id")
 
-    assert bool(features.loc["r1", "repeated_text"])
-    assert bool(features.loc["r2", "repeated_text"])
-    assert features.loc["r1", "repeated_text_group_size"] == 2
-    assert features.loc["r2", "repeated_text_group_size"] == 2
-    assert features.loc["r1", "repeated_text_fingerprint"] == features.loc["r2", "repeated_text_fingerprint"]
-    assert not bool(features.loc["r5", "repeated_text"])
+    assert bool(features.loc["r1", "repeated_review_body"])
+    assert bool(features.loc["r2", "repeated_review_body"])
+    assert features.loc["r1", "repeated_review_body_group_size"] == 2
+    assert features.loc["r1", "repeated_review_body_fingerprint"] == features.loc["r2", "repeated_review_body_fingerprint"]
+    assert not bool(features.loc["r1", "repeated_full_content"])
+    assert not bool(features.loc["r2", "repeated_full_content"])
+    assert not bool(features.loc["r5", "repeated_review_body"])
     assert len(features) == 6
+
+
+def test_repeated_full_content_is_scoped_by_app_and_storefront() -> None:
+    source = read_normalized_reviews(FIXTURE_PATH)
+    copies = pd.concat([source.iloc[[0]], source.iloc[[0]], source.iloc[[0]]], ignore_index=True)
+    copies["review_id"] = ["same-1", "same-2", "other-store"]
+    copies.loc[2, "country"] = "gb"
+    features = generate_review_features(copies, load_feature_rules(RULES_PATH)).set_index("review_id")
+
+    assert bool(features.loc["same-1", "repeated_full_content"])
+    assert features.loc["same-1", "repeated_full_content_group_size"] == 2
+    assert not bool(features.loc["other-store", "repeated_full_content"])
 
 
 def test_keyword_boundaries_phrases_language_and_metadata() -> None:
     features = _features().set_index("review_id")
 
-    assert bool(features.loc["r1", "issue_login"])
-    assert bool(features.loc["r4", "issue_payment"])
-    assert bool(features.loc["r4", "issue_customer_service"])
-    assert bool(features.loc["r4", "issue_delivery"])
-    assert bool(features.loc["r3", "issue_performance"])
+    assert bool(features.loc["r1", "login_topic_signal"])
+    assert bool(features.loc["r4", "payment_topic_signal"])
+    assert bool(features.loc["r4", "customer_service_topic_signal"])
+    assert bool(features.loc["r4", "delivery_topic_signal"])
+    assert bool(features.loc["r3", "performance_topic_signal"])
     assert bool(features.loc["r1", "declared_language_available"])
     assert bool(features.loc["r1", "language_script_consistent"])
     assert not bool(features.loc["r6", "language_script_consistent"])
@@ -97,7 +114,7 @@ def test_keyword_boundaries_phrases_language_and_metadata() -> None:
 
 def test_keyword_token_boundary_does_not_match_substrings(tmp_path: Path) -> None:
     raw = yaml.safe_load(RULES_PATH.read_text(encoding="utf-8"))
-    raw["keyword_categories"]["login"] = ["log"]
+    raw["topic_signal_keywords"]["login"] = ["log"]
     path = tmp_path / "rules.yaml"
     path.write_text(yaml.safe_dump(raw, sort_keys=False), encoding="utf-8")
     source = read_normalized_reviews(FIXTURE_PATH).iloc[[0]].copy()
@@ -106,7 +123,18 @@ def test_keyword_token_boundary_does_not_match_substrings(tmp_path: Path) -> Non
 
     features = generate_review_features(source, load_feature_rules(path))
 
-    assert not bool(features.iloc[0]["issue_login"])
+    assert not bool(features.iloc[0]["login_topic_signal"])
+
+
+def test_rating_derived_sentiment_is_a_nullable_weak_label() -> None:
+    features = _features().set_index("review_id")
+
+    assert features.loc["r1", "weak_sentiment_label"] == "negative"
+    assert features.loc["r2", "weak_sentiment_label"] == "negative"
+    assert features.loc["r3", "weak_sentiment_label"] == "neutral"
+    assert features.loc["r4", "weak_sentiment_label"] == "positive"
+    assert features.loc["r6", "weak_sentiment_label"] == "positive"
+    assert pd.isna(features.loc["r5", "weak_sentiment_label"])
 
 
 def test_run_specific_output_does_not_overwrite_input(tmp_path: Path) -> None:

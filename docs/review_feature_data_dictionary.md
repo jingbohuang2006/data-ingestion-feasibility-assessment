@@ -50,24 +50,29 @@ explicitly stated. `string` includes ISO-8601 timestamp strings where noted.
 | `publication_month` | integer | `review_date` | UTC month, 1–12 | Null when missing/invalid | Publication month |
 | `publication_day_of_week` | string | `review_date` | English UTC weekday name | Null when missing/invalid | Publication weekday |
 | `review_age_days` | number | `review_date`, rules | Fractional days to fixed reference timestamp | Null when missing/invalid | Reproducible review age |
+| `review_age_at_collection_days` | number | `review_date`, `collected_at` | Fractional days from publication to collection | Null when either timestamp is missing/invalid | Operational age at collection |
 | `publication_timestamp_missing_or_invalid` | boolean | `review_date` | True when absent or not timezone-aware ISO-8601 | Never null | Timestamp usability flag |
 | `has_app_version` | boolean | `app_version` | Non-null/non-blank check | Never null | App-version availability |
 | `has_developer_reply` | boolean | `developer_response` | Non-null/non-blank check | Never null | Reply availability, not quality |
 | `low_signal_text` | boolean | `review_text`, rules | Absent or below configured character/word threshold | Never null | Weak review-body text signal |
-| `repeated_text` | boolean | title, text, scope | Group size greater than one | Never null | Repeated content within scope |
-| `repeated_text_fingerprint` | string | title, text | SHA-256 of normalized title/body | Null when both are empty | Stable review-safe content key |
-| `repeated_text_group_size` | integer | fingerprint, scope | Size of scoped fingerprint group | `0` for empty content | Repeated group membership size |
+| `repeated_full_content` | boolean | title, text, scope | Scoped normalized title+body group size greater than one | Never null | Identical full content within App/storefront |
+| `repeated_full_content_fingerprint` | string | title, text | SHA-256 of normalized title/body | Null when both are empty | Stable full-content key |
+| `repeated_full_content_group_size` | integer | fingerprint, scope | Size of scoped full-content group | `0` for empty content | Full-content group membership size |
+| `repeated_review_body` | boolean | text, scope | Scoped normalized body group size greater than one | Never null | Identical body regardless of title |
+| `repeated_review_body_fingerprint` | string | text | SHA-256 of normalized body | Null when body is empty | Stable review-body key |
+| `repeated_review_body_group_size` | integer | fingerprint, scope | Size of scoped body group | `0` for empty body | Review-body group membership size |
 | `missing_title` | boolean | `review_title` | Inverse of `has_title` | Never null | Missing/blank title |
 | `missing_review_text` | boolean | `review_text` | Inverse of `has_review_text` | Never null | Missing/blank body |
 | `missing_rating` | boolean | `rating` | Null/blank check | Never null | Rating availability |
 | `missing_publication_timestamp` | boolean | `review_date` | Null/blank check only | Never null | Timestamp source availability |
 | `declared_language_available` | boolean | `language` | Null/blank check | Never null | Declared-language availability |
 | `language_script_consistent` | boolean | language, title, text, rules | Latin-letter ratio for supported English text | Null when unsupported/too short | Limited script consistency, not detection |
-| `issue_login` | boolean | title, text, rules | Boundary match for configured login terms | Never null | Login issue vocabulary present |
-| `issue_payment` | boolean | title, text, rules | Boundary match for configured payment terms | Never null | Payment issue vocabulary present |
-| `issue_performance` | boolean | title, text, rules | Boundary match for configured performance terms | Never null | Performance issue vocabulary present |
-| `issue_subscription` | boolean | title, text, rules | Boundary match for configured subscription terms | Never null | Subscription vocabulary present |
-| `issue_delivery` | boolean | title, text, rules | Boundary match for configured delivery terms | Never null | Delivery issue vocabulary present |
-| `issue_customer_service` | boolean | title, text, rules | Boundary match for configured service terms | Never null | Customer-service vocabulary present |
+| `login_topic_signal` | boolean | title, text, rules | Boundary match for configured login terms | Never null | Login vocabulary present; not a confirmed issue |
+| `payment_topic_signal` | boolean | title, text, rules | Boundary match for configured payment terms | Never null | Payment vocabulary present; not a confirmed issue |
+| `performance_topic_signal` | boolean | title, text, rules | Boundary match for configured performance terms | Never null | Performance vocabulary present; not a confirmed issue |
+| `subscription_topic_signal` | boolean | title, text, rules | Boundary match for configured subscription terms | Never null | Subscription vocabulary present; not a confirmed issue |
+| `delivery_topic_signal` | boolean | title, text, rules | Boundary match for configured delivery terms | Never null | Delivery vocabulary present; not a confirmed issue |
+| `customer_service_topic_signal` | boolean | title, text, rules | Boundary match for configured service terms | Never null | Service vocabulary present; not a confirmed issue |
+| `weak_sentiment_label` | string | `rating` | 1–2 negative; 3 neutral; 4–5 positive | Null when rating is missing/invalid/out of range | Weak validation label only; prohibited as model feature or target |
 | `feature_rule_version` | string | rules | Copied validated rule version | Never null | Feature definition version |
 | `feature_reference_timestamp` | string | rules | Canonical fixed UTC reference | Never null | Review-age calculation reference |

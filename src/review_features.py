@@ -18,7 +18,7 @@ import yaml
 from .models import NORMALIZED_FIELDS
 
 
-ISSUE_CATEGORIES = (
+TOPIC_CATEGORIES = (
     "login",
     "payment",
     "performance",
@@ -39,20 +39,25 @@ DERIVED_FEATURE_FIELDS = [
     "publication_month",
     "publication_day_of_week",
     "review_age_days",
+    "review_age_at_collection_days",
     "publication_timestamp_missing_or_invalid",
     "has_app_version",
     "has_developer_reply",
     "low_signal_text",
-    "repeated_text",
-    "repeated_text_fingerprint",
-    "repeated_text_group_size",
+    "repeated_full_content",
+    "repeated_full_content_fingerprint",
+    "repeated_full_content_group_size",
+    "repeated_review_body",
+    "repeated_review_body_fingerprint",
+    "repeated_review_body_group_size",
     "missing_title",
     "missing_review_text",
     "missing_rating",
     "missing_publication_timestamp",
     "declared_language_available",
     "language_script_consistent",
-    *[f"issue_{category}" for category in ISSUE_CATEGORIES],
+    *[f"{category}_topic_signal" for category in TOPIC_CATEGORIES],
+    "weak_sentiment_label",
     "feature_rule_version",
     "feature_reference_timestamp",
 ]
@@ -85,10 +90,10 @@ def load_feature_rules(path: str | Path) -> FeatureRules:
         "text_normalization",
         "word_count",
         "low_signal",
-        "repeated_text",
+        "repeated_content",
         "missing_fields",
         "language_indicator",
-        "keyword_categories",
+        "topic_signal_keywords",
     }
     missing = sorted(required - set(raw))
     if missing:
@@ -117,12 +122,12 @@ def load_feature_rules(path: str | Path) -> FeatureRules:
         if not isinstance(low_signal, dict) or not isinstance(low_signal.get(key), int) or low_signal[key] < 0:
             raise ValueError(f"low_signal.{key} must be a non-negative integer.")
 
-    repeated = raw["repeated_text"]
+    repeated = raw["repeated_content"]
     expected_scope = ["source", "app_identifier", "country", "language"]
     if not isinstance(repeated, dict) or repeated.get("scope") != expected_scope:
-        raise ValueError(f"repeated_text.scope must be exactly {expected_scope}.")
+        raise ValueError(f"repeated_content.scope must be exactly {expected_scope}.")
     if repeated.get("fingerprint_algorithm") != "sha256":
-        raise ValueError("repeated_text.fingerprint_algorithm must be sha256.")
+        raise ValueError("repeated_content.fingerprint_algorithm must be sha256.")
 
     missing_fields = raw["missing_fields"]
     expected_missing_fields = ["review_title", "review_text", "rating", "review_date"]
@@ -139,16 +144,16 @@ def load_feature_rules(path: str | Path) -> FeatureRules:
     if not isinstance(minimum_letters, int) or minimum_letters < 1:
         raise ValueError("language_indicator.minimum_letters must be a positive integer.")
 
-    keywords = raw["keyword_categories"]
+    keywords = raw["topic_signal_keywords"]
     if not isinstance(keywords, dict):
-        raise ValueError("keyword_categories must be a mapping.")
-    missing_categories = [category for category in ISSUE_CATEGORIES if category not in keywords]
+        raise ValueError("topic_signal_keywords must be a mapping.")
+    missing_categories = [category for category in TOPIC_CATEGORIES if category not in keywords]
     if missing_categories:
-        raise ValueError(f"keyword_categories is missing: {', '.join(missing_categories)}")
-    for category in ISSUE_CATEGORIES:
+        raise ValueError(f"topic_signal_keywords is missing: {', '.join(missing_categories)}")
+    for category in TOPIC_CATEGORIES:
         values = keywords[category]
         if not isinstance(values, list) or not values or any(not str(value).strip() for value in values):
-            raise ValueError(f"keyword_categories.{category} must be a non-empty list of non-empty strings.")
+            raise ValueError(f"topic_signal_keywords.{category} must be a non-empty list of non-empty strings.")
 
     return FeatureRules(version, reference, raw, word_pattern)
 
@@ -191,6 +196,16 @@ def generate_review_features(frame: pd.DataFrame, rules: FeatureRules) -> pd.Dat
         ],
         dtype="Float64",
     )
+    collected_dates = [_parse_timestamp(value) for value in source["collected_at"]]
+    output["review_age_at_collection_days"] = pd.array(
+        [
+            (collected - published).total_seconds() / 86400
+            if published is not None and collected is not None
+            else None
+            for published, collected in zip(parsed_dates, collected_dates)
+        ],
+        dtype="Float64",
+    )
     invalid_timestamp = pd.Series([value is None for value in parsed_dates], index=source.index)
     output["publication_timestamp_missing_or_invalid"] = invalid_timestamp
 
@@ -214,45 +229,30 @@ def generate_review_features(frame: pd.DataFrame, rules: FeatureRules) -> pd.Dat
         | (output["review_text_word_count"] < low_signal["minimum_review_text_words"])
     )
 
-    repeated = rules.raw["repeated_text"]
-    fingerprint_text = _fingerprint_text(normalized_title, normalized_review, repeated)
+    repeated = rules.raw["repeated_content"]
     minimum_length = int(repeated.get("minimum_normalized_characters", 1))
-    fingerprints = fingerprint_text.map(
-        lambda value: hashlib.sha256(value.encode("utf-8")).hexdigest() if len(value) >= minimum_length else None
-    )
     app_identifier = source.apply(_app_identifier, axis=1)
-    scope = pd.DataFrame(
-        {
-            "source": source["source"].map(_scope_value),
-            "app_identifier": app_identifier,
-            "country": source["country"].map(_scope_value),
-            "language": source["language"].map(_scope_value),
-            "fingerprint": fingerprints,
-        },
-        index=source.index,
-    )
-    valid = scope["fingerprint"].notna()
-    group_sizes = pd.Series(0, index=source.index, dtype="int64")
-    group_sizes.loc[valid] = (
-        scope.loc[valid]
-        .groupby(["source", "app_identifier", "country", "language", "fingerprint"], dropna=False)[
-            "fingerprint"
-        ]
-        .transform("size")
-        .astype("int64")
-    )
-    output["repeated_text"] = group_sizes.gt(1)
-    output["repeated_text_fingerprint"] = fingerprints
-    output["repeated_text_group_size"] = group_sizes
+    scope = pd.DataFrame({
+        "source": source["source"].map(_scope_value),
+        "app_identifier": app_identifier,
+        "country": source["country"].map(_scope_value),
+        "language": source["language"].map(_scope_value),
+    }, index=source.index)
+    full_content = normalized_title + "\n" + normalized_review
+    full_content = full_content.str.strip()
+    _add_repeated_features(output, scope, full_content, minimum_length, "repeated_full_content")
+    _add_repeated_features(output, scope, normalized_review, minimum_length, "repeated_review_body")
 
-    for category in ISSUE_CATEGORIES:
+    for category in TOPIC_CATEGORIES:
         patterns = [
             _keyword_pattern(normalize_text(keyword, rules))
-            for keyword in rules.raw["keyword_categories"][category]
+            for keyword in rules.raw["topic_signal_keywords"][category]
         ]
-        output[f"issue_{category}"] = combined.map(
+        output[f"{category}_topic_signal"] = combined.map(
             lambda value: any(pattern.search(value) is not None for pattern in patterns)
         )
+
+    output["weak_sentiment_label"] = source["rating"].map(_weak_sentiment_label)
 
     output["feature_rule_version"] = rules.version
     output["feature_reference_timestamp"] = rules.reference_timestamp.isoformat().replace("+00:00", "Z")
@@ -333,18 +333,45 @@ def _app_identifier(row: pd.Series) -> str:
     return ""
 
 
-def _fingerprint_text(title: pd.Series, review: pd.Series, rules: dict[str, Any]) -> pd.Series:
-    parts: list[pd.Series] = []
-    if rules.get("include_title", True):
-        parts.append(title)
-    if rules.get("include_review_text", True):
-        parts.append(review)
-    if not parts:
-        raise ValueError("repeated_text must include title and/or review text.")
-    result = parts[0]
-    for part in parts[1:]:
-        result = result + "\n" + part
-    return result.str.strip()
+def _add_repeated_features(
+    output: pd.DataFrame,
+    scope: pd.DataFrame,
+    content: pd.Series,
+    minimum_length: int,
+    prefix: str,
+) -> None:
+    fingerprints = content.map(
+        lambda value: hashlib.sha256(value.encode("utf-8")).hexdigest()
+        if len(value) >= minimum_length else None
+    )
+    grouped = scope.assign(fingerprint=fingerprints)
+    valid = grouped["fingerprint"].notna()
+    sizes = pd.Series(0, index=scope.index, dtype="int64")
+    sizes.loc[valid] = (
+        grouped.loc[valid]
+        .groupby(["source", "app_identifier", "country", "language", "fingerprint"], dropna=False)["fingerprint"]
+        .transform("size")
+        .astype("int64")
+    )
+    output[prefix] = sizes.gt(1)
+    output[f"{prefix}_fingerprint"] = fingerprints
+    output[f"{prefix}_group_size"] = sizes
+
+
+def _weak_sentiment_label(value: Any) -> str | None:
+    if not _is_present(value):
+        return None
+    try:
+        rating = float(value)
+    except (TypeError, ValueError):
+        return None
+    if 1 <= rating <= 2:
+        return "negative"
+    if rating == 3:
+        return "neutral"
+    if 4 <= rating <= 5:
+        return "positive"
+    return None
 
 
 def _keyword_pattern(keyword: str) -> re.Pattern[str]:

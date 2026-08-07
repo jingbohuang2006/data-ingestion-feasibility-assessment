@@ -14,9 +14,9 @@ schema order followed by the documented derived-feature order.
 
 ## Versioned rules
 
-`config/review_feature_rules_v1.yaml` is the authoritative ruleset. It records version `1.0.0`, the fixed
+`config/review_feature_rules_v1.yaml` is the authoritative ruleset. It records version `1.1.0`, the fixed
 reference timestamp, normalization and token rules, low-signal thresholds, repeated-text behavior,
-missing-field scope, language/script settings, and all issue keywords. The loader rejects missing sections,
+missing-field scope, language/script settings, and all topic-signal keywords. The loader rejects missing sections,
 invalid timestamps, unsupported normalization or fingerprint algorithms, invalid regular expressions, and
 missing keyword categories with actionable errors.
 
@@ -35,17 +35,19 @@ underscore, optionally containing an internal ASCII or curly apostrophe.
 `low_signal_text` is true when review text is absent, has fewer than 15 normalized characters, or has fewer
 than 3 words. It is a text-signal indicator, not a deletion rule. The row remains in the feature dataset.
 
-## Repeated text
+## Repeated content
 
-The fingerprint input is normalized title, a newline separator, and normalized review text. Non-empty values
-are hashed with SHA-256. Repetition is grouped within:
+Two independent SHA-256 indicators are generated. `repeated_full_content` fingerprints normalized title plus
+normalized review body; `repeated_review_body` fingerprints the normalized body alone, so identical bodies can
+be detected even when titles differ. Repetition for both is grouped within:
 
 `source + app_identifier + country + language + fingerprint`
 
 `app_identifier` deterministically selects the first available value from `item_id`, `package_id`,
 `item_name`, and `app_name`, retaining the field name in the scoped value. Every member of a group larger
 than one is flagged. Empty title-and-text records are not grouped as repeated. Rows are never removed.
-The SHA-256 fingerprint is review-safe derived text metadata rather than readable review content.
+Empty applicable content is not grouped. Each indicator has its own fingerprint and group-size field. The
+SHA-256 fingerprints are review-safe derived text metadata rather than readable review content.
 
 ## Language indicator
 
@@ -66,6 +68,10 @@ with `publication_timestamp_missing_or_invalid=true`. The distinct
 `2026-07-07T00:00:00Z` reference. It never uses the system clock. Negative values are retained when a review
 is later than the reference timestamp because altering them would conceal source/reference inconsistencies.
 
+`review_age_at_collection_days` is the operational age at ingestion: `collected_at - review_date`, also in
+fractional 24-hour days. It is null if either timestamp is missing, malformed, or timezone-naive. Negative
+values are retained as evidence of timestamp or clock inconsistencies.
+
 ## Metadata and quality treatment
 
 App version and developer reply are availability indicators. In particular, `has_developer_reply=false`
@@ -73,15 +79,33 @@ does not set `low_signal_text` or any general quality-failure field. Missing tit
 publication timestamp are independent flags. Invalid non-empty timestamps are additionally identified by the
 parse-validity flag.
 
-## Keyword issue signals
+## Topic vocabulary signals
 
-Each issue category is matched independently against normalized title plus normalized review text. Keywords
+Each topic category is matched independently against normalized title plus normalized review text. Keywords
 and phrases come only from the versioned YAML. Matching uses Unicode word boundaries implemented as
 non-word lookarounds; spaces inside phrases accept normalized whitespace. A review can activate multiple
 categories. Multiple matches in one category still produce one Boolean value. Substrings inside larger words
 do not match.
 
-These signals are transparent lexical indicators, not sentiment predictions.
+Fields use the `<topic>_topic_signal` suffix. These are transparent lexical indicators: they show that
+configured vocabulary is present, not that a user problem has been confirmed, and they are not sentiment predictions.
+
+## Rating-derived weak sentiment labels
+
+`weak_sentiment_label` maps ratings 1–2 to `negative`, 3 to `neutral`, and 4–5 to `positive`. Missing,
+non-numeric, and out-of-range ratings yield null. This is a weak label for manual data-quality validation only;
+no model is trained. It must not later be used as a model feature or prediction target. Rating must also not be
+used as circular evidence that the weak label agrees with human sentiment.
+
+## Stratified manual validation
+
+The report command writes a deterministic `manual_validation_sample.csv` (135 rows by default, configurable
+from approximately 120–150). Selection seeds coverage across weak sentiment classes, Apps, storefronts,
+low-signal text, both repeated-content flags, and all six topic signals, then fills across sentiment classes.
+Annotators complete human sentiment, agreement, mixed/unclear, topic-relevance, and duplication-judgment fields
+using `docs/manual_validation_annotation_guidelines.md`. Flagged duplicate rows include one same-scope peer
+example so the judgment is self-contained. The validation
+report deliberately leaves reliability and rule-refinement conclusions pending until annotation is complete.
 
 ## Lineage and future PostgreSQL integration
 
@@ -93,6 +117,5 @@ raw or normalized tables.
 
 ## Target-leakage warning
 
-No rating-derived sentiment label is created here. If a future project derives sentiment targets from rating,
-then rating and every rating-derived field must be excluded from model inputs. Using them would disclose the
-target definition to the model and create target leakage.
+Rating and `weak_sentiment_label` are evaluation metadata only. Neither may be used as a model feature, and the
+weak label may not be used as a prediction target. Doing so would create leakage or train against an unvalidated proxy.

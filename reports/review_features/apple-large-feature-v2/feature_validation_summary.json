@@ -1,0 +1,51 @@
+{
+  "duplicate_contextual_identity_count": 0,
+  "feature_reference_timestamps": [
+    "2026-07-07T00:00:00Z"
+  ],
+  "feature_rule_versions": [
+    "1.1.0"
+  ],
+  "input_row_count": 6396,
+  "lineage_fields": [
+    "source",
+    "app_name",
+    "item_id",
+    "package_id",
+    "item_name",
+    "review_id",
+    "country",
+    "language",
+    "source_url",
+    "collected_at",
+    "raw_page_number",
+    "raw_cursor"
+  ],
+  "lineage_fields_retained": true,
+  "output_row_count": 6396,
+  "overall_rates": {
+    "customer_service_topic_signal": 0.02689180737961226,
+    "delivery_topic_signal": 0.005628517823639775,
+    "has_app_version": 1.0,
+    "has_developer_reply": 0.0,
+    "login_topic_signal": 0.030175109443402126,
+    "low_signal_text": 0.08614759224515323,
+    "missing_publication_timestamp": 0.0,
+    "missing_rating": 0.0,
+    "missing_review_text": 0.0,
+    "missing_title": 0.0,
+    "payment_topic_signal": 0.043777360850531584,
+    "performance_topic_signal": 0.024859287054409006,
+    "publication_timestamp_missing_or_invalid": 0.0,
+    "repeated_full_content": 0.0014071294559099437,
+    "repeated_review_body": 0.008130081300813009,
+    "subscription_topic_signal": 0.01876172607879925
+  },
+  "row_count_preserved": true,
+  "unique_contextual_review_identity_count": 6396,
+  "weak_sentiment_label_counts": {
+    "negative": 3485,
+    "neutral": 501,
+    "positive": 2410
+  }
+}

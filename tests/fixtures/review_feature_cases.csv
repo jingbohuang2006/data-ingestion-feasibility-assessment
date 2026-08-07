@@ -1,7 +1,7 @@
 source,app_name,item_id,package_id,item_name,review_id,review_title,review_text,rating,recommendation,review_date,author_id,author_name,verified_purchase,helpful_votes,funny_votes,playtime_forever,playtime_at_review,app_version,language,country,developer_response,developer_response_date,source_url,collected_at,raw_page_number,raw_cursor
 apple_app_store,App A,app-a,,,r1,Login issue,"  I   cannot log in!  ",1.0,,2026-07-05T00:00:00Z,,,,,,,,1.0,en,us,,,https://example.test/a?page=1,2026-07-06T00:00:00Z,1,
-apple_app_store,App A,app-a,,,r2,Ｌｏｇｉｎ issue,I cannot log in!,2.0,,2026-07-05T00:00:00+00:00,,,,,,,,,en,us,Please contact support.,2026-07-05T01:00:00Z,https://example.test/a?page=1,2026-07-06T00:00:00Z,1,
+apple_app_store,App A,app-a,,,r2,Password trouble,I cannot log in!,2.0,,2026-07-05T00:00:00+00:00,,,,,,,,,en,us,Please contact support.,2026-07-05T01:00:00Z,https://example.test/a?page=1,2026-07-05T01:00:00Z,1,
 apple_app_store,App A,app-a,,,r3,Slow app,"crashes, freezes and lag",3.0,,not-a-date,,,,,,,,2.0,en,us,,,https://example.test/a?page=2,2026-07-06T00:00:00Z,2,
 apple_app_store,App B,app-b,,,r4,Delivery,Payment and customer service failed,4.0,,2026-07-06T12:00:00-04:00,,,,,,,,3.0,en,gb,,,https://example.test/b?page=1,2026-07-06T17:00:00Z,1,
 apple_app_store,App B,app-b,,,r5,"   ","   ",,,,,,,,,,,,en,gb,,,https://example.test/b?page=1,2026-07-06T17:00:00Z,1,
-apple_app_store,App B,app-b,,,r6,Arabic,احب هذا التطبيق,5.0,,2026-07-01T00:00:00Z,,,,,,,,4.0,en,gb,,,https://example.test/b?page=2,2026-07-06T17:00:00Z,2,
+apple_app_store,App B,app-b,,,r6,Arabic,احب هذا التطبيق,5.0,,2026-07-08T00:00:00Z,,,,,,,,4.0,en,gb,,,https://example.test/b?page=2,2026-07-08T00:30:00Z,2,

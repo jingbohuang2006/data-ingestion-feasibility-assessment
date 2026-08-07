@@ -227,18 +227,27 @@ python -m src.review_features \
   --input data/processed/apple_app_store_validation/apple-large-10000/apple_app_store_validation_reviews.csv \
   --config config/review_feature_rules_v1.yaml \
   --output-root data/processed/review_features \
-  --run-id apple-large-feature-v1
+  --run-id apple-large-feature-v2
 ```
 
 Then generate the deterministic validation report using the observed input count:
 
 ```bash
 python -m src.review_feature_report \
-  --features data/processed/review_features/apple-large-feature-v1/review_features.csv \
+  --features data/processed/review_features/apple-large-feature-v2/review_features.csv \
   --input-row-count 6396 \
   --output-root reports/review_features \
-  --run-id apple-large-feature-v1
+  --run-id apple-large-feature-v2 \
+  --manual-sample-size 135
 ```
+
+The feature layer remains separate from normalized data. It includes fixed-reference and collection-relative
+review ages, separate full-content and body-only repetition indicators, six explicitly named lexical topic
+signals, and rating-derived weak sentiment labels. Weak labels are for manual data-quality validation only:
+they must not be used as model features or prediction targets. The report run also creates
+`manual_validation_sample.csv`; complete its human annotation fields before deciding which sentiment groups
+are suitable for baseline usage or which rules require refinement. Follow
+`docs/manual_validation_annotation_guidelines.md` for allowed values, decision rules, and completion checks.
 
 The generator preserves one row per normalized review, retains identifiers and lineage, and never overwrites
 raw or normalized datasets. Rules are versioned in `config/review_feature_rules_v1.yaml`. See

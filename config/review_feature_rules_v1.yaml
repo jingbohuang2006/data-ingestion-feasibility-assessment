@@ -1,4 +1,4 @@
-rule_version: "1.0.0"
+rule_version: "1.1.0"
 reference_timestamp: "2026-07-07T00:00:00Z"
 
 text_normalization:
@@ -15,14 +15,12 @@ low_signal:
   minimum_review_text_characters: 15
   minimum_review_text_words: 3
 
-repeated_text:
+repeated_content:
   scope:
     - source
     - app_identifier
     - country
     - language
-  include_title: true
-  include_review_text: true
   minimum_normalized_characters: 1
   fingerprint_algorithm: "sha256"
 
@@ -40,7 +38,7 @@ language_indicator:
   minimum_latin_letter_ratio: 0.70
   minimum_letters: 3
 
-keyword_categories:
+topic_signal_keywords:  # Lexical signals only; these do not validate that an issue occurred.
   login:
     - "login"
     - "log in"
