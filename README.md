@@ -243,8 +243,10 @@ python -m src.review_feature_report \
 
 The feature layer remains separate from normalized data. It includes fixed-reference and collection-relative
 review ages, separate full-content and body-only repetition indicators, six explicitly named lexical topic
-signals, and rating-derived weak sentiment labels. Weak labels are for manual data-quality validation only:
-they must not be used as model features or prediction targets. The report run also creates
+signals, and rating-derived weak sentiment labels. The completed audit supports using the positive and
+negative weak-label groups as an exploratory prediction target after excluding three-star reviews. Rating,
+`weak_sentiment_label`, and all rating-derived fields remain prohibited as model inputs. This target is not
+manually verified sentiment ground truth. The report run also creates
 `manual_validation_sample.csv`; complete its human annotation fields before deciding which sentiment groups
 are suitable for baseline usage or which rules require refinement. Follow
 `docs/manual_validation_annotation_guidelines.md` for allowed values, decision rules, and completion checks.
@@ -252,6 +254,23 @@ are suitable for baseline usage or which rules require refinement. Follow
 The generator preserves one row per normalized review, retains identifiers and lineage, and never overwrites
 raw or normalized datasets. Rules are versioned in `config/review_feature_rules_v1.yaml`. See
 `docs/review_feature_methodology.md` and `docs/review_feature_data_dictionary.md`.
+
+## Binary Sentiment Baseline
+
+Run the deterministic text-only and text-plus-existing-features baselines from the repository root:
+
+```bash
+python -m src.binary_sentiment_baseline
+```
+
+The workflow uses the committed `apple-large-feature-v2` feature dataset, excludes all 135 audited records
+and every matching normalized-text group before splitting, excludes three-star reviews, and prevents identical
+normalized review text from crossing the train/test boundary. The audited records are reserved exclusively for
+post-training diagnostics; only the 88 clear, non-mixed positive or negative human decisions are evaluated.
+Outputs under `reports/modeling/binary-sentiment-baseline/` include `modeling_report.md`, `metrics.json`,
+`split_summary.json`, `test_predictions.csv`, `manual_diagnostic_predictions.csv`, and
+`error_analysis_sample.csv`. The primary target remains a rating-derived weak proxy rather than manually
+verified sentiment ground truth.
 
 If a validation run cannot reach the configured target, the generated summary, EDA Markdown, errors table, and pagination table record the actual collected count and observed reason, such as empty RSS pages, request failures, duplicate records, configured page-depth exhaustion, or target/storefront limits.
 

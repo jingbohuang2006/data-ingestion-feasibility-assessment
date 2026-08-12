@@ -172,5 +172,7 @@ indicate that either exact-repetition rule needs refinement.
 - Repetition evaluation contains only two full-content and three body-only flagged rows. It evaluates the supplied
   exact-match peer examples, not semantic similarity or recall among unflagged records.
 - Mixed/unclear is a reviewer judgment and does not invalidate the assigned dominant sentiment by itself.
-- `rating` and `weak_sentiment_label` remain validation metadata only. Neither may be used as a model feature, and
-  the weak label may not be used as a prediction target.
+- Subsequent stakeholder approval permits the audited positive and negative weak-label groups as an exploratory
+  rating-derived prediction target after excluding three-star reviews. `rating`, `weak_sentiment_label`, and every
+  rating-derived field remain prohibited as model inputs. The target is not manually verified sentiment ground
+  truth, and all 135 audited rows are reserved outside training and the main split for post-training diagnostics.
