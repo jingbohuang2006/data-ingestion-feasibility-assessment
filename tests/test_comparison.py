@@ -3,7 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from src.comparison import build_comparison, preliminary_recommendation
-from src.config import AppConfig, AmazonConfig, AssessmentConfig, SteamConfig
+from src.config import AppleAppStoreConfig, AppConfig, AmazonConfig, AssessmentConfig, GooglePlayConfig, SteamConfig
 from src.models import NormalizedReview, ProbeResult, RequestRecord
 from src.quality_checks import calculate_quality_metrics
 from src.report_generator import generate_reports
@@ -27,6 +27,8 @@ def test_report_generation_with_no_reviews(tmp_path: Path) -> None:
         assessment=AssessmentConfig(),
         steam=SteamConfig(enabled=False),
         amazon=AmazonConfig(enabled=False),
+        google_play=GooglePlayConfig(enabled=False),
+        apple_app_store=AppleAppStoreConfig(enabled=False),
         path=tmp_path / "config.yaml",
     )
     steam = ProbeResult(source="steam", executed=False, skipped_reason="disabled")
@@ -98,6 +100,8 @@ def test_secret_values_not_in_report(tmp_path: Path) -> None:
         assessment=AssessmentConfig(),
         steam=SteamConfig(enabled=True, app_ids=("440",)),
         amazon=AmazonConfig(enabled=True, review_urls=("https://example.test/product-reviews/B000000001/?token=SECRET",)),
+        google_play=GooglePlayConfig(enabled=False),
+        apple_app_store=AppleAppStoreConfig(enabled=False),
         path=tmp_path / "config.yaml",
     )
     amazon = ProbeResult(
@@ -127,6 +131,8 @@ def test_report_next_steps_are_not_stale(tmp_path: Path) -> None:
         assessment=AssessmentConfig(),
         steam=SteamConfig(enabled=True, app_ids=("730",)),
         amazon=AmazonConfig(enabled=True),
+        google_play=GooglePlayConfig(enabled=False),
+        apple_app_store=AppleAppStoreConfig(enabled=False),
         path=tmp_path / "config.yaml",
     )
     steam = ProbeResult(source="steam", executed=True, reviews=[NormalizedReview(source="steam", review_id="1")])

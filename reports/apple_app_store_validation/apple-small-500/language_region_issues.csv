@@ -1,0 +1,4 @@
+app_name,item_id,country,language,review_count,language_detection_available,region_storefront,issue_note
+Duolingo,570060128,us,en,100,False,us,Language is request-configured; independent language detection is not performed.
+Spotify,324684580,us,en,250,False,us,Language is request-configured; independent language detection is not performed.
+YouTube,544007664,us,en,150,False,us,Language is request-configured; independent language detection is not performed.

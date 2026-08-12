@@ -18,6 +18,17 @@ CRITERIA = [
     "Long-term maintainability",
 ]
 
+APP_STORE_CRITERIA = [
+    "Consistent accessibility",
+    "Pagination or batching",
+    "Available metadata",
+    "Repeated collection",
+    "Access limitations",
+    "Data quality",
+    "Long-term maintainability",
+    "Commercial value and generalizability",
+]
+
 
 def build_comparison(amazon: ProbeResult, steam: ProbeResult, quality_metrics: dict[str, dict[str, Any]]) -> pd.DataFrame:
     """Build the requested comparison table."""
@@ -37,6 +48,67 @@ def build_comparison(amazon: ProbeResult, steam: ProbeResult, quality_metrics: d
             }
         )
     return pd.DataFrame(rows)
+
+
+def build_app_store_comparison(
+    results: dict[str, ProbeResult], quality_metrics: dict[str, dict[str, Any]]
+) -> pd.DataFrame:
+    """Build a multi-source app-store comparison table."""
+    rows = []
+    for criterion in APP_STORE_CRITERIA:
+        row: dict[str, Any] = {"criterion": criterion}
+        for source in ("google_play", "apple_app_store"):
+            result = results.get(source, ProbeResult(source=source))
+            quality = quality_metrics.get(source, {})
+            row[f"{source}_evidence"] = _app_store_evidence(criterion, result, quality)
+            row[f"{source}_assessment"] = _app_store_assessment(criterion, result, quality)
+        row["confidence"] = _app_store_confidence(results, criterion)
+        row["notes"] = _app_store_notes(criterion)
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def app_store_recommendation(results: dict[str, ProbeResult]) -> str:
+    """Return the Phase 2 recommendation based on observed app-store evidence."""
+    google = results.get("google_play", ProbeResult(source="google_play"))
+    apple = results.get("apple_app_store", ProbeResult(source="apple_app_store"))
+    google_viable = _primary_viability_score(google)
+    apple_viable = _primary_viability_score(apple)
+
+    if google_viable > apple_viable:
+        return (
+            "Google Play Store is the stronger primary app-store source under the current evidence because it exposes "
+            "a continuation-token batching path and produced the larger normalized sample in this run. Its main caveat "
+            "is that access depends on an unofficial third-party library and undocumented Google Play behavior. Apple "
+            "App Store should be retained as a secondary source where its RSS feed remains accessible, but pagination "
+            "was not demonstrated for the selected app/storefront. Before production use, both sources need approved "
+            "access review, repeat monitoring across days, explicit rate limits, and failure handling. Steam is no "
+            "longer recommended as the main source because stakeholder concerns about gaming-specific commercial "
+            "relevance supersede the earlier technical recommendation; Amazon remains on hold because repeatable "
+            "programmatic access was not resolved in this phase."
+        )
+    if apple_viable > google_viable:
+        return (
+            "Apple App Store is the stronger primary app-store source under the current evidence because its public RSS "
+            "review feed was more accessible and maintainable in this environment. This is not a risk-free production "
+            "API: the feed is publicly accessible but undocumented, is not an official supported Apple review API, and "
+            "long-term endpoint and schema stability are not guaranteed. The two immediate successful runs do not prove "
+            "long-term repeatability, and the observed 100% cross-run overlap may only reflect an unchanged recent-review "
+            "window during closely timed runs. Incremental ingestion is conditionally feasible only while stable review "
+            "IDs and stable ordering remain available. Google Play Store should be used as a secondary source only after "
+            "the unofficial third-party access path is approved for use and monitored, even though it worked repeatably "
+            "in this limited run. Before production use, the selected approach needs monitoring, failure detection, "
+            "schema-change alerts, explicit rate limits, stakeholder/legal approval, and approved access review. Steam "
+            "is no longer recommended as the main source because stakeholder concerns about gaming-specific commercial "
+            "relevance supersede the earlier technical recommendation; Amazon remains on hold because repeatable "
+            "programmatic access was not resolved in this phase."
+        )
+    return (
+        "No app store can be selected as a fully verified primary source from the current evidence. Use the stronger "
+        "successfully accessible app store as a limited pilot source only if one collected live reviews; otherwise, "
+        "treat both Google Play Store and Apple App Store as inconclusive until live access succeeds. Steam is not the "
+        "main-source recommendation for Phase 2 due to commercial generalizability concerns, and Amazon remains on hold."
+    )
 
 
 def preliminary_recommendation(amazon: ProbeResult, steam: ProbeResult) -> str:
@@ -71,6 +143,131 @@ def preliminary_recommendation(amazon: ProbeResult, steam: ProbeResult) -> str:
             "Amazon feasibility testing before committing to it as the main source."
         )
     return "No final source winner is supported by the current evidence; additional configured live or saved-response tests are required."
+
+
+def _app_store_evidence(criterion: str, result: ProbeResult, quality: dict[str, Any]) -> str:
+    if not result.executed:
+        return f"Not executed: {result.skipped_reason}"
+    if criterion == "Consistent accessibility":
+        return (
+            f"method={result.access_method}; method_type={result.access_method_type}; "
+            f"request_count={_request_count_text(result)}; success_rate={_request_success_rate_text(result)}; "
+            f"request_count_status={result.request_count_status}; live_collection={_live_collection_executed(result)}; "
+            f"errors={len(result.errors)}"
+        )
+    if criterion == "Pagination or batching":
+        return (
+            f"attempted={result.pages_attempted}; completed={result.pages_completed}; "
+            f"pagination_demonstrated={result.pagination_success}; batches={len(result.pagination_batches)}"
+        )
+    if criterion == "Available metadata":
+        return ", ".join(result.available_metadata_fields) or "No normalized metadata observed"
+    if criterion == "Repeated collection":
+        return (
+            f"runs={len(result.run_timestamps)}; repeated_collection={result.repeated_collection_demonstrated}; "
+            f"cross_run_overlap_count={_not_applicable(result.overlap_across_repeat_runs)}; "
+            f"cross_run_overlap_rate={_not_applicable(result.repeat_run_overlap_rate)}; "
+            f"new_records_in_second_run={_not_applicable(result.new_records_in_second_run)}"
+        )
+    if criterion == "Access limitations":
+        return "; ".join(result.access_limitations + result.warnings + result.errors) or "No access limitation observed"
+    if criterion == "Data quality":
+        return (
+            f"rows={quality.get('total_rows')}; unique={quality.get('unique_review_count')}; "
+            f"final_dataset_duplicate_count={quality.get('final_dataset_duplicate_count')}; "
+            f"cross_run_overlap_count={quality.get('cross_run_overlap_count')}; "
+            f"new_records_in_second_run={quality.get('new_records_in_second_run')}; "
+            f"empty_text={quality.get('empty_review_text_count')}; "
+            f"parser_errors={quality.get('parser_error_count')}"
+        )
+    if criterion == "Long-term maintainability":
+        return f"access_method_type={result.access_method_type}; parser_errors={len(result.parser_errors)}"
+    if criterion == "Commercial value and generalizability":
+        return "Mobile app reviews are broad product/user feedback and more generalizable than gaming-only Steam reviews."
+    return ""
+
+
+def _app_store_assessment(criterion: str, result: ProbeResult, quality: dict[str, Any]) -> str:
+    if not result.executed:
+        return "Insufficient evidence."
+    if criterion == "Consistent accessibility":
+        if result.requests and result.request_success_rate() == 1.0:
+            return "Strong in this limited live test."
+        if result.source == "google_play" and result.reviews:
+            return "Technically feasible in this run, but access depends on an unofficial library."
+        return "Inconclusive or failed in this environment."
+    if criterion == "Pagination or batching":
+        return "Demonstrated." if result.pagination_success else "Not demonstrated."
+    if criterion == "Available metadata":
+        return "Strong observed metadata coverage." if len(result.available_metadata_fields) >= 8 else "Limited observed metadata coverage."
+    if criterion == "Repeated collection":
+        return "Demonstrated." if result.repeated_collection_demonstrated else "Not demonstrated."
+    if criterion == "Access limitations":
+        return "Material limitations observed." if result.access_limitations or result.errors else "No material limitation observed in this small test."
+    if criterion == "Data quality":
+        if quality.get("total_rows", 0) == 0:
+            return "No collected rows to assess."
+        if quality.get("duplicates_within_final_dataset", 0) == 0 and quality.get("parser_error_count", 0) == 0:
+            return "Acceptable in this limited sample."
+        return "Mixed."
+    if criterion == "Long-term maintainability":
+        if result.access_method_type and "third-party" in result.access_method_type:
+            return "Riskier because collection depends on an unofficial wrapper."
+        return "Stronger because the access path is a public feed with simple JSON parsing."
+    if criterion == "Commercial value and generalizability":
+        return "Strong fit for app-product feedback and product intelligence."
+    return "Insufficient evidence."
+
+
+def _app_store_confidence(results: dict[str, ProbeResult], criterion: str) -> str:
+    if criterion == "Commercial value and generalizability":
+        return "medium qualitative"
+    if any(result.executed and result.reviews for result in results.values()):
+        return "limited"
+    return "low"
+
+
+def _app_store_notes(criterion: str) -> str:
+    if criterion == "Access limitations":
+        return "Do not bypass authentication, CAPTCHA, rate limits, region restrictions, or robots/access controls."
+    if criterion == "Long-term maintainability":
+        return "Official or stable documented access is preferred before production use."
+    return ""
+
+
+def _request_count_text(result: ProbeResult) -> str:
+    if result.request_count_status != "available":
+        return "unavailable"
+    return str(len(result.requests))
+
+
+def _request_success_rate_text(result: ProbeResult) -> str:
+    if result.request_count_status != "available":
+        return "unavailable"
+    return str(result.request_success_rate())
+
+
+def _live_collection_executed(result: ProbeResult) -> bool:
+    if result.live_request_executed is not None:
+        return result.live_request_executed
+    return bool(result.requests)
+
+
+def _primary_viability_score(result: ProbeResult) -> int:
+    score = 0
+    if result.executed and result.reviews:
+        score += 2
+    if result.pagination_success:
+        score += 1
+    if result.repeated_collection_demonstrated:
+        score += 1
+    if result.incremental_collection_feasible:
+        score += 1
+    if result.access_method_type and "third-party" in result.access_method_type:
+        score -= 1
+    if result.errors:
+        score -= 1
+    return score
 
 
 def _evidence(criterion: str, result: ProbeResult, quality: dict[str, Any]) -> str:

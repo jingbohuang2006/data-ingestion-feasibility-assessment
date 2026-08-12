@@ -1,0 +1,167 @@
+{
+  "execution_timestamp": "2026-07-06T16:33:34.557184+00:00",
+  "phase": "Apple App Store larger-scale validation",
+  "run_id": "apple-large-10000",
+  "target_review_count": 10000,
+  "reviews_collected": 6396,
+  "target_reached": false,
+  "shortfall_reason": "Target not reached: collected 6396 of 10000 reviews because Apple RSS page depth was limited by app/storefront. Several targets returned empty pages before page 10, several high-volume targets returned unavailable-page responses around page 11, and duplicate review IDs were skipped rather than counted in the final dataset.",
+  "targets": [
+    {
+      "app_name": "YouTube",
+      "app_id": "544007664",
+      "country": "us",
+      "language": "en",
+      "category": "video"
+    },
+    {
+      "app_name": "Spotify",
+      "app_id": "324684580",
+      "country": "us",
+      "language": "en",
+      "category": "music"
+    },
+    {
+      "app_name": "Duolingo",
+      "app_id": "570060128",
+      "country": "us",
+      "language": "en",
+      "category": "education"
+    },
+    {
+      "app_name": "Headspace",
+      "app_id": "493145008",
+      "country": "us",
+      "language": "en",
+      "category": "health"
+    },
+    {
+      "app_name": "Canva",
+      "app_id": "897446215",
+      "country": "gb",
+      "language": "en",
+      "category": "productivity"
+    },
+    {
+      "app_name": "Instagram",
+      "app_id": "389801252",
+      "country": "us",
+      "language": "en",
+      "category": "social"
+    },
+    {
+      "app_name": "TikTok",
+      "app_id": "835599320",
+      "country": "us",
+      "language": "en",
+      "category": "social"
+    },
+    {
+      "app_name": "WhatsApp",
+      "app_id": "310633997",
+      "country": "us",
+      "language": "en",
+      "category": "communication"
+    },
+    {
+      "app_name": "Google Maps",
+      "app_id": "585027354",
+      "country": "us",
+      "language": "en",
+      "category": "navigation"
+    },
+    {
+      "app_name": "Gmail",
+      "app_id": "422689480",
+      "country": "us",
+      "language": "en",
+      "category": "productivity"
+    },
+    {
+      "app_name": "Zoom",
+      "app_id": "546505307",
+      "country": "us",
+      "language": "en",
+      "category": "business"
+    },
+    {
+      "app_name": "Uber",
+      "app_id": "368677368",
+      "country": "us",
+      "language": "en",
+      "category": "travel"
+    },
+    {
+      "app_name": "Airbnb",
+      "app_id": "401626263",
+      "country": "us",
+      "language": "en",
+      "category": "travel"
+    },
+    {
+      "app_name": "Netflix",
+      "app_id": "363590051",
+      "country": "us",
+      "language": "en",
+      "category": "entertainment"
+    },
+    {
+      "app_name": "Amazon Shopping",
+      "app_id": "297606951",
+      "country": "us",
+      "language": "en",
+      "category": "shopping"
+    },
+    {
+      "app_name": "Pinterest",
+      "app_id": "429047995",
+      "country": "us",
+      "language": "en",
+      "category": "lifestyle"
+    },
+    {
+      "app_name": "Reddit",
+      "app_id": "1064216828",
+      "country": "us",
+      "language": "en",
+      "category": "social"
+    },
+    {
+      "app_name": "Discord",
+      "app_id": "985746746",
+      "country": "us",
+      "language": "en",
+      "category": "social"
+    },
+    {
+      "app_name": "Microsoft Teams",
+      "app_id": "1113153706",
+      "country": "us",
+      "language": "en",
+      "category": "business"
+    },
+    {
+      "app_name": "LinkedIn",
+      "app_id": "288429040",
+      "country": "us",
+      "language": "en",
+      "category": "business"
+    }
+  ],
+  "request_count": 152,
+  "successful_request_count": 144,
+  "errors": [],
+  "parser_errors": [],
+  "warnings": [
+    "Target not reached: collected 6396 of 10000 reviews because Apple RSS page depth was limited by app/storefront. Several targets returned empty pages before page 10, several high-volume targets returned unavailable-page responses around page 11, and duplicate review IDs were skipped rather than counted in the final dataset."
+  ],
+  "processed_output_dir": "/Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/data/processed/apple_app_store_validation/apple-large-10000",
+  "reports_output_dir": "/Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/reports/apple_app_store_validation/apple-large-10000",
+  "raw_output_dir": "/Users/huang/Documents/GitHub/data-ingestion-feasibility-assessment/data/raw/apple_app_store_validation/apple-large-10000",
+  "limitations": [
+    "Validation run only; this is not a production-ready ingestion pipeline.",
+    "Apple customer review RSS is publicly accessible but undocumented and not an official supported review API.",
+    "Review volume is capped by configuration and may be limited by app, storefront, endpoint behavior, or paging depth.",
+    "Language is configured by storefront request; independent language detection is not performed."
+  ]
+}

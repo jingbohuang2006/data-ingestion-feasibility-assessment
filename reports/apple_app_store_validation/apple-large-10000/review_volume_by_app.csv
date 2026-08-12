@@ -1,0 +1,21 @@
+app_name,item_id,country,language,review_count,unique_review_count,duplicate_count
+Airbnb,401626263,us,en,300,300,0
+Amazon Shopping,297606951,us,en,150,150,0
+Canva,897446215,gb,en,50,50,0
+Discord,985746746,us,en,50,50,0
+Duolingo,570060128,us,en,250,250,0
+Gmail,422689480,us,en,500,500,0
+Google Maps,585027354,us,en,150,150,0
+Headspace,493145008,us,en,500,500,0
+Instagram,389801252,us,en,434,434,0
+LinkedIn,288429040,us,en,500,500,0
+Microsoft Teams,1113153706,us,en,500,500,0
+Netflix,363590051,us,en,400,400,0
+Pinterest,429047995,us,en,500,500,0
+Reddit,1064216828,us,en,398,398,0
+Spotify,324684580,us,en,400,400,0
+TikTok,835599320,us,en,464,464,0
+Uber,368677368,us,en,50,50,0
+WhatsApp,310633997,us,en,250,250,0
+YouTube,544007664,us,en,50,50,0
+Zoom,546505307,us,en,500,500,0

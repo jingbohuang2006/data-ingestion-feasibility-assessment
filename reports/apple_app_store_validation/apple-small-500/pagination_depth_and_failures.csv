@@ -1,0 +1,13 @@
+app_name,app_id,category,country,language,page,raw_review_count,distinct_review_count,distinct_from_previous_page,status,summary,duplicate_review_id_count,duplicate_review_ids_sample
+YouTube,544007664,video,us,en,1.0,50.0,50.0,,ok,,,
+YouTube,544007664,video,us,en,2.0,50.0,50.0,True,ok,,,
+YouTube,544007664,video,us,en,3.0,50.0,50.0,True,ok,,,
+YouTube,544007664,video,us,en,4.0,0.0,0.0,False,empty_page,,,
+Spotify,324684580,music,us,en,1.0,50.0,50.0,,ok,,,
+Spotify,324684580,music,us,en,2.0,50.0,50.0,True,ok,,,
+Spotify,324684580,music,us,en,3.0,50.0,50.0,True,ok,,,
+Spotify,324684580,music,us,en,4.0,50.0,50.0,True,ok,,,
+Spotify,324684580,music,us,en,5.0,50.0,50.0,True,ok,,,
+Duolingo,570060128,education,us,en,1.0,50.0,50.0,,ok,,,
+Duolingo,570060128,education,us,en,2.0,50.0,50.0,True,ok,,,
+,,,,,,,,,,final_dataset,0.0,[]

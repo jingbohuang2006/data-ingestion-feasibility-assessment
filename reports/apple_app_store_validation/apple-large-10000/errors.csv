@@ -1,0 +1,2 @@
+message
+"Target not reached: collected 6396 of 10000 reviews because Apple RSS page depth was limited by app/storefront. Several targets returned empty pages before page 10, several high-volume targets returned unavailable-page responses around page 11, and duplicate review IDs were skipped rather than counted in the final dataset."

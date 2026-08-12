@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 import src.steam_probe as steam_probe
-from src.config import AppConfig, AmazonConfig, AssessmentConfig, SteamConfig
+from src.config import AppleAppStoreConfig, AppConfig, AmazonConfig, AssessmentConfig, GooglePlayConfig, SteamConfig
 from src.models import ProbeResult
 from src.steam_probe import parse_steam_reviews, run_steam_probe
 
@@ -85,6 +85,8 @@ def test_steam_probe_retrieves_multiple_cursor_pages(monkeypatch, tmp_path: Path
         assessment=AssessmentConfig(max_reviews_per_item=5, max_pages_per_item=5, repeat_runs=2),
         steam=SteamConfig(enabled=True, app_ids=("999",), reviews_per_page=2),
         amazon=AmazonConfig(enabled=False),
+        google_play=GooglePlayConfig(enabled=False),
+        apple_app_store=AppleAppStoreConfig(enabled=False),
         path=tmp_path / "config.yaml",
     )
 

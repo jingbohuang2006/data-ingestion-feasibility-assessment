@@ -1,0 +1,80 @@
+rule_version: "1.1.0"
+reference_timestamp: "2026-07-07T00:00:00Z"
+
+text_normalization:
+  unicode_form: "NFKC"
+  casefold: true
+  collapse_whitespace: true
+  trim: true
+
+word_count:
+  pattern: "[^\\W_]+(?:['’][^\\W_]+)*"
+  unicode_aware: true
+
+low_signal:
+  minimum_review_text_characters: 15
+  minimum_review_text_words: 3
+
+repeated_content:
+  scope:
+    - source
+    - app_identifier
+    - country
+    - language
+  minimum_normalized_characters: 1
+  fingerprint_algorithm: "sha256"
+
+missing_fields:
+  fields:
+    - review_title
+    - review_text
+    - rating
+    - review_date
+
+language_indicator:
+  enabled: true
+  supported_declared_languages:
+    - en
+  minimum_latin_letter_ratio: 0.70
+  minimum_letters: 3
+
+topic_signal_keywords:  # Lexical signals only; these do not validate that an issue occurred.
+  login:
+    - "login"
+    - "log in"
+    - "sign in"
+    - "password"
+    - "authentication"
+  payment:
+    - "payment"
+    - "pay"
+    - "charged"
+    - "billing"
+    - "credit card"
+    - "refund"
+  performance:
+    - "slow"
+    - "lag"
+    - "lagging"
+    - "crash"
+    - "crashes"
+    - "freezes"
+    - "performance"
+  subscription:
+    - "subscription"
+    - "subscribe"
+    - "renewal"
+    - "premium plan"
+    - "cancel subscription"
+  delivery:
+    - "delivery"
+    - "delivered"
+    - "shipping"
+    - "courier"
+    - "order arrived"
+  customer_service:
+    - "customer service"
+    - "customer support"
+    - "support team"
+    - "help desk"
+    - "representative"
