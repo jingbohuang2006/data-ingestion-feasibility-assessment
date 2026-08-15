@@ -6,6 +6,17 @@ This repository documents an end-to-end review data ingestion and validation wor
 
 The project evolved from an initial feasibility assessment of external review sources into a broader data workflow covering source evaluation, large-scale collection validation, data quality analysis, feature engineering, and manual sentiment-label validation.
 
+### Project at a Glance
+
+| Area | Result |
+|---|---|
+| Sources Evaluated | Amazon, Steam, Google Play, Apple App Store |
+| Large-Scale Validation | 6,396 normalized reviews |
+| Coverage | 20 app/storefront targets |
+| Manual Sentiment Validation | 135 reviews |
+| Core Workflow | Source Evaluation → Collection → Normalization → EDA → Feature Engineering → Validation |
+| Primary Stack | Python, pandas, Requests, BeautifulSoup, pytest |
+
 ### Key Outcomes
 
 - Evaluated Amazon, Steam, Google Play, and Apple App Store review sources across accessibility, reliability, metadata availability, data quality, scalability, and maintainability.
