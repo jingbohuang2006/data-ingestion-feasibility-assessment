@@ -1,18 +1,21 @@
 # Data-Ingestion Feasibility Assessment
 
-This project evaluates review sources for a future review-ingestion and sentiment-analysis prototype.
+## Project Overview
 
-- **Phase 1** preserved the historical Amazon Product Reviews vs. Steam User Reviews assessment.
-- **Phase 2** assesses Google Play Store and Apple App Store reviews as candidate primary sources for broader product-intelligence work.
+This repository documents an end-to-end review data ingestion and validation workflow developed to support customer-review analytics and downstream sentiment analysis.
 
-The goal is not to build a production scraper. The project is a small, evidence-based feasibility assessment focused on:
+The project evolved from an initial feasibility assessment of external review sources into a broader data workflow covering source evaluation, large-scale collection validation, data quality analysis, feature engineering, and manual sentiment-label validation.
 
-- accessibility
-- review volume in a limited sample
-- available metadata
-- data quality
-- commercial value
-- long-term maintainability
+### Key Outcomes
+
+- Evaluated Amazon, Steam, Google Play, and Apple App Store review sources across accessibility, reliability, metadata availability, data quality, scalability, and maintainability.
+- Selected Apple App Store as the primary validation direction under the tested constraints and collected **6,396 normalized reviews across 20 app/storefront targets**.
+- Built reproducible collection, cleaning, normalization, and EDA workflows with explicit handling of missing fields, duplicate records, pagination limitations, low-signal reviews, and collection failures.
+- Developed a deterministic feature-engineering layer covering text characteristics, time-based features, metadata availability, repetition indicators, and lexical topic signals while preserving review identifiers and source lineage.
+- Completed manual validation on a deterministic **135-review sample** to assess weak sentiment labels and ambiguous cases, including rating-text disagreement, mixed sentiment, neutral reviews, and unclear content.
+- Produced versioned configuration, automated tests, validation reports, and reproducible artifacts to support traceability and independent review.
+
+This repository represents validation and analytical infrastructure rather than a production scraping system. Platform access stability, deployment, monitoring, legal/policy review, and production operations remain outside the validated scope.
 
 ## Phase 1 Data Sources
 
