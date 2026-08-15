@@ -51,6 +51,12 @@ flowchart TB
     L --> M[Analytics-Ready Dataset]
 ```
 
+## Explore the Project
+
+- **[Source Feasibility & Selection](reports/app_store_feasibility_report.md)** — Compare candidate app-store sources and review the evidence supporting the Apple App Store validation direction.
+- **[Large-Scale Apple Validation & EDA](reports/apple_app_store_validation/apple-large-10000/)** — Explore the 6,396-review validation run, including collection coverage, data-quality checks, pagination behavior, missing fields, and EDA artifacts.
+- **[Feature Engineering & Manual Validation](reports/review_features/apple-large-feature-v2/feature_validation_report.md)** — Review feature validation, lineage preservation, feature distributions, and analysis of the 135 manually annotated reviews.
+
 ## Phase 1 Data Sources
 
 ### Steam User Reviews
