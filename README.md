@@ -31,13 +31,16 @@ This repository represents validation and analytical infrastructure rather than 
 ## Project Workflow
 
 ```mermaid
-flowchart LR
-    A[Amazon] --> E[Source Feasibility Assessment]
-    B[Steam] --> E
-    C[Google Play] --> E
-    D[Apple App Store] --> E
+flowchart TB
+    subgraph sources[External Review Sources]
+        direction LR
+        A[Amazon] ~~~ B[Steam] ~~~ C[Google Play] ~~~ D[Apple App Store]
+    end
 
-
+    A --> E[Source Feasibility Assessment]
+    B --> E
+    C --> E
+    D --> E
     E --> F[Source Selection]
     F --> G[Review Data Collection]
     G --> H[Cleaning & Normalization]
