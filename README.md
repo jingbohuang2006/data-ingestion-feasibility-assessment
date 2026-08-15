@@ -28,6 +28,26 @@ The project evolved from an initial feasibility assessment of external review so
 
 This repository represents validation and analytical infrastructure rather than a production scraping system. Platform access stability, deployment, monitoring, legal/policy review, and production operations remain outside the validated scope.
 
+## Project Workflow
+
+```mermaid
+flowchart LR
+    A[Amazon] --> E[Source Feasibility Assessment]
+    B[Steam] --> E
+    C[Google Play] --> E
+    D[Apple App Store] --> E
+
+
+    E --> F[Source Selection]
+    F --> G[Review Data Collection]
+    G --> H[Cleaning & Normalization]
+    H --> I[Data Quality Validation]
+    I --> J[Exploratory Data Analysis]
+    J --> K[Feature Engineering]
+    K --> L[Manual Sentiment Validation]
+    L --> M[Analytics-Ready Dataset]
+```
+
 ## Phase 1 Data Sources
 
 ### Steam User Reviews
