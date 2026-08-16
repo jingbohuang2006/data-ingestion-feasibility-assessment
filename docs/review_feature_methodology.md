@@ -93,9 +93,10 @@ configured vocabulary is present, not that a user problem has been confirmed, an
 ## Rating-derived weak sentiment labels
 
 `weak_sentiment_label` maps ratings 1–2 to `negative`, 3 to `neutral`, and 4–5 to `positive`. Missing,
-non-numeric, and out-of-range ratings yield null. This is a weak label for manual data-quality validation only;
-no model is trained. It must not later be used as a model feature or prediction target. Rating must also not be
-used as circular evidence that the weak label agrees with human sentiment.
+non-numeric, and out-of-range ratings yield null. The completed manual audit supports using the positive and
+negative groups as an exploratory weak prediction target after excluding three-star reviews. It is not manually
+verified sentiment ground truth. Rating, `weak_sentiment_label`, and every rating-derived field remain prohibited
+as model inputs. Rating must also not be used as circular evidence that the weak label agrees with human sentiment.
 
 ## Stratified manual validation
 
@@ -117,5 +118,8 @@ raw or normalized tables.
 
 ## Target-leakage warning
 
-Rating and `weak_sentiment_label` are evaluation metadata only. Neither may be used as a model feature, and the
-weak label may not be used as a prediction target. Doing so would create leakage or train against an unvalidated proxy.
+Rating, `weak_sentiment_label`, and every rating-derived field may not be used as model inputs. The positive and
+negative weak-label groups may be used only as the explicitly identified exploratory rating-derived target, with
+three-star reviews excluded. The 135 audited records and all matching normalized-text groups are excluded before
+splitting, fitting, selection, or preprocessing; eligible clear binary audit decisions are reserved for a separate
+post-training diagnostic. The weak target must not be represented as manually verified sentiment ground truth.

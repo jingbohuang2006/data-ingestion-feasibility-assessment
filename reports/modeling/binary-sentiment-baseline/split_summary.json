@@ -1,0 +1,63 @@
+{
+  "audit_dataset": "reports/review_features/apple-large-feature-v2/manual_validation_sample_annotated.csv",
+  "audit_dataset_rows": 135,
+  "audit_match_key": "review_id",
+  "exclusions": {
+    "additional_audit_text_duplicate_rows_excluded": 19,
+    "direct_audit_rows_excluded": 135,
+    "initial_feature_rows": 6396,
+    "modeling_population_groups": 5696,
+    "modeling_population_rows": 5781,
+    "neutral_or_nonbinary_rows_excluded": 461,
+    "rows_after_audit_group_exclusion": 6242
+  },
+  "feature_dataset": "data/processed/review_features/apple-large-feature-v2/review_features.csv",
+  "feature_dataset_rows": 6396,
+  "integrity_assertions": {
+    "all_135_audit_ids_matched_exactly_once": true,
+    "no_audit_ids_in_train_or_test": true,
+    "no_audit_text_groups_in_train_or_test": true,
+    "no_prohibited_model_inputs": true,
+    "no_text_group_crosses_train_and_test": true,
+    "same_train_test_records_for_both_models": true,
+    "train_and_test_nonempty_with_both_classes": true
+  },
+  "manual_diagnostic": {
+    "class_balance": {
+      "negative": 56,
+      "positive": 32
+    },
+    "eligible_rows": 88,
+    "excluded_mixed_unclear_or_nonbinary_rows": 47
+  },
+  "normalization": "Unicode NFKC, casefold, collapse whitespace, trim",
+  "random_seed": 20260811,
+  "test": {
+    "class_balance": {
+      "negative": {
+        "proportion": 0.5934256055363322,
+        "rows": 686
+      },
+      "positive": {
+        "proportion": 0.40657439446366783,
+        "rows": 470
+      }
+    },
+    "normalized_text_groups": 1137,
+    "rows": 1156
+  },
+  "train": {
+    "class_balance": {
+      "negative": {
+        "proportion": 0.5937297297297297,
+        "rows": 2746
+      },
+      "positive": {
+        "proportion": 0.4062702702702703,
+        "rows": 1879
+      }
+    },
+    "normalized_text_groups": 4559,
+    "rows": 4625
+  }
+}

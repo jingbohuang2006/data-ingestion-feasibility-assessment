@@ -73,6 +73,6 @@ explicitly stated. `string` includes ISO-8601 timestamp strings where noted.
 | `subscription_topic_signal` | boolean | title, text, rules | Boundary match for configured subscription terms | Never null | Subscription vocabulary present; not a confirmed issue |
 | `delivery_topic_signal` | boolean | title, text, rules | Boundary match for configured delivery terms | Never null | Delivery vocabulary present; not a confirmed issue |
 | `customer_service_topic_signal` | boolean | title, text, rules | Boundary match for configured service terms | Never null | Service vocabulary present; not a confirmed issue |
-| `weak_sentiment_label` | string | `rating` | 1–2 negative; 3 neutral; 4–5 positive | Null when rating is missing/invalid/out of range | Weak validation label only; prohibited as model feature or target |
+| `weak_sentiment_label` | string | `rating` | 1–2 negative; 3 neutral; 4–5 positive | Null when rating is missing/invalid/out of range | Exploratory weak target for audited positive/negative groups only; prohibited as a model input and not ground truth |
 | `feature_rule_version` | string | rules | Copied validated rule version | Never null | Feature definition version |
 | `feature_reference_timestamp` | string | rules | Canonical fixed UTC reference | Never null | Review-age calculation reference |

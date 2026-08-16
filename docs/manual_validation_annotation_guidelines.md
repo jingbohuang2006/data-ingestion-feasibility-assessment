@@ -174,5 +174,8 @@ inspect mixed/unclear rates and disagreement examples; calculate topic relevance
 false repetition flags. Small App/topic cells are descriptive and should not be presented as stable rates.
 
 The resulting evidence should answer which weak-label groups are adequate for baseline dataset use, which
-rules require refinement, and whether topic signals behave consistently across Apps. It does not authorize
-modeling, and neither `rating` nor `weak_sentiment_label` may be used as model features or prediction targets.
+rules require refinement, and whether topic signals behave consistently across Apps. Subsequent stakeholder
+approval authorizes the audited positive and negative groups as an exploratory rating-derived prediction target
+after excluding three-star reviews. Neither `rating`, `weak_sentiment_label`, nor any rating-derived field may be
+used as a model input, and the weak target is not manually verified sentiment ground truth. All 135 audited rows
+remain excluded from fitting and the main split and are reserved for post-training diagnostics.
